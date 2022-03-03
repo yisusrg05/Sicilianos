@@ -1,0 +1,34 @@
+######## FUNCIONES DE NUESTRA WEB ########
+
+- Login para usuarios(diferenciar entre normales y administradores con un atributo booleano).
+- Crear un conjunto de Restaurantes.
+- Poner un mapa con una lista de productos que tiene cada uno de los restaurantes de la web:
+     Clave: Restaurante.
+     Valor: Lista de Productos.
+- Cada usuario pueda añadir a su cesta unos productos.
+- Realizar la compra y que se quede linkeada al usuario, para que pueda verla cuando quiera
+- Desde el modo administrador, poder añadir nuevos restaurantes, y a los ya creados, añadirle productos
+...
+
+
+######## ENTIDADES / OBJETOS ########
+
+1. Restaurante:
+   a. ...atributos...
+
+2. Productos:
+   a. ...atributos...
+
+3. Compra:
+   a. Factura (id unico)
+   b. Lista de productos
+   c. Precio total
+   d. Forma de pago
+   ....
+
+3. Usuarios:
+   a. ...atributos..
+   .
+   .
+   .
+   x. ADMINISTRADOR (Sí/No)

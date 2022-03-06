@@ -12,10 +12,12 @@ import java.util.concurrent.atomic.AtomicLong;
 public class RestaurantHolder {
 
     private Map<Long,Restaurant> restaurants= new ConcurrentHashMap<>();
-    private AtomicLong lastID= new AtomicLong();
+    private AtomicLong lastIDRestaurant= new AtomicLong();
+    private AtomicLong lastIDdishes= new AtomicLong();
 
-    public void addItem(Restaurant restaurant){
-        long id = lastID.incrementAndGet();
+
+    public void addRestaurant(Restaurant restaurant){
+        long id = lastIDRestaurant.incrementAndGet();
         restaurant.setId(id);
         restaurants.put(id,restaurant);
     }
@@ -26,5 +28,35 @@ public class RestaurantHolder {
 
     public Restaurant getRestaurant(long id){
         return restaurants.get(id);
+    }
+
+    public Restaurant removeRestaurant(long id){
+        return restaurants.remove(id);
+    }
+
+    public void updateRestaurant(long id,Restaurant restaurant){
+        restaurants.put(id,restaurant);
+    }
+
+    public void addDish(long idRestaurant, Dishes dish){
+        long id = lastIDdishes.incrementAndGet();
+        dish.setId(id);
+        restaurants.get(idRestaurant).add(id,dish);
+    }
+
+    public Collection<Dishes> getDishes(long idRestaurant){
+        return restaurants.get(idRestaurant).allDishes();
+    }
+
+    public Dishes getDish(long idRestaurant, long idDishes){
+        return restaurants.get(idRestaurant).getDish(idDishes);
+    }
+
+    public Dishes removeDish(long idRestaurant, long idDishes){
+        return restaurants.get(idRestaurant).removeDish(idDishes);
+    }
+
+    public void updateDish(long idRestaurant,long idDish,Dishes dish){
+        restaurants.get(idRestaurant).add(idDish,dish);
     }
 }

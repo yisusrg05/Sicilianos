@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class Restaurantes_Controller {
 
@@ -17,7 +19,9 @@ public class Restaurantes_Controller {
     @GetMapping("/restaurant")
     public String restaurant(Model model){
 
-        model.addAttribute("restaurant",restaurantHolder.getRestaurants());
+        List<Restaurant> restaurants = (List<Restaurant>) restaurantHolder.getRestaurants();
+
+        model.addAttribute("restaurant",restaurants);
 
         return "pricing";
     }
@@ -30,12 +34,13 @@ public class Restaurantes_Controller {
 
         return "catalog-page";
     }
-    @PostMapping("/restaurant/nuevo")
+
+    @PostMapping("/restaurant/new")
     public String addRestaurant (Model model, Restaurant restaurant){
 
         restaurantHolder.addRestaurant(restaurant);
 
-        return "registrationRest";
+        return "pricing";
     }
 
 }

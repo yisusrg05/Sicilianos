@@ -34,55 +34,21 @@
                 <h2 class="text-muted">Los Restaurantes</h2>
                 <p class="fs-5">Nuestros favoritos y próximamente también los tuyos.</p>
             </div>
+            {{#restaurants}}
             <div class="row justify-content-center">
                 <div class="col-md-5 col-lg-4">
                     <div class="clean-pricing-item">
                         <div class="heading">
-                            <h3>La Bonita</h3>
+                            <h3>{{name}}</h3>
                         </div>
-                        <p>Restaurante diferente y original.</p>
+                        <p>{{description}}</p>
                         <div class="features">
                             <h4><span class="feature">Tipo de comida:</span><span>Mediterránea</span></h4>
-                            <h4><span class="feature"></span><span></span></h4>
-                            <h4><span class="feature"></span><span></span></h4>
                         </div>
-                        <div class="price">
-                            <h4></h4>
                         </div><button class="btn btn-outline-warning d-block w-100" type="button">LA CARTA</button>
                     </div>
                 </div>
-                <div class="col-md-5 col-lg-4">
-                    <div class="clean-pricing-item">
-                        <div class="heading">
-                            <h3>PRO</h3>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <div class="features">
-                            <h4><span class="feature"></span><span></span></h4>
-                            <h4></h4>
-                            <h4><span class="feature"></span><span></span></h4>
-                        </div>
-                        <div class="price">
-                            <h4></h4>
-                        </div><button class="btn btn-primary d-block w-100" type="button">BUY NOW</button>
-                    </div>
-                </div>
-                <div class="col-md-5 col-lg-4">
-                    <div class="clean-pricing-item">
-                        <div class="heading">
-                            <h3>PREMIUM</h3>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <div class="features">
-                            <h4><span class="feature"></span><span></span></h4>
-                            <h4><span class="feature"></span><span></span></h4>
-                            <h4><span class="feature"></span><span></span></h4>
-                        </div>
-                        <div class="price">
-                            <h4></h4>
-                        </div><button class="btn btn-outline-primary d-block w-100" type="button">BUY NOW</button>
-                    </div>
-                </div>
+            {{/restaurants}}
             </div>
             <div class="ribbon"><span></span></div>
         </div>

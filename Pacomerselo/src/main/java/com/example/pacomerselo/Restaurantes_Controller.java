@@ -73,13 +73,17 @@ public class Restaurantes_Controller {
         return "registration";
     }
     @GetMapping("/registerDish")
-    public String registerDish(){
-        return "registrationDish";
-    }
-    @GetMapping("/registerRestaurant")
+    public String registerDish(){return "registrationDish";}
+
+    @GetMapping ("/registerRestaurant")
     public String registerRestaurant(){
         return "registrationRest";
     }
+
+
+
+
+
     @GetMapping("/index")
     public String index(){
         return "index";

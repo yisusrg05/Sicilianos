@@ -53,5 +53,39 @@ public class Restaurantes_Controller {
     public String login(){
         return "login";
     }
+    @GetMapping("/carrito")
+    public String shoppingCart(){
+        return "shopping-cart";
+    }
+    @GetMapping("/catalogo")
+    public String catalog(){
+        return "catalog-page";
+    }
+    @GetMapping("/reviews")
+    public String reviews(){
+        return "reviews";
+    }
+    @GetMapping("/payment")
+    public String payment(){
+        return "payment-page";
+    }
+    @GetMapping("/register")
+    public String register(){
+        return "registration";
+    }
+    @GetMapping("/registerDish")
+    public String registerDish(){
+        return "registrationDish";
+    }
+    @GetMapping("/registerRestaurant")
+    public String registerRestaurant(){
+        return "registrationRest";
+    }
+    @GetMapping("/index")
+    public String index(){
+        return "index";
+    }
+
+
 
 }

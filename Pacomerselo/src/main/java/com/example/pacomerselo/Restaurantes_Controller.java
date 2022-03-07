@@ -34,10 +34,12 @@ public class Restaurantes_Controller {
 
         return "catalog-page";
     }
-    @PostMapping("/restaurant/new")
+    @PostMapping("/restaurant")
     public String addRestaurant (Model model, Restaurant restaurant){
 
         restaurantHolder.addRestaurant(restaurant);
+        Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
+        model.addAttribute("restaurants",restaurants);
 
         return "pricing";
     }

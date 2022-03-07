@@ -1,0 +1,68 @@
+package com.example.pacomerselo;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
+
+public class UserHolder {
+
+    private Map<Long,User> users= new ConcurrentHashMap<>();
+    private AtomicLong lastIDUser= new AtomicLong();
+    private AtomicLong lastIDOrder= new AtomicLong();
+
+    public UserHolder(){
+        //addUser(new Restaurant("Sicilia","no sabe comer","Japonés"));
+        //addUser(new Restaurant("Yisus","es un crack","Hawaiana"));
+    }
+
+
+    public void addUser(User user){
+        long id = lastIDUser.incrementAndGet();
+        user.setId(id);
+        users.put(id,user);
+    }
+
+    public User getUser(long id){
+        return users.get(id);
+    }
+
+    public User removeUser(long id){
+        return users.remove(id);
+    }
+
+    public void updateUser(long id,User user){
+        users.put(id,user);
+    }
+
+    public void addDishToCart(long id,Dishes dish){
+        users.get(id).addDish(dish);
+    }
+
+    public Collection<Dishes> getDishes(long id){
+        return users.get(id).allCart();
+    }
+
+    public void proccessOrder (long id){
+        Order order = new Order((List<Dishes>) getDishes(id));
+        int price=0;
+        List<Dishes> list =(List<Dishes>) getDishes(id);
+        for(Dishes dish : list){
+            price+=dish.getPrice();
+        }
+        long idOrder = lastIDOrder.incrementAndGet();
+        order.setId(idOrder);
+        users.get(id).addOrder(idOrder,order);
+    }
+
+    // YA SE VERÁ MÁS ADELANTE QUE COJONES HACEMOS CON ESTO
+
+    /*public Dishes removeDish(long idRestaurant, long idDishes){
+        return restaurants.get(idRestaurant).removeDish(idDishes);
+    }*/
+
+    /*public void updateDish(long idRestaurant,long idDish,Dishes dish){
+        restaurants.get(idRestaurant).add(idDish,dish);
+    }*/
+}

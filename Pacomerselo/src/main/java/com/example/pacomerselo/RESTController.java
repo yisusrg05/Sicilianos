@@ -110,4 +110,10 @@ public class RESTController {
         }
     }
 
+    //////////////////////USERS REST CONTROLLER//////////////////////
+
+    //PREGUNTAR SI DEBEMOS TENER UN GET DE TODOS LOS USUARIOS
+
+
+
 }

@@ -17,12 +17,14 @@ public class Restaurant {
 
     private String name;
     private String description;
+    private String type;
     private long id=-1;
     private Map<Long,Dishes> dishes= new ConcurrentHashMap<>();
 
-    public Restaurant(String name,String description){
+    public Restaurant(String name,String description,String type){
         this.name=name;
         this.description=description;
+        this.type=type;
     }
 
     public Dishes add(long id, Dishes dish){

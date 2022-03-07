@@ -16,8 +16,8 @@ public class RestaurantHolder {
     private AtomicLong lastIDdishes= new AtomicLong();
 
     public RestaurantHolder(){
-        addRestaurant(new Restaurant("Sicilia","no sabe comer"));
-        addRestaurant(new Restaurant("Yisus","es un crack"));
+        addRestaurant(new Restaurant("Sicilia","no sabe comer","Japonés"));
+        addRestaurant(new Restaurant("Yisus","es un crack","Hawaiana"));
         addDish(1, new Dishes("Kevin Bacon", "La best seller",13));
     }
 

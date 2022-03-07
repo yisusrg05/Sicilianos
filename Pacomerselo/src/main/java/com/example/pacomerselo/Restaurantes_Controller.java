@@ -27,7 +27,6 @@ public class Restaurantes_Controller {
     }
     @GetMapping("/restaurant/{id}")
     public String restaurantId(Model model, @PathVariable int id){
-
         Restaurant restaurant = restaurantHolder.getRestaurant(id);
         Collection<Dishes> list = restaurant.allDishes();
 

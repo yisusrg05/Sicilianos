@@ -15,6 +15,12 @@ public class RestaurantHolder {
     private AtomicLong lastIDRestaurant= new AtomicLong();
     private AtomicLong lastIDdishes= new AtomicLong();
 
+    public RestaurantHolder(){
+        addRestaurant(new Restaurant("Sicilia","no sabe comer"));
+        addRestaurant(new Restaurant("Yisus","es un crack"));
+        addDish(1, new Dishes("Kevin Bacon", "La best seller",13));
+    }
+
 
     public void addRestaurant(Restaurant restaurant){
         long id = lastIDRestaurant.incrementAndGet();

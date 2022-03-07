@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -19,17 +20,16 @@ public class Restaurantes_Controller {
     }*/
     @GetMapping("/restaurant")
     public String restaurant(Model model){
-        List<Restaurant> restaurants = (List<Restaurant>) restaurantHolder.getRestaurants();
-
+        Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
         model.addAttribute("restaurants",restaurants);
 
-        return "list";
+        return "pricing";
     }
     @GetMapping("/restaurant/{id}")
     public String restaurantId(Model model, @PathVariable int id){
 
         Restaurant restaurant = restaurantHolder.getRestaurant(id);
-        List<Dishes> list = (List <Dishes>)restaurant.allDishes();
+        Collection<Dishes> list = restaurant.allDishes();
 
         model.addAttribute("list",list);
 

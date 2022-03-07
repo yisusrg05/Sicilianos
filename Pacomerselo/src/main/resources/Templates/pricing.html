@@ -34,24 +34,26 @@
                 <h2 class="text-muted">Los Restaurantes</h2>
                 <p class="fs-5">Nuestros favoritos y próximamente también los tuyos.</p>
             </div>
-            {{#restaurants}}
-            <div class="row justify-content-center">
-                <div class="col-md-5 col-lg-4">
-                    <div class="clean-pricing-item">
-                        <div class="heading">
-                            <h3>{{name}}</h3>
-                        </div>
-                        <p>{{description}}</p>
-                        <div class="features">
-                            <h4><span class="feature">Tipo de comida:</span><span>Mediterránea</span></h4>
-                        </div>
-                        </div><button class="btn btn-outline-warning d-block w-100" type="button" href="/{id}">LA CARTA</button>
+            <ul>
+                {{#restaurants}}
+                <div class="row justify-content-center">
+                    <div class="col-md-5 col-lg-4">
+                        <div class="clean-pricing-item">
+                            <div class="heading">
+                                <h3>{{name}}</h3>
+                            </div>
+                            <p>{{description}}</p>
+                            <div class="features">
+                                <h4><span class="feature">Tipo de comida:</span><span>Mediterránea</span></h4>
+                            </div>
+                        </div><button class="btn btn-outline-warning d-block w-100" type="button">LA CARTA</button>
                     </div>
                 </div>
-            {{/restaurants}}
-            </div>
-            <div class="ribbon"><span></span></div>
+
+                {{/restaurants}}
+            </ul>
         </div>
+        <div class="ribbon"><span></span></div>
     </section>
 </main>
 <footer class="page-footer dark">

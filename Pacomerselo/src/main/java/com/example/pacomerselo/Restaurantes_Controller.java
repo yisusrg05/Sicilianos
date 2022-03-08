@@ -52,6 +52,18 @@ public class Restaurantes_Controller {
         return "catalog-page";
     }
 
+    @PutMapping("/restaurant/{id}")
+    public String putRestaurant (Model model,Restaurant restaurant, @PathVariable long id){
+        restaurantHolder.updateRestaurant(id,restaurant);
+        model.addAttribute("restaurants",restaurant);
+        return "pricing";
+    }
+
+
+
+
+
+
     @GetMapping("/nosotros")
     public String nosotros(){
 
@@ -88,6 +100,12 @@ public class Restaurantes_Controller {
     @GetMapping ("/registerRestaurant")
     public String registerRestaurant(){
         return "registrationRest";
+    }
+    @GetMapping ("/updateRestaurant/{id}")
+    public String updateRestaurant(Model model, @PathVariable long id){
+        Restaurant restaurant = restaurantHolder.getRestaurant(id);
+        model.addAttribute("id",id);
+        return "updateRest";
     }
     @GetMapping("/faq")
     public String faq(){

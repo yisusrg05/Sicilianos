@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Restaurantes - Paco M&eacute;rselo</title>
+    <title>Registrar Restaurante - Paco M&eacute;rselo</title>
     <link rel="shortcut icon" href="assets/img/scenery/logo.jpg">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
@@ -20,43 +20,27 @@
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="/index">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/restaurant">Los Restaurantes</a></li>
+                <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
                 <li class="nav-item"><a class="nav-link" href="/carrito">El carrito</a></li>
                 <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
             </ul>
         </div>
     </div>
 </nav>
-<main class="page pricing-table-page">
-    <section class="clean-block clean-pricing dark">
+<main class="page registration-page">
+    <section class="clean-block clean-form dark">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-muted">Los Restaurantes</h2>
-                <p class="fs-5">Nuestros favoritos y próximamente también los tuyos.</p>
+                <h2 class="text-muted">Nuevo Restaurante</h2>
+                <p>¿Quieres trabajar con nosotros? Registra tu restaurante aquí</p>
             </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-5 col-lg-3">
-                        {{#restaurants}}
-                        <div class="clean-pricing-item">
-                            <div class="heading">
-                                <h3>{{name}}</h3>
-                            </div>
-                            <p>{{description}}</p>
-                            <div class="features">
-                                <h4><span class="feature">Tipo de comida:</span><span>{{type}}</span></h4>
-                            </div>
-
-
-                            <button class="btn btn-outline-warning d-block w-100 " onclick="location.href='/restaurant/{{id}}'" type="button">LA CARTA</button>
-
-                        </div>  <button class="btn btn-outline-warning d-block w-100 " onclick="location.href='/updateRestaurant/{{id}}'" type="button">ACTUALIZAR</button>
-                        {{/restaurants}}
-                    </div>
-                </div>
-            <button class="btn btn-info d-block w-100 " onclick="location.href='/registerRestaurant'" type="button">Registra un restaurante ahora.</button>
-
+            <form action="/restaurant" method="post">
+                <div class="mb-3"><label class="form-label" >Nombre del restaurante</label><input class="form-control item" type="text" name="name"></div>
+                <div class="mb-3"><label class="form-label" >Descripción</label><input class="form-control item" type="text" name="description"></div>
+                <div class="mb-3"><label class="form-label" >Tipo de comida</label><input class="form-control item" type="text" name="type"></div>
+                <div class="mb-3"></div><input class="btn btn-outline-warning" type="submit">
+            </form>
         </div>
-        <div class="ribbon"><span></span></div>
     </section>
 </main>
 <footer class="page-footer dark">

@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Login - Paco Mérselo</title>
-    <link rel="shortcut icon" href="assets/img/scenery/logo.jpg">
+    <title>FAQ - Brand</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href="assets/css/untitled.css">
     <link rel="stylesheet" href="assets/css/vanilla-zoom.min.css">
 </head>
 
@@ -18,35 +15,42 @@
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
     <div class="container"><a class="navbar-brand logo" href="#">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navcol-1">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/index">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
-                <li class="nav-item"><a class="nav-link" href="/carrito">El carrito</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/login">Login</a></li>
-            </ul>
+            <ul class="navbar-nav ms-auto"></ul>
         </div>
     </div>
 </nav>
-<main class="page login-page">
-    <section class="clean-block clean-form dark">
+<main class="page faq-page">
+    <section class="clean-block clean-faq dark">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-warning">Log In</h2>
-                <p>Inicia sesión para realizar tu pedido.</p>
+                <h2 class="text-muted">FAQ</h2>
+                <p>Aquí encontrarás preguntas frecuentes de nuestros clientes.</p>
             </div>
-            <form method="post" action="/profile">
-                <div class="mb-3"><label class="form-label" for="email">Email</label><input class="form-control item" type="email" id="email"></div>
-                <div class="mb-3"><label class="form-label" for="password">Password</label><input class="form-control" type="password" id="password"></div>
-                <div class="mb-3">
-                    <div class="form-check"><input class="form-check-input" type="checkbox" id="checkbox"><label class="form-check-label" for="checkbox">Remember me</label></div>
-                </div><button class="btn btn-warning" type="submit">Log In</button>
-                <a class="nav-link" href="/register">¿A&uacute;n no tienes cuenta? Reg&iacute;strate ahora.</a>
-            </form>
+            <div class="block-content">
+                <div class="faq-item">
+                    <h4 class="question">¿Cuánto cuesta el envío?</h4>
+                    <div class="answer">
+                        <p>El envío cuesta 5€ de manera estándar. Da igual el pedido y la cantidad.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <h4 class="question">¿Quiénes son los repartidores?</h4>
+                    <div class="answer">
+                        <p>Los repartidores son mensajeros independientes de 'Paco Mérselo' conectados a nuestra plataforma. Son personas que disponen de tiempo libre, vehículo y smartphone propio, y buscan sacarle el máximo rendimiento ayudándote a resolver tus gestiones del modo más rápido y eficaz.<br></p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <h4 class="question">¿Tengo que dar una propina a los repartidores?<br></h4>
+                    <div class="answer">
+                        <p>¡Como quieras! Si crees que la merece, ¿por qué no? Los repartidores son libres de aceptar o no propinas.<br></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </main>
-<footer class="page-footer dark">
-    <div class="container">
+<footer class="flex-shrink-0 page-footer dark">
+    <div class="container d-lg-flex justify-content-lg-center">
         <div class="row">
             <div class="col-sm-3">
                 <h5>Get started</h5>
@@ -67,13 +71,12 @@
                 <h5>Support</h5>
                 <ul>
                     <li><a href="/faq">FAQ</a></li>
-
                 </ul>
             </div>
         </div>
     </div>
     <div class="footer-copyright">
-        <p>© 2022 Copyright Text</p>
+        <p>© 2022 Paco Mérselo.</p>
     </div>
 </footer>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>

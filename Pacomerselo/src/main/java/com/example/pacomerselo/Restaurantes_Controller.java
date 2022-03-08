@@ -89,11 +89,10 @@ public class Restaurantes_Controller {
     public String registerRestaurant(){
         return "registrationRest";
     }
-
-
-
-
-
+    @GetMapping("/faq")
+    public String faq(){
+        return "faq";
+    }
     @GetMapping("/index")
     public String index(){
         return "index";

@@ -13,8 +13,9 @@ public class UserHolder {
     private AtomicLong lastIDOrder= new AtomicLong();
 
     public UserHolder(){
-        //addUser(new Restaurant("Sicilia","no sabe comer","Japonés"));
-        //addUser(new Restaurant("Yisus","es un crack","Hawaiana"));
+        addUser(new User("Por defecto","Sicilia","Crack","sici@urjc.es","oleole"));
+        addDishToCart(1,new Dishes("Kevin","Bacon",14));
+        addDishToCart(1,new Dishes("Pigma","Huevo",11));
     }
 
 

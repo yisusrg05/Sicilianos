@@ -18,6 +18,7 @@ public class User {
     private String username;
     private String name;
     private String surname;
+    private String email;
     private String password;
     private Boolean admin;
     private Map<Long,Order> orders;
@@ -25,19 +26,19 @@ public class User {
     private long id=-1;
 
 
-    public User(String username,String name, String surname, String password){
+    public User(String username,String name, String surname, String email, String password){
         this.username=username;
         this.name=name;
         this.surname=surname;
+        this.email=email;
         this.password=password;
         this.admin=false;
         this.orders=new ConcurrentHashMap<>();
         this.cart=new ArrayList<>();
     }
 
-    public Dishes addDish(Dishes dish){
+    public void addDish(Dishes dish){
         this.cart.add(dish);
-        return dish;
     }
 
     public Collection<Dishes> allCart(){

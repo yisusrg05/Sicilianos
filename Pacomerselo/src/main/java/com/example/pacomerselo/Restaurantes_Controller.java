@@ -69,10 +69,10 @@ public class Restaurantes_Controller {
     @GetMapping("/carrito")
     public String shoppingCart(Model model){
         User user= userHolder.getUser(1);
-        Collection<Dishes> shopping = user.allCart();
-        model.addAttribute("cart",shopping);
+        Collection<Dishes> cart = user.allCart();
+        model.addAttribute("cart",cart);
         int comida=0;
-        for(Dishes dish : shopping){
+        for(Dishes dish : cart){
             comida+=dish.getPrice();
         }
         int total=5+comida;

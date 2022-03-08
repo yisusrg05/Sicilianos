@@ -38,69 +38,36 @@
                 <div class="row g-0">
                     <div class="col-md-12 col-lg-8">
                         <div class="items">
+                            {{#cart}}
                             <div class="product">
                                 <div class="row justify-content-center align-items-center">
                                     <div class="col-md-3">
                                         <div class="product-image"><img class="img-fluid d-block mx-auto image" src="assets/img/tech/image2.jpg"></div>
                                     </div>
-                                    <div class="col-md-5 product-info"><a class="product-name" href="#">Lorem Ipsum dolor</a>
-                                        <div class="product-specs">
-                                            <div><span>Display:&nbsp;</span><span class="value">5 inch</span></div>
-                                            <div><span>RAM:&nbsp;</span><span class="value">4GB</span></div>
-                                            <div><span>Memory:&nbsp;</span><span class="value">32GB</span></div>
-                                        </div>
+                                    <div class="col-md-5 product-info"><h1 class="product-name" >{{name}}</h1>
+                                            <div class="product-specs">
+                                                <div><span>Descripcion:&nbsp;</span><span class="value">{{description}}</span></div>
+                                            </div>
                                     </div>
-                                    <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block" for="quantity">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
-                                    <div class="col-6 col-md-2 price"><span>$120</span></div>
+                                        <div class="col-6 col-md-2 price"><span>{{price}}€</span></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="product">
-                                <div class="row justify-content-center align-items-center">
-                                    <div class="col-md-3">
-                                        <div class="product-image"><img class="img-fluid d-block mx-auto image" src="assets/img/tech/image2.jpg"></div>
-                                    </div>
-                                    <div class="col-md-5 product-info"><a class="product-name" href="#">Lorem Ipsum dolor</a>
-                                        <div class="product-specs">
-                                            <div><span>Display:&nbsp;</span><span class="value">5 inch</span></div>
-                                            <div><span>RAM:&nbsp;</span><span class="value">4GB</span></div>
-                                            <div><span>Memory:&nbsp;</span><span class="value">32GB</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block" for="quantity">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
-                                    <div class="col-6 col-md-2 price"><span>$120</span></div>
-                                </div>
-                            </div>
-                            <div class="product">
-                                <div class="row justify-content-center align-items-center">
-                                    <div class="col-md-3">
-                                        <div class="product-image"><img class="img-fluid d-block mx-auto image" src="assets/img/tech/image2.jpg"></div>
-                                    </div>
-                                    <div class="col-md-5 product-info"><a class="product-name" href="#">Lorem Ipsum dolor</a>
-                                        <div class="product-specs">
-                                            <div><span>Display:&nbsp;</span><span class="value">5 inch</span></div>
-                                            <div><span>RAM:&nbsp;</span><span class="value">4GB</span></div>
-                                            <div><span>Memory:&nbsp;</span><span class="value">32GB</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block" for="quantity">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
-                                    <div class="col-6 col-md-2 price"><span>$120</span></div>
-                                </div>
-                            </div>
+                            {{/cart}}
                         </div>
-                    </div>
-                    <div class="col-md-12 col-lg-4">
-                        <div class="summary">
-                            <h3>Resumen</h3>
-                            <h4><span class="text">Comida</span><span class="price">360€</span></h4>
-                            <h4><span class="text">Descuento</span><span class="price">6€</span></h4>
-                            <h4><span class="text">Código: Nico eres un crack</span><span class="price">10%</span></h4>
-                            <h4><span class="text">Envío</span><span class="price">5€</span></h4>
-                            <h4><span class="text">Total</span><span class="price">359€</span></h4><button class="btn btn-primary btn-lg d-block w-100" type="button">Pagar</button>
+                        <div class="col-md-12 col-lg-4">
+                            <div class="summary">
+                                <h3>Resumen</h3>
+                                <h4><span class="text">Comida</span><span class="price">{comida}€</span></h4>
+                                <h4><span class="text">Descuento</span><span class="price">6€</span></h4>
+                                <h4><span class="text">Código: Nico eres un crack</span><span class="price">10%</span></h4>
+                                <h4><span class="text">Envío</span><span class="price">5€</span></h4>
+                                <h4><span class="text">Total</span><span class="price">{total}€</span></h4><button class="btn btn-primary btn-lg d-block w-100" type="button">Pagar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 </main>
 <footer class="page-footer dark">

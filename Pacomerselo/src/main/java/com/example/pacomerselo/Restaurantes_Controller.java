@@ -93,6 +93,10 @@ public class Restaurantes_Controller {
     public String faq(){
         return "faq";
     }
+    @GetMapping("/profile")
+    public String profile(){
+        return "profile";
+    }
     @GetMapping("/index")
     public String index(){
         return "index";

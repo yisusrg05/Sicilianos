@@ -34,10 +34,9 @@
                 <h2 class="text-muted">Los Restaurantes</h2>
                 <p class="fs-5">Nuestros favoritos y próximamente también los tuyos.</p>
             </div>
-            <ul>
-                {{#restaurants}}
                 <div class="row justify-content-center">
-                    <div class="col-md-5 col-lg-4">
+                    <div class="col-md-5 col-lg-3">
+                        {{#restaurants}}
                         <div class="clean-pricing-item">
                             <div class="heading">
                                 <h3>{{name}}</h3>
@@ -47,10 +46,9 @@
                                 <h4><span class="feature">Tipo de comida:</span><span>{{type}}</span></h4>
                             </div>
                         </div><button class="btn btn-outline-warning d-block w-100 " onclick="location.href='/restaurant/{{id}}'" type="button">LA CARTA</button>
+                        {{/restaurants}}
                     </div>
                 </div>
-                {{/restaurants}}
-            </ul>
             <button class="btn btn-info d-block w-100 " onclick="location.href='/registerRestaurant'" type="button">Registra un restaurante ahora.</button>
         </div>
         <div class="ribbon"><span></span></div>

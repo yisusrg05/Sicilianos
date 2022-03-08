@@ -13,8 +13,6 @@ public class Restaurantes_Controller {
 
     @Autowired
     RestaurantHolder restaurantHolder;
-    UserHolder userHolder;
-
     /*public Restaurantes_Controller(){
         restaurantHolder.addRestaurant(new Restaurant("Sicilia","come mucho"));
         restaurantHolder.addRestaurant(new Restaurant("Jorge","ahora es vegano"));
@@ -64,20 +62,7 @@ public class Restaurantes_Controller {
     public String login(){
         return "login";
     }
-    @GetMapping("/carrito")
-    public String shoppingCart(Model model){
-        User user= userHolder.getUser(1);
-        Collection<Dishes> cart = user.allCart();
-        model.addAttribute("cart",cart);
-        int comida=0;
-        for(Dishes dish : cart){
-            comida+=dish.getPrice();
-        }
-        int total=5+comida;
-        model.addAttribute("comida",comida);
-        model.addAttribute("total",total);
-        return "shopping-cart";
-    }
+
     @GetMapping("/catalogo")
     public String catalog(){
         return "catalog-page";

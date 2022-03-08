@@ -53,9 +53,21 @@ public class Restaurantes_Controller {
     }
 
     @PutMapping("/restaurant/{id}")
-    public String putRestaurant (Model model,Restaurant restaurant, @PathVariable long id){
-        restaurantHolder.updateRestaurant(id,restaurant);
-        model.addAttribute("restaurants",restaurant);
+    public String putRestaurant (Model model,@RequestBody Restaurant newRestaurant, @PathVariable long id){
+        Restaurant oldRestaurant = restaurantHolder.getRestaurant(id);
+
+        restaurantHolder.updateRestaurant(oldRestaurant.getId(), newRestaurant);
+        model.addAttribute("restaurants",newRestaurant);
+
+        return "pricing";
+    }
+
+    @DeleteMapping("/deleteRestaurant/{id}")
+    public String deleteRestaurant (Model model,Restaurant restaurant, @PathVariable long id){
+        restaurantHolder.getRestaurant(id);
+        restaurantHolder.removeRestaurant(id);
+        Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
+        model.addAttribute("restaurants",restaurants);
         return "pricing";
     }
 

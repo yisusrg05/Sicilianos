@@ -52,28 +52,25 @@ public class Restaurantes_Controller {
         return "catalog-page";
     }
 
-    @PutMapping("/restaurant/{id}")
-    public String putRestaurant (Model model,@RequestBody Restaurant newRestaurant, @PathVariable long id){
-        Restaurant oldRestaurant = restaurantHolder.getRestaurant(id);
-
-        restaurantHolder.updateRestaurant(oldRestaurant.getId(), newRestaurant);
-        model.addAttribute("restaurants",newRestaurant);
-
-        return "pricing";
+    @PostMapping("/updateRestaurant/{id}")
+    public String putRestaurant (Model model,@PathVariable long id,Restaurant newRestaurant){
+        Restaurant oldRestaurant=restaurantHolder.getRestaurant(id);
+        newRestaurant.setId(oldRestaurant.getId());
+        newRestaurant.setDishes(oldRestaurant.getDishes());
+        restaurantHolder.removeRestaurant(id);
+        restaurantHolder.updateRestaurant(id, newRestaurant);
+        Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
+        model.addAttribute("restaurants",restaurants);
+        return "updateSuccesful";
     }
 
-    @DeleteMapping("/deleteRestaurant/{id}")
-    public String deleteRestaurant (Model model,Restaurant restaurant, @PathVariable long id){
-        restaurantHolder.getRestaurant(id);
+    @GetMapping("/deleteRestaurant/{id}")
+    public String deleteRestaurant (Model model, @PathVariable long id){
         restaurantHolder.removeRestaurant(id);
         Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
         model.addAttribute("restaurants",restaurants);
-        return "pricing";
+        return "list";
     }
-
-
-
-
 
 
     @GetMapping("/nosotros")
@@ -94,6 +91,10 @@ public class Restaurantes_Controller {
     @GetMapping("/reviews")
     public String reviews(){
         return "reviews";
+    }
+    @GetMapping("/updateSuccesful")
+    public String okkkkkkkk(){
+        return "updateSuccesful";
     }
     @GetMapping("/payment")
     public String payment(){

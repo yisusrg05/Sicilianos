@@ -14,7 +14,6 @@ public class RESTController {
 
     @Autowired
     RestaurantHolder restaurantHolder;
-    //DishesHolder dishesHolder;
 
     //////////////////////RESTAURANTS REST CONTROLLER//////////////////////
     @PostMapping("/restaurant")
@@ -109,11 +108,4 @@ public class RESTController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-    //////////////////////USERS REST CONTROLLER//////////////////////
-
-    //PREGUNTAR SI DEBEMOS TENER UN GET DE TODOS LOS USUARIOS
-
-
-
 }

@@ -9,15 +9,27 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
 </head>
-
-<body id="page-top">
-<div id="wrapper">
-    <div class="d-flex flex-column" id="content-wrapper">
-        <div id="content">
-            <div class="container-fluid">
-                <h3 class="text-dark mb-4">Mi Perfil</h3>
-                <div class="row mb-3">
-                    <div class="col-lg-4">
+<body>
+<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+    <div class="container"><a class="navbar-brand logo" href="#">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="/index">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
+                <li class="nav-item"><a class="nav-link" href="/carrito">El carrito</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<main class="page landing-page">
+    <div id="wrapper">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <main id="content">
+                <div class="container-fluid">
+                    <h3 class="text-dark mb-4">Mi Perfil</h3>
+                    <div class="row mb-3">
+                    <div class="col-lg-5">
                         <div class="card mb-3">
                             <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/avatars/logo.jpg" width="160" height="160">
                             </div>
@@ -99,9 +111,7 @@
                                     <div class="mb-3"><label class="form-label" for="signature"><strong>Pedido #1</strong><br></label></div>
                                     <div class="mb-3"></div>
                                     <div class="mb-3"></div>
-
                                 </form>
-
                             </div>
                             <div class="content">
                                 <div class="row g-0">
@@ -117,22 +127,7 @@
                                                             <div><span>Descripci&oacute;n: &nbsp;</span><span class="value">5 inch</span></div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block" for="quantity">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
-                                                    <div class="col-6 col-md-2 price"><span>$120</span></div>
-                                                </div>
-                                            </div>
-                                            <div class="product">
-                                                <div class="row justify-content-center align-items-center">
-                                                    <div class="col-md-3">
-                                                        <div class="product-image"><img class="img-fluid d-block mx-auto image" src="assets/img/tech/image2.jpg"></div>
-                                                    </div>
-                                                    <div class="col-md-5 product-info"><a class="product-name" href="#">Lorem Ipsum dolor</a>
-                                                        <div class="product-specs">
-                                                            <div><span>Descripci&oacute;n: &nbsp;</span><span class="value">5 inch</span></div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block" for="quantity">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
+                                                    <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
                                                     <div class="col-6 col-md-2 price"><span>$120</span></div>
                                                 </div>
                                             </div>
@@ -146,14 +141,27 @@
                                                             <div><span>Descripci&oacute;n: &nbsp;</span><span class="value">5 inch</span></div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block" for="quantity">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
+                                                    <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
+                                                    <div class="col-6 col-md-2 price"><span>$120</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="product">
+                                                <div class="row justify-content-center align-items-center">
+                                                    <div class="col-md-3">
+                                                        <div class="product-image"><img class="img-fluid d-block mx-auto image" src="assets/img/tech/image2.jpg"></div>
+                                                    </div>
+                                                    <div class="col-md-5 product-info"><a class="product-name" href="#">Lorem Ipsum dolor</a>
+                                                        <div class="product-specs">
+                                                            <div><span>Descripci&oacute;n: &nbsp;</span><span class="value">5 inch</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
                                                     <div class="col-6 col-md-2 price"><span>$120</span></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="summary">
                                             <h3>Summary</h3>
-
                                             <h4><span class="text">Total</span><span class="price">$360</span></h4>
                                         </div>
                                     </div>
@@ -163,14 +171,54 @@
                             </div>
                         </div>
                     </div>
-                    <footer class="bg-white sticky-footer">
-                        <div class="container my-auto">
-                            <div class="text-center my-auto copyright"><span>Copyright © Paco Mérselo 2022</span></div>
-                        </div>
-                    </footer>
-                </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+                </div>
             </div>
+            </main>
             <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+            <script src="assets/js/theme.js"></script>
+            <footer class="page-footer dark">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5>Get started</h5>
+                            <ul>
+                                <li><a href="/index">Home</a></li>
+                                <li><a href="/login">Sign up</a></li>
+                                <li><a href="/restaurant">Los Restaurantes</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-3">
+                            <h5>About us</h5>
+                            <ul>
+                                <li><a href="/nosotros">Sobre nosotros</a></li>
+                                <li><a href="/reviews">Reviews</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-3">
+                            <h5>Support</h5>
+                            <ul>
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="#">Help desk</a></li>
+                                <li><a href="#">Forums</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-3">
+                            <h5>Legal</h5>
+                            <ul>
+                                <li><a href="#">Terms of Service</a></li>
+                                <li><a href="#">Terms of Use</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-copyright">
+                    <p>© 2022 Copyright Text</p>
+                </div>
+            </footer>
+            <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+            <script src="assets/js/vanilla-zoom.js"></script>
             <script src="assets/js/theme.js"></script>
 </body>
 

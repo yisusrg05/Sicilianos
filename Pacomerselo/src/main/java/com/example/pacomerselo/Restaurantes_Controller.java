@@ -87,7 +87,7 @@ public class Restaurantes_Controller {
     public String register(){
         return "registration";
     }
-    @GetMapping("/{id}/registerDish")
+    @GetMapping("restaurant/{id}/registerDish")
     public String registerDish(Model model, long id){
         model.addAttribute("id",id);
         return "registrationDish";

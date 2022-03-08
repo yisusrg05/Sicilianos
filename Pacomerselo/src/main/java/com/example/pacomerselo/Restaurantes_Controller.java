@@ -26,23 +26,36 @@ public class Restaurantes_Controller {
         return "pricing";
     }
     @GetMapping("/restaurant/{id}")
-    public String restaurantId(Model model, @PathVariable int id){
+    public String restaurantId(Model model, @PathVariable long id){
         Restaurant restaurant = restaurantHolder.getRestaurant(id);
-        Collection<Dishes> list = restaurant.allDishes();
+        Collection<Dishes> dishes = restaurant.allDishes();
 
-        model.addAttribute("list",list);
+        model.addAttribute("dishes",dishes);
+        model.addAttribute("id",id);
 
         return "catalog-page";
     }
     @PostMapping("/restaurant")
     public String addRestaurant (Model model, Restaurant restaurant){
-
         restaurantHolder.addRestaurant(restaurant);
         Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
         model.addAttribute("restaurants",restaurants);
 
         return "pricing";
     }
+
+    @PostMapping("/restaurant/{id}")
+    public String addDish (Model model, @PathVariable long id, Dishes dish){
+        Restaurant restaurant= restaurantHolder.getRestaurant(id);
+        long idDish= dish.getId();
+        restaurant.add(idDish,dish);
+        Collection<Dishes> dishes = restaurant.allDishes();
+        model.addAttribute("dishes",dishes);
+
+        return "catalog-page";
+    }
+
+
 
     @GetMapping("/nosotros")
     public String nosotros(){
@@ -74,9 +87,11 @@ public class Restaurantes_Controller {
     public String register(){
         return "registration";
     }
-    @GetMapping("/registerDish")
-    public String registerDish(){return "registrationDish";}
-
+    @GetMapping("/{id}/registerDish")
+    public String registerDish(Model model, long id){
+        model.addAttribute("id",id);
+        return "registrationDish";
+    }
     @GetMapping ("/registerRestaurant")
     public String registerRestaurant(){
         return "registrationRest";

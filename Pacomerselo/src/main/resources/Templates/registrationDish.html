@@ -22,7 +22,7 @@
                 <li class="nav-item"><a class="nav-link" href="/index">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
                 <li class="nav-item"><a class="nav-link" href="/carrito">El carrito</a></li>
-                <li class="nav-item"><a class="nav-link" href="/login>Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
             </ul>
         </div>
     </div>
@@ -34,10 +34,10 @@
                 <h2 class="text-muted">Añade un nuevo plato</h2>
                 <p>Añade un nuevo plato a tu restaurante</p>
             </div>
-            <form method="post">
+            <form action="/restaurant/{id}" method="post">
                 <div class="mb-3"><label class="form-label" for="name">Nombre</label><input class="form-control item" type="text" id="name"></div>
-                <div class="mb-3"><label class="form-label" for="name">Descripción</label><input class="form-control item" type="text" id="name2"></div>
-                <div class="mb-3"><label class="form-label" for="text">Precio</label><input class="form-control item" type="text" id="text"></div><button class="btn btn-outline-warning" type="submit">Sign Up</button>
+                <div class="mb-3"><label class="form-label" for="name">Descripción</label><input class="form-control item" type="text" id="description"></div>
+                <div class="mb-3"><label class="form-label" for="name">Precio</label><input class="form-control item" type="text" id="price"></div><button class="btn btn-outline-warning" type="submit">Registrar</button>
             </form>
         </div>
     </section>

@@ -41,7 +41,7 @@ public class UserHolder {
         users.get(id).addDish(dish);
     }
 
-    public Collection<Dishes> getDishes(long id){
+    public List<Dishes> getDishes(long id){
         return users.get(id).allCart();
     }
 

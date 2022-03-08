@@ -41,7 +41,7 @@ public class User {
         this.cart.add(dish);
     }
 
-    public Collection<Dishes> allCart(){
+    public List<Dishes> allCart(){
         return this.cart;
     }
 

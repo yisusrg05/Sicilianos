@@ -47,12 +47,10 @@ public class Restaurantes_Controller {
 
     @PostMapping("/restaurant/{id}")
     public String addDish (Model model, @PathVariable long id, Dishes dish){
-        Restaurant restaurant= restaurantHolder.getRestaurant(id);
-        long idDish= dish.getId();
-        restaurant.add(idDish,dish);
+        restaurantHolder.addDish(id,dish);
+        Restaurant restaurant = restaurantHolder.getRestaurant(id);
         Collection<Dishes> dishes = restaurant.allDishes();
         model.addAttribute("dishes",dishes);
-
         return "catalog-page";
     }
 

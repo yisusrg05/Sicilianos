@@ -34,7 +34,7 @@
                 <h2 class="text-muted">Añade un nuevo plato</h2>
                 <p>Añade un nuevo plato a tu restaurante</p>
             </div>
-            <form action="/restaurant/{id}" method="post">
+            <form action="/restaurant/{{id}}" method="post">
                 <div class="mb-3"><label class="form-label" for="name">Nombre</label><input class="form-control item" type="text" id="name"></div>
                 <div class="mb-3"><label class="form-label" for="name">Descripción</label><input class="form-control item" type="text" id="description"></div>
                 <div class="mb-3"><label class="form-label" for="name">Precio</label><input class="form-control item" type="text" id="price"></div><button class="btn btn-outline-warning" type="submit">Registrar</button>

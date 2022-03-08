@@ -88,7 +88,8 @@ public class Restaurantes_Controller {
         return "registration";
     }
     @GetMapping("restaurant/{id}/registerDish")
-    public String registerDish(Model model, long id){
+    public String registerDish(Model model,@PathVariable long id){
+        Restaurant restaurant = restaurantHolder.getRestaurant(id);
         model.addAttribute("id",id);
         return "registrationDish";
     }

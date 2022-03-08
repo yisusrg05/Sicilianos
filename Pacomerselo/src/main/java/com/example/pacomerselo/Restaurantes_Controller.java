@@ -101,6 +101,10 @@ public class Restaurantes_Controller {
     public String index(){
         return "index";
     }
+    @GetMapping("/forgottenPassword")
+    public String forgottenPassword(){
+        return "forgottenPassword";
+    }
 
 
 

@@ -41,6 +41,10 @@ public class User {
         this.cart.add(dish);
     }
 
+    public void deleteDish(Dishes dish){
+        this.cart.remove(dish);
+    }
+
     public List<Dishes> allCart(){
         return this.cart;
     }

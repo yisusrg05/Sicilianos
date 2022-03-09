@@ -94,10 +94,7 @@ public class Restaurantes_Controller {
     public String okkkkkkkk(){
         return "updateSuccesful";
     }
-    @GetMapping("/payment")
-    public String payment(){
-        return "payment-page";
-    }
+
     @GetMapping("/register")
     public String register(){
         return "registration";
@@ -122,10 +119,7 @@ public class Restaurantes_Controller {
     public String faq(){
         return "faq";
     }
-    @GetMapping("/profile")
-    public String profile(){
-        return "profile";
-    }
+
     @GetMapping("/index")
     public String index(){
         return "index";

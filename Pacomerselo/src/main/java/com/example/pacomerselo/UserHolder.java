@@ -14,10 +14,12 @@ public class UserHolder {
     private Map<Long,User> users= new ConcurrentHashMap<>();
     private AtomicLong lastIDUser= new AtomicLong();
     private AtomicLong lastIDOrder= new AtomicLong();
+    private Map<String,Long> userIDs= new ConcurrentHashMap<>();
 
     public UserHolder(){
-        addUser(new User("Por defecto","Sicilia","Crack","sici@urjc.es","oleole"));
+        addUser(new User("Anonimo","Sicilia","Crack","sici@urjc.es","oleole"));
         addDishToCart(1,new Dishes("Kevin","Bacon",14));
+        addDishToCart(1,new Dishes("Pigma","Huevo",11));
         addDishToCart(1,new Dishes("Pigma","Huevo",11));
     }
 
@@ -25,6 +27,7 @@ public class UserHolder {
         long id = lastIDUser.incrementAndGet();
         user.setId(id);
         users.put(id,user);
+        userIDs.put(user.getUsername(),id);
     }
 
     public User getUser(long id){
@@ -37,10 +40,29 @@ public class UserHolder {
 
     public void updateUser(long id,User user){
         users.put(id,user);
+        userIDs.put(user.getUsername(),id);
+    }
+
+    public boolean validUser(String username,String password){
+        long id;
+        if(userIDs.containsKey(username)){
+            id = userIDs.get(username);
+        }else{
+            id=0;
+        }
+        if(id==0){
+            return false;
+        }else{
+            return users.get(id).getUsername().equals(username)&&users.get(id).getPassword().equals(password);
+        }
     }
 
     public void addDishToCart(long id,Dishes dish){
         users.get(id).addDish(dish);
+    }
+
+    public void deleteDishFromCart(long id, Dishes dish){
+        users.get(id).deleteDish(dish);
     }
 
     public List<Dishes> getDishes(long id){

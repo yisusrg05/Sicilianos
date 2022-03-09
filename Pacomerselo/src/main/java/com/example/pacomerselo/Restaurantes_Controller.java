@@ -26,13 +26,13 @@ public class Restaurantes_Controller {
 
         return "pricing";
     }
-    @GetMapping("/restaurant/{id}")
-    public String restaurantId(Model model, @PathVariable long id){
-        Restaurant restaurant = restaurantHolder.getRestaurant(id);
+    @GetMapping("/restaurant/{id1}")
+    public String restaurantId(Model model, @PathVariable long id1){
+        Restaurant restaurant = restaurantHolder.getRestaurant(id1);
         Collection<Dishes> dishes = restaurant.allDishes();
 
         model.addAttribute("dishes",dishes);
-        model.addAttribute("id",id);
+        model.addAttribute("id1",id1);
 
         return "catalog-page";
     }
@@ -60,6 +60,8 @@ public class Restaurantes_Controller {
         restaurantHolder.updateDish(id1,id2,newDish);
         Collection<Dishes> dishes = restaurantHolder.getDishes(id1);
         model.addAttribute("dishes",dishes);
+        model.addAttribute("id1",id1);
+        model.addAttribute("id2",id2);
         return "updateSuccesful";
     }
 

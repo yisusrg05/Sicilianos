@@ -65,6 +65,17 @@ public class Restaurantes_Controller {
         return "updateSuccesful";
     }
 
+    @GetMapping("/restaurant/{id1}/deleteDish/{id2}")
+    public String deleteDish (Model model, @PathVariable long id1, @PathVariable long id2){
+        restaurantHolder.removeDish(id1,id2);
+        Collection<Dishes> dishes = restaurantHolder.getDishes(id1);
+        model.addAttribute("dishes",dishes);
+        model.addAttribute("id1",id1);
+        model.addAttribute("id2",id2);
+
+        return "deleteSuccesful";
+    }
+
     @PostMapping("/updateRestaurant/{id}")
     public String putRestaurant (Model model,@PathVariable long id,Restaurant newRestaurant){
         newRestaurant.setId(id);
@@ -84,6 +95,7 @@ public class Restaurantes_Controller {
         model.addAttribute("restaurants",restaurants);
         return "deleteSuccesful";
     }
+
 
 
     @GetMapping("/nosotros")

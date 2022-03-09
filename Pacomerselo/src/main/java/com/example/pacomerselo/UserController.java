@@ -52,6 +52,7 @@ public class UserController {
     public String profile(Model model){
         User user= userHolder.getUser(1);
         model.addAttribute("user",user);
+        model.addAttribute("order",user.getOrders().values());
         return "profile";
     }
 
@@ -59,9 +60,23 @@ public class UserController {
     public String updateProfile(Model model, User newUser){
         newUser.setId(1);
         newUser.setCart(userHolder.getDishes(1));
+        newUser.setOrders(userHolder.getOrders(1));
         userHolder.updateUser(1,newUser);
+        model.addAttribute("order",newUser.getOrders().values());
         model.addAttribute("user",newUser);
         return "profile";
+    }
+
+    @GetMapping("/orderPlaced")
+    public String placeOrder(){
+        userHolder.proccessOrder(1);
+        return "orderPlaced";
+    }
+
+    @PostMapping("/register")
+    public String addUser(User newUser){
+        userHolder.addUser(newUser);
+        return "updateSuccesful";
     }
 
     private int foodCart(){

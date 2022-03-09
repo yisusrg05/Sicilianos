@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Carta - Paco M&eacute;rselo</title>
+    <title>Registrar Plato - Paco M&eacute;rselo</title>
+    <link rel="shortcut icon" href="assets/img/scenery/logo.jpg">
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="../assets/fonts/simple-line-icons.min.css">
@@ -26,49 +27,24 @@
         </div>
     </div>
 </nav>
-<main class="page catalog-page">
-    <section class="clean-block clean-catalog dark">
+<main class="page registration-page">
+    <section class="clean-block clean-form dark">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-muted">La Carta</h2>
-                <p>Mira aquí la carta de tu nuevo restaurante favorito.</p>
+                <h2 class="text-muted">Añade un nuevo plato</h2>
+                <p>Añade un nuevo plato a tu restaurante</p>
             </div>
-            <div class="content">
-                <div class="row justify-content-evenly">
-                    <div class="col-md-9">
-                        <div class="products">
-                            <ul>
-                            <div class="row g-0">
-                                {{#dishes}}
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="clean-product-item">
-                                        <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image2.jpg"></a></div>
-                                        <div class="product-name"><h3>{{name}}</h3></div>
-                                        <div class="about">
-                                            <div class="description"><a>{{description}}</a></div>
-                                            <div class="price">
-                                                <h3>{{price}}</h3>
-                                            </div>
-
-                                            <br><button class="btn btn-outline-warning d-block w-100 " onclick="location.href='/carrito'" type="button">añadir al carrito</button>
-                                            <button class="btn btn-outline-warning d-block w-100 " onclick="location.href='restaurant/{{id1}}/updateDish/{{id2}}'" type="button">ACTUALIZAR</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{/dishes}}
-                            </div>
-                            </ul>
-                            <button class="btn btn-info d-block w-100 " onclick="location.href='/{{id}}/registerDish'" type="button">Registra un plato ahora.</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <form action="restaurant/{{id1}}/updateDish/{{id2}}" method="post">
+                <div class="mb-3"><label class="form-label" >Nombre</label><input class="form-control item" type="text" name="name"></div>
+                <div class="mb-3"><label class="form-label" >Descripción</label><input class="form-control item" type="text" name="description"></div>
+                <div class="mb-3"><label class="form-label" >Precio</label><input class="form-control item" type="number" name="price"></div><button class="btn btn-outline-warning" type="submit">Registrar</button>
+            </form>
         </div>
     </section>
 </main>
 <footer class="page-footer dark">
     <div class="container">
-        <div class="row justify-content-lg-evenly">
+        <div class="row">
             <div class="col-sm-3">
                 <h5>Get started</h5>
                 <ul>

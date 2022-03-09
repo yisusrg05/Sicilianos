@@ -2,11 +2,14 @@ package com.example.pacomerselo;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+
+
 
 @Service
 public class UserHolder {
@@ -15,6 +18,7 @@ public class UserHolder {
     private AtomicLong lastIDUser= new AtomicLong();
     private AtomicLong lastIDOrder= new AtomicLong();
     private Map<String,Long> userIDs= new ConcurrentHashMap<>();
+    static final int SHIPPING_COSTS = 5;
 
     public UserHolder(){
         addUser(new User("Anonimo","Sicilia","Crack","sici@urjc.es","oleole"));
@@ -65,20 +69,30 @@ public class UserHolder {
         users.get(id).deleteDish(dish);
     }
 
+    public void deleteCart(long id){
+        users.get(id).setCart(new ArrayList<Dishes>());
+    }
+
     public List<Dishes> getDishes(long id){
         return users.get(id).allCart();
     }
 
     public void proccessOrder (long id){
         Order order = new Order((List<Dishes>) getDishes(id));
-        int price=0;
+        int price=SHIPPING_COSTS;
         List<Dishes> list =(List<Dishes>) getDishes(id);
         for(Dishes dish : list){
             price+=dish.getPrice();
         }
         long idOrder = lastIDOrder.incrementAndGet();
         order.setId(idOrder);
+        order.setPrice(price);
+        deleteCart(id);
         users.get(id).addOrder(idOrder,order);
+    }
+
+    public Map<Long,Order> getOrders (long id){
+        return users.get(id).getOrders();
     }
 
     // YA SE VERÁ MÁS ADELANTE QUE COJONES HACEMOS CON ESTO

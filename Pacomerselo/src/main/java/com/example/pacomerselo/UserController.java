@@ -73,6 +73,12 @@ public class UserController {
         return "orderPlaced";
     }
 
+    @PostMapping("/register")
+    public String addUser(User newUser){
+        userHolder.addUser(newUser);
+        return "updateSuccesful";
+    }
+
     private int foodCart(){
         User user= userHolder.getUser(1);
         Collection<Dishes> cart = user.allCart();

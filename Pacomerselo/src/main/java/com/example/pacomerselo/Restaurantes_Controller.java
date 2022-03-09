@@ -54,7 +54,7 @@ public class Restaurantes_Controller {
         return "catalog-page";
     }
 
-    @PostMapping("restuarant/{id1}/updateDish/{id2}")
+    @PostMapping("/restaurant/{id1}/updateDish/{id2}")
     public String updateDish(Model model, @PathVariable long id1, @PathVariable long id2, Dishes newDish) {
         newDish.setId(id2);
         restaurantHolder.updateDish(id1,id2,newDish);
@@ -128,12 +128,12 @@ public class Restaurantes_Controller {
         model.addAttribute("id",id);
         return "updateRest";
     }
-    @GetMapping ("restaurant/{id1}/updateDish/{id2}")
+    @GetMapping ("/restaurant/{id1}/updateDish/{id2}")
     public String updateDishes(Model model, @PathVariable long id1, @PathVariable long id2){
         Dishes dishes = restaurantHolder.getDish(id1, id2);
         model.addAttribute("id1",id1);
         model.addAttribute("id2",id2);
-        return "updatedish";
+        return "updateDish";
     }
 
 

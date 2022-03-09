@@ -1,6 +1,8 @@
 package com.example.pacomerselo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +54,15 @@ public class Restaurantes_Controller {
         return "catalog-page";
     }
 
+    @PostMapping("restuarant/{id1}/updateDish/{id2}")
+    public String updateDish(Model model, @PathVariable long id1, @PathVariable long id2, Dishes newDish) {
+        newDish.setId(id2);
+        restaurantHolder.updateDish(id1,id2,newDish);
+        Collection<Dishes> dishes = restaurantHolder.getDishes(id1);
+        model.addAttribute("dishes",dishes);
+        return "updateSuccesful";
+    }
+
     @PostMapping("/updateRestaurant/{id}")
     public String putRestaurant (Model model,@PathVariable long id,Restaurant newRestaurant){
         newRestaurant.setId(id);
@@ -61,6 +72,8 @@ public class Restaurantes_Controller {
         model.addAttribute("restaurants",restaurants);
         return "updateSuccesful";
     }
+
+
 
     @GetMapping("/deleteRestaurant/{id}")
     public String deleteRestaurant (Model model, @PathVariable long id){
@@ -115,6 +128,15 @@ public class Restaurantes_Controller {
         model.addAttribute("id",id);
         return "updateRest";
     }
+    @GetMapping ("restaurant/{id1}/updateDish/{id2}")
+    public String updateDishes(Model model, @PathVariable long id1, @PathVariable long id2){
+        Dishes dishes = restaurantHolder.getDish(id1, id2);
+        model.addAttribute("id1",id1);
+        model.addAttribute("id2",id2);
+        return "updatedish";
+    }
+
+
     @GetMapping("/faq")
     public String faq(){
         return "faq";

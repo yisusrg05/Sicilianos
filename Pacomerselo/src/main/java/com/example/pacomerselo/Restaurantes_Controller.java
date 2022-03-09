@@ -54,10 +54,8 @@ public class Restaurantes_Controller {
 
     @PostMapping("/updateRestaurant/{id}")
     public String putRestaurant (Model model,@PathVariable long id,Restaurant newRestaurant){
-        Restaurant oldRestaurant=restaurantHolder.getRestaurant(id);
-        newRestaurant.setId(oldRestaurant.getId());
-        newRestaurant.setDishes(oldRestaurant.getDishes());
-        restaurantHolder.removeRestaurant(id);
+        newRestaurant.setId(id);
+        newRestaurant.setDishes(restaurantHolder.getRestaurant(id).getDishes());
         restaurantHolder.updateRestaurant(id, newRestaurant);
         Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
         model.addAttribute("restaurants",restaurants);
@@ -69,7 +67,7 @@ public class Restaurantes_Controller {
         restaurantHolder.removeRestaurant(id);
         Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
         model.addAttribute("restaurants",restaurants);
-        return "list";
+        return "deleteSuccesful";
     }
 
 

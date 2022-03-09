@@ -128,10 +128,6 @@ public class Restaurantes_Controller {
     public String forgottenPassword(){
         return "forgottenPassword";
     }
-    @GetMapping("/orderPlaced")
-    public String orderPlaced(){
-        return "orderPlaced";
-    }
 
 
 

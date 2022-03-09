@@ -110,69 +110,40 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
+                            {{#order}}
                             <div class="col-md-6">
-                                <form>
-                                    <div class="mb-3"><label class="form-label" for="signature"><strong>Pedido #1</strong><br></label></div>
-                                    <div class="mb-3"></div>
-                                    <div class="mb-3"></div>
-                                </form>
+                                    <div class="mb-3"><label class="form-label" ><strong>Pedido #{{number}}</strong><br></label></div>
                             </div>
                             <div class="content">
                                 <div class="row g-0">
                                     <div class="col-md-12 col-lg-8">
                                         <div class="items">
                                             <div class="product">
+                                                {{#order}}
                                                 <div class="row justify-content-center align-items-center">
                                                     <div class="col-md-3">
                                                         <div class="product-image"><img class="img-fluid d-block mx-auto image" src="assets/img/tech/image2.jpg"></div>
                                                     </div>
-                                                    <div class="col-md-5 product-info"><a class="product-name" href="#">Lorem Ipsum dolor</a>
+                                                    <div class="col-md-5 product-info"><a class="product-name" href="#">{{name}}</a>
                                                         <div class="product-specs">
-                                                            <div><span>Descripci&oacute;n: &nbsp;</span><span class="value">5 inch</span></div>
+                                                            <div><span>Descripci&oacute;n: &nbsp;</span><span class="value">{{description}}</span></div>
                                                         </div>
                                                     </div>
                                                     <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
-                                                    <div class="col-6 col-md-2 price"><span>$120</span></div>
-                                                </div>
-                                            </div>
-                                            <div class="product">
-                                                <div class="row justify-content-center align-items-center">
-                                                    <div class="col-md-3">
-                                                        <div class="product-image"><img class="img-fluid d-block mx-auto image" src="assets/img/tech/image2.jpg"></div>
-                                                    </div>
-                                                    <div class="col-md-5 product-info"><a class="product-name" href="#">Lorem Ipsum dolor</a>
-                                                        <div class="product-specs">
-                                                            <div><span>Descripci&oacute;n: &nbsp;</span><span class="value">5 inch</span></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
-                                                    <div class="col-6 col-md-2 price"><span>$120</span></div>
-                                                </div>
-                                            </div>
-                                            <div class="product">
-                                                <div class="row justify-content-center align-items-center">
-                                                    <div class="col-md-3">
-                                                        <div class="product-image"><img class="img-fluid d-block mx-auto image" src="assets/img/tech/image2.jpg"></div>
-                                                    </div>
-                                                    <div class="col-md-5 product-info"><a class="product-name" href="#">Lorem Ipsum dolor</a>
-                                                        <div class="product-specs">
-                                                            <div><span>Descripci&oacute;n: &nbsp;</span><span class="value">5 inch</span></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block">Quantity</label><input type="number" id="number" class="form-control quantity-input" value="1"></div>
-                                                    <div class="col-6 col-md-2 price"><span>$120</span></div>
+                                                    <div class="col-6 col-md-2 price"><span>{{precio}}€</span></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="summary">
-                                            <h3>Summary</h3>
-                                            <h4><span class="text">Total</span><span class="price">$360</span></h4>
+                                            <h3>Total</h3>
+                                            <h4><span class="text">Total</span><span class="price">{{total}}€</span></h4>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-4">
                                     </div>
                                 </div>
                             </div>
+                            {{/order}}
                         </div>
                     </div>
                 </div>

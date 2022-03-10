@@ -40,6 +40,7 @@ public class UserHolder {
     }
 
     public User removeUser(long id){
+        userIDs.remove(users.get(id).getUsername());
         return users.remove(id);
     }
 

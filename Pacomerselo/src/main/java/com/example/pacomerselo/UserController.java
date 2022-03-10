@@ -42,6 +42,13 @@ public class UserController extends RestaurantHolder{
         return getString(model, userHolder.getUser(1));
     }
 
+    @GetMapping("/deleteCart")
+    public String deleteCart(Model model){
+       userHolder.deleteCart(1);
+       return "deleteSuccesful";
+    }
+
+
     @PostMapping("/login")
     public String login(Model model, @RequestParam String username, @RequestParam String password){
         boolean valid= userHolder.validUser(username,password);

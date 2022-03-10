@@ -40,13 +40,13 @@ public class UserController extends RestaurantHolder{
     public String deleteShoppingCart(Model model,@PathVariable long id1, @PathVariable long id2){
         Dishes dish= restaurantHolder.getDish(id1,id2);
         userHolder.deleteDishFromCart(1,dish);
-        return "deleteSuccesful";
+        return "deleteDishSuccessful";
     }
 
     @GetMapping("/deleteCart")
     public String deleteCart(Model model){
        userHolder.deleteCart(1);
-       return "deleteSuccesful";
+       return "deleteCartSuccssesful";
     }
 
 

@@ -92,6 +92,7 @@ public class RESTController {
         Dishes oldDish=restaurantHolder.getDish(id1,id2);
         if (oldDish!= null) {
             newDish.setId(id2);
+            newDish.setIdRestaurant(id1);
             restaurantHolder.updateDish(id1,id2,newDish);
             return new ResponseEntity<>(newDish, HttpStatus.OK);
         } else {

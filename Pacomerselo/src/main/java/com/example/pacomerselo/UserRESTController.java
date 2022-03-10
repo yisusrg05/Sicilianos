@@ -2,6 +2,7 @@ package com.example.pacomerselo;
 
 
 import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ public class UserRESTController{
 
     @Autowired
     UserHolder userHolder;
+    @Autowired
     RestaurantHolder restaurantHolder;
 
     //////////////////////CART REST CONTROLLER//////////////////////
@@ -37,9 +39,9 @@ public class UserRESTController{
 
     @PutMapping("/deletedish/{id}")
     public ResponseEntity<Dishes> deleteDishFromCart(@PathVariable long id){
-        if(userHolder.getDishFromCart(id)!=null){
-            userHolder.deleteDishFromCart(id, userHolder.getDishFromCart(id));
-            return new ResponseEntity<>(userHolder.getDishFromCart(id), HttpStatus.OK);
+        if(userHolder.getDishFromCart(1,id)!=null){
+            userHolder.deleteDishFromCart(1, userHolder.getDishFromCart(1,id));
+            return new ResponseEntity<>(userHolder.getDishFromCart(1,id), HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -63,11 +65,32 @@ public class UserRESTController{
         return userHolder.getUser(1).getOrders().values();
     }
 
+    @PostMapping("/proccessOrder")
+    public ResponseEntity<Order> proccessOrder(){
+        if(userHolder.getUser(1).getCart()!=null){
+            long id=userHolder.proccessOrder(1);
+            return new ResponseEntity<>(userHolder.getOrders(1).get(id),HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     //////////////////////USER REST CONTROLLER//////////////////////
 
     @GetMapping("/user/{id}")
     public User getUser(@PathVariable long id){
         return userHolder.getUser(id);
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password){
+        if(userHolder.validUser(username,password)){
+            return new ResponseEntity<>(userHolder.getUser(username),HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/register")
@@ -76,7 +99,7 @@ public class UserRESTController{
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PutMapping("/changeprofile{id}/")
+    @PutMapping("/changeprofile/{id}/")
     public ResponseEntity<User> updateProfile(@PathVariable long id,@RequestBody User newUser){
         User oldUser= userHolder.getUser(id);
         if (oldUser!= null) {

@@ -33,14 +33,14 @@ public class UserController extends RestaurantHolder{
     public String addShoppingCart(@PathVariable long id1, @PathVariable long id2){
         Dishes dish= restaurantHolder.getDish(id1,id2);
         userHolder.addDishToCart(1,dish);
-        return "updateSuccesful";
+        return "addToCartSuccessful";
     }
 
     @GetMapping("/deletecart/{id1}/{id2}")
     public String deleteShoppingCart(Model model,@PathVariable long id1, @PathVariable long id2){
         Dishes dish= restaurantHolder.getDish(id1,id2);
         userHolder.deleteDishFromCart(1,dish);
-        return "deleteDishSuccessful";
+        return "deleteCartSuccssesful";
     }
 
     @GetMapping("/deleteCart")

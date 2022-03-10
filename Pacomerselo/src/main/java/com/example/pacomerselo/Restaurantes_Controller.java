@@ -63,7 +63,7 @@ public class Restaurantes_Controller {
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id1);
         model.addAttribute("id2",id2);
-        return "updateSuccesful";
+        return "updateDishSuccessful";
     }
 
     @GetMapping("/restaurant/{id1}/deleteDish/{id2}")

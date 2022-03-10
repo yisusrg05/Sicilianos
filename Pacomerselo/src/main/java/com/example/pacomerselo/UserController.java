@@ -38,8 +38,8 @@ public class UserController extends RestaurantHolder{
 
     @GetMapping("/deletecart/{id1}/{id2}")
     public String deleteShoppingCart(Model model,@PathVariable long id1, @PathVariable long id2){
-        Dishes dish=getDish(id1,id2);
-        userHolder.deleteDishFromCart(id1,dish);
+        Dishes dish= restaurantHolder.getDish(id1,id2);
+        userHolder.deleteDishFromCart(1,dish);
         return getString(model, userHolder.getUser(1));
     }
 

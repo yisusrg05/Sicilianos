@@ -96,18 +96,19 @@
                                                     </div>
                                                     <div class="col-md-5 product-info"><a class="product-name" href="/restaurant/{{idRestaurant}}">{{name}}</a>
                                                         <div class="product-specs">
-                                                            <div><span>Descripci&oacute;n: &nbsp;</span><span class="value">{{description}}</span></div>
+                                                            <div><span><b>Descripci&oacute;n:</b> &nbsp;</span><span class="value">{{description}}</span></div>
                                                         </div>
                                                     </div>
                                                     <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block">Cantidad</label><input type="text" id="number" class="form-control quantity-input" value="1"  disabled></div>
                                                     <div class="col-6 col-md-2 price"><span>{{price}}€</span></div>
                                                 </div>
+                                                <br>
                                                 {{/dishes}}
                                             </div>
                                         </div>
                                         <div class="summary">
-                                            <h4><span class="summary">Gastos de envío:</span><span class="price"> 5€</span></h4>
-                                            <h3><span class="total">Total:</span><span class="price"> {{price}}€</span></h3>
+                                            <h6><span class="summary">Gastos de envío:</span><span class="price" style="margin: 10px"> 5€</span></h6>
+                                            <h5><span class="total">Total:</span><span class="price"> {{price}}€</span></h5>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-4">

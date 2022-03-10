@@ -83,6 +83,7 @@ public class UserController extends RestaurantHolder{
         newUser.setId(1);
         newUser.setCart(userHolder.getDishes(1));
         newUser.setOrders(userHolder.getOrders(1));
+        newUser.setPassword(userHolder.getPassword(1));
         userHolder.updateUser(1,newUser);
         model.addAttribute("order",newUser.getOrders().values());
         model.addAttribute("user",newUser);

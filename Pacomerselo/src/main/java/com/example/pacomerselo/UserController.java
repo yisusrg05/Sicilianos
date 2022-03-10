@@ -5,13 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
 
 @Controller
-public class UserController {
+public class UserController extends RestaurantHolder{
 
     @Autowired
     UserHolder userHolder;
@@ -19,13 +20,26 @@ public class UserController {
     @GetMapping("/carrito")
     public String shoppingCart(Model model){
         User user= userHolder.getUser(1);
-        Collection<Dishes> cart = user.allCart();
-        model.addAttribute("cart",cart);
-        int comida=foodCart();
-        int total=5+comida;
-        model.addAttribute("comida",comida);
-        model.addAttribute("total",total);
-        return "shopping-cart";
+        boolean vacio= !user.getCart().isEmpty();
+        boolean mostrarAhora=!vacio;
+        model.addAttribute("vacio",vacio);
+        model.addAttribute("now",mostrarAhora);
+        return getString(model, user);
+    }
+
+    @GetMapping("/addcarrito/{id1}/{id2}")
+    public String addShoppingCart(Model model, @PathVariable long id1, @PathVariable long id2){
+        User user= userHolder.getUser(1);
+        Dishes dish=getDish(id1,id2);
+        user.addDish(dish);
+        return getString(model, user);
+    }
+
+    @GetMapping("/deletecart/{id1}/{id2}")
+    public String deleteShoppingCart(Model model,@PathVariable long id1, @PathVariable long id2){
+        Dishes dish=getDish(id1,id2);
+        userHolder.deleteDishFromCart(id1,dish);
+        return getString(model, userHolder.getUser(1));
     }
 
     @PostMapping("/login")
@@ -67,6 +81,17 @@ public class UserController {
         return "profile";
     }
 
+    @PostMapping("/forgottenPassword")
+    public String updatePassword(@RequestParam String username,@RequestParam String email, @RequestParam String password){
+        User user=userHolder.getUser(username);
+        if(user!=null&&user.getEmail().equals(email)){
+            user.setPassword(password);
+        }
+        assert user != null;
+        userHolder.updateUser(user.getId(),user);
+        return "login";
+    }
+
     @GetMapping("/orderPlaced")
     public String placeOrder(){
         userHolder.proccessOrder(1);
@@ -87,5 +112,15 @@ public class UserController {
             comida+=dish.getPrice();
         }
         return comida;
+    }
+
+    private String getString(Model model, User user) {
+        Collection<Dishes> cart = user.allCart();
+        model.addAttribute("cart",cart);
+        int comida=foodCart();
+        int total=5+comida;
+        model.addAttribute("comida",comida);
+        model.addAttribute("total",total);
+        return "shopping-cart";
     }
 }

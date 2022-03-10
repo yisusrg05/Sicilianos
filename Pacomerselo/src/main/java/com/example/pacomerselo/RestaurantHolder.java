@@ -20,8 +20,8 @@ public class RestaurantHolder {
         addRestaurant(new Restaurant("Yisus","es un crack","Hawaiana"));
         addDish(1, new Dishes("Kevin Bacon", "La best seller",13));
         addDish(1, new Dishes("Pigma", "Mucho Huevo",12));
-        addDish(1, new Dishes("Kevin Bacon", "La best seller",13));
-        addDish(1, new Dishes("Pigma", "Mucho Huevo",12));
+        addDish(1, new Dishes("Baby Yankee", "La mas Baby de todas",11));
+        addDish(2, new Dishes("Big Mac", "Dos pisos",6));
     }
 
 

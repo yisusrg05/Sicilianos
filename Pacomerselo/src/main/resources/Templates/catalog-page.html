@@ -47,19 +47,19 @@
                                         <div class="about">
                                             <div class="description"><a>{{description}}</a></div>
                                             <div class="price">
-                                                <h3>{{price}}</h3>
+                                                <h3>{{price}}€</h3>
                                             </div>
-
-                                            <br><button class="btn btn-outline-warning d-block w-100 " onclick="location.href='/carrito'" type="button">añadir al carrito</button>
-                                            <button class="btn btn-outline-warning d-block w-100 " onclick="location.href='/restaurant/{{id1}}/updateDish/{{id}}'" type="button">ACTUALIZAR</button>
-                                            <button class="btn btn-warning d-block w-100 "style="margin: 10px"onclick="location.href='/restaurant/{{id1}}/deleteDish/{{id}}'" type="button">BORRAR</button>
+                                            <br>
                                         </div>
+                                        <button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/restaurant/{{id1}}/deleteDish/{{id}}'" type="button">BORRAR</button>
+                                        <button class="btn btn-outline-warning d-block w-100 " style="margin: 10px" onclick="location.href='/restaurant/{{id1}}/updateDish/{{id}}'" type="button">ACTUALIZAR</button>
+                                        <button class="btn btn-warning d-block w-100  " style="margin: 10px" onclick="location.href='/addcarrito/{{id1}}/{{id}}'" type="button">Añadir al carrito</button>
                                     </div>
                                 </div>
                                 {{/dishes}}
                             </div>
                             </ul>
-                            <button class="btn btn-info d-block w-100 " onclick="location.href='/{{id1}}/registerDish'" type="button">Registra un plato ahora.</button>
+                            <button class="btn btn-info d-block w-100 " onclick="location.href='/{{id1}}/registerDish'"     type="button">Registra un plato ahora.</button>
                         </div>
                     </div>
                 </div>

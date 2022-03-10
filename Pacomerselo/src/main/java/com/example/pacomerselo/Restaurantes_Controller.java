@@ -141,13 +141,15 @@ public class Restaurantes_Controller {
     public String updateRestaurant(Model model, @PathVariable long id){
         Restaurant restaurant = restaurantHolder.getRestaurant(id);
         model.addAttribute("id",id);
+        model.addAttribute("restaurant",restaurant);
         return "updateRest";
     }
     @GetMapping ("/restaurant/{id1}/updateDish/{id2}")
     public String updateDishes(Model model, @PathVariable long id1, @PathVariable long id2){
-        Dishes dishes = restaurantHolder.getDish(id1, id2);
+        Dishes dish = restaurantHolder.getDish(id1, id2);
         model.addAttribute("id1",id1);
         model.addAttribute("id2",id2);
+        model.addAttribute("dish",dish);
         return "updateDish";
     }
 

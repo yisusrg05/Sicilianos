@@ -45,10 +45,10 @@ public class Restaurantes_Controller {
         return "pricing";
     }
 
-    @PostMapping("/restaurant/{id}")
-    public String addDish (Model model, @PathVariable long id, Dishes dish){
-        restaurantHolder.addDish(id,dish);
-        Restaurant restaurant = restaurantHolder.getRestaurant(id);
+    @PostMapping("/restaurant/{id1}")
+    public String addDish (Model model, @PathVariable long id1, Dishes dish){
+        restaurantHolder.addDish(id1,dish);
+        Restaurant restaurant = restaurantHolder.getRestaurant(id1);
         Collection<Dishes> dishes = restaurant.allDishes();
         model.addAttribute("dishes",dishes);
         return "catalog-page";

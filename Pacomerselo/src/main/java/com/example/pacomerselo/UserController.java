@@ -16,6 +16,8 @@ public class UserController extends RestaurantHolder{
 
     @Autowired
     UserHolder userHolder;
+    @Autowired
+    RestaurantHolder restaurantHolder;
 
     @GetMapping("/carrito")
     public String shoppingCart(Model model){
@@ -30,9 +32,9 @@ public class UserController extends RestaurantHolder{
     @GetMapping("/addcarrito/{id1}/{id2}")
     public String addShoppingCart(Model model, @PathVariable long id1, @PathVariable long id2){
         User user= userHolder.getUser(1);
-        Dishes dish=getDish(id1,id2);
-        user.addDish(dish);
-        return getString(model, user);
+        Dishes dish= restaurantHolder.getDish(id1,id2);
+        userHolder.addDishToCart(1,dish);
+        return "updateSuccesful";
     }
 
     @GetMapping("/deletecart/{id1}/{id2}")

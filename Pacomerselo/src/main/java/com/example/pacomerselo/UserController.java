@@ -129,6 +129,6 @@ public class UserController extends RestaurantHolder{
         int total=5+comida;
         model.addAttribute("comida",comida);
         model.addAttribute("total",total);
-        return "shopping-cart";
+        return "cart";
     }
 }

@@ -74,7 +74,7 @@ public class Restaurantes_Controller {
         model.addAttribute("id1",id1);
         model.addAttribute("id2",id2);
 
-        return "deleteSuccesful";
+        return "deleteDishSuccessful";
     }
 
     @PostMapping("/updateRestaurant/{id}")
@@ -94,7 +94,7 @@ public class Restaurantes_Controller {
         restaurantHolder.removeRestaurant(id);
         Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
         model.addAttribute("restaurants",restaurants);
-        return "deleteSuccesful";
+        return "deleteRestaurantSuccessful";
     }
 
 

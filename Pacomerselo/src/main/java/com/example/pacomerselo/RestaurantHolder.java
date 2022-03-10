@@ -50,6 +50,7 @@ public class RestaurantHolder {
     public void addDish(long idRestaurant, Dishes dish){
         long id = lastIDdishes.incrementAndGet();
         dish.setId(id);
+        dish.setIdRestaurant(idRestaurant);
         restaurants.get(idRestaurant).add(id,dish);
     }
 

@@ -16,6 +16,7 @@ public class Dishes {
     private String description;
     private int price;
     private long id=-1;
+    private long idRestaurant=-1;
 
     public Dishes(String name, String description, int price){
         this.name=name;

@@ -57,6 +57,7 @@ public class Restaurantes_Controller {
     @PostMapping("/restaurant/{id1}/updateDish/{id2}")
     public String updateDish(Model model, @PathVariable long id1, @PathVariable long id2, Dishes newDish) {
         newDish.setId(id2);
+        newDish.setIdRestaurant(id1);
         restaurantHolder.updateDish(id1,id2,newDish);
         Collection<Dishes> dishes = restaurantHolder.getDishes(id1);
         model.addAttribute("dishes",dishes);

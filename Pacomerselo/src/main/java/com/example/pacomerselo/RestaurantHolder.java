@@ -16,12 +16,15 @@ public class RestaurantHolder {
     private AtomicLong lastIDdishes= new AtomicLong();
 
     public RestaurantHolder(){
-        addRestaurant(new Restaurant("Sicilia","no sabe comer","Japonés"));
-        addRestaurant(new Restaurant("Yisus","es un crack","Hawaiana"));
-        addDish(1, new Dishes("Kevin Bacon", "La best seller",13));
-        addDish(1, new Dishes("Pigma", "Mucho Huevo",12));
-        addDish(1, new Dishes("Baby Yankee", "La mas Baby de todas",11));
-        addDish(2, new Dishes("Big Mac", "Dos pisos",6));
+        addRestaurant(new Restaurant("La Bonita","Comida Original","Mediterránea"));
+        addRestaurant(new Restaurant("Fellina","Comida Italiana Sofisticada","Italiana"));
+        addDish(1, new Dishes("Croquetas Gourmet", "6ud",12));
+        addDish(1, new Dishes("Ensalada de Burrata", "Con miel y trufa",20));
+        addDish(1, new Dishes("Solomillo de Ternera", "Con patatas baby especiadas",25));
+        addDish(1, new Dishes("Cappellacci", "Relleno de verduras",15));
+        addDish(2, new Dishes("Ensalada de Queso de Cabra", "Con tomate y rúcula",17));
+        addDish(2, new Dishes("Pappardelle", "Con ternera y queso",19));
+        addDish(2, new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9));
     }
 
 

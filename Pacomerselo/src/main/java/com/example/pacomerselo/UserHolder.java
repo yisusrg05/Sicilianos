@@ -93,6 +93,17 @@ public class UserHolder {
         users.get(id).addOrder(idOrder,order);
     }
 
+    public Dishes getDishFromCart(long id){
+        List<Dishes> dishesList=users.get(1).getCart();
+        Dishes validDish=null;
+        for (Dishes dish: dishesList){
+            if (dish.getId()==id){
+                validDish=dish;
+            }
+        }
+        return validDish;
+    }
+
     public Map<Long,Order> getOrders (long id){
         return users.get(id).getOrders();
     }

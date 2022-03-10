@@ -110,7 +110,7 @@ public class UserController extends RestaurantHolder{
     @PostMapping("/register")
     public String addUser(User newUser){
         userHolder.addUser(newUser);
-        return "updateSuccesful";
+        return "registerSuccessful";
     }
 
     private int foodCart(){

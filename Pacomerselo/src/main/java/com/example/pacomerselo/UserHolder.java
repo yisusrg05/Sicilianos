@@ -45,6 +45,8 @@ public class UserHolder {
     }
 
     public void updateUser(long id,User user){
+        user.setOrders(users.get(id).getOrders());
+        user.setCart(users.get(id).getCart());
         users.put(id,user);
         userIDs.put(user.getUsername(),id);
     }
@@ -79,7 +81,7 @@ public class UserHolder {
         return users.get(id).allCart();
     }
 
-    public void proccessOrder (long id){
+    public long proccessOrder (long id){
         Order order = new Order((List<Dishes>) getDishes(id));
         int price=SHIPPING_COSTS;
         List<Dishes> list =(List<Dishes>) getDishes(id);
@@ -91,10 +93,11 @@ public class UserHolder {
         order.setPrice(price);
         deleteCart(id);
         users.get(id).addOrder(idOrder,order);
+        return idOrder;
     }
 
-    public Dishes getDishFromCart(long id){
-        List<Dishes> dishesList=users.get(1).getCart();
+    public Dishes getDishFromCart(long idUser,long id){
+        List<Dishes> dishesList=users.get(idUser).getCart();
         Dishes validDish=null;
         for (Dishes dish: dishesList){
             if (dish.getId()==id){

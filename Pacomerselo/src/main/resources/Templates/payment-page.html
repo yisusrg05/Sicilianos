@@ -43,21 +43,22 @@
                         <p class="item-description">{{description}}</p>
                     </div>
                     {{/cart}}
+                    <div class="summary"><span>Gastos de Envío</span><span class="price">5€</span></div>
                     <div class="total"><span>Total</span><span class="price">{{total}}€</span></div>
                 </div>
                 <div class="card-details">
                     <h3 class="title">Tus datos bancarios</h3>
                     <div class="row">
                         <div class="col-sm-7">
-                            <div class="mb-3"><label class="form-label" for="card_holder">Card Holder</label><input class="form-control" type="text" id="card_holder" placeholder="Card Holder" name="card_holder"></div>
+                            <div class="mb-3"><label class="form-label" for="card_holder">Nombre del titular</label><input class="form-control" type="text" id="card_holder" placeholder="Nombre del titular" name="card_holder"></div>
                         </div>
                         <div class="col-sm-5">
-                            <div class="mb-3"><label class="form-label">Expiration date</label>
+                            <div class="mb-3"><label class="form-label">Fecha de caducidad</label>
                                 <div class="input-group expiration-date"><input class="form-control" type="text" max="2" placeholder="MM" name="expiration_month"><input class="form-control" type="text" placeholder="YY" max="2" name="expiration_year"></div>
                             </div>
                         </div>
                         <div class="col-sm-8">
-                            <div class="mb-3"><label class="form-label" for="card_number">Card Number</label><input class="form-control" type="text" id="card_number" placeholder="Card Number" name="card_number"></div>
+                            <div class="mb-3"><label class="form-label" for="card_number">Número de la tarjeta</label><input class="form-control" type="text" id="card_number" placeholder="Número de la tarjeta" name="card_number"></div>
                         </div>
                         <div class="col-sm-4">
                             <div class="mb-3"><label class="form-label" for="cvc">CVC</label><input class="form-control" type="text" id="cvc" placeholder="CVC" max="3" name="cvc"></div>

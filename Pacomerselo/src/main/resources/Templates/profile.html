@@ -73,7 +73,7 @@
                             <div class="col">
                                 <div class="card shadow mb-3">
                                     <div class="card-header py-3">
-                                        <p class="text-muted m-0 fw-bold">User Settings</p>
+                                        <p class="text-muted m-0 fw-bold">Información del usuario</p>
                                     </div>
                                     <div class="card-body">
                                         <form method="post" action="/profile">
@@ -94,7 +94,7 @@
                                                     <div class="mb-3"><label class="form-label" for="last_name"><strong>Apellidos</strong></label><input class="form-control" type="text" id="last_name" placeholder="{{surname}}" value="{{surname}}" name="surname"></div>
                                                 </div>
                                             </div>
-                                            <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
+                                            <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Guardar cambios</button></div>
                                             {{/user}}
                                         </form>
                                     </div>
@@ -124,7 +124,7 @@
                                                     <div class="col-md-3">
                                                         <div class="product-image"><img class="img-fluid d-block mx-auto image" src="assets/img/tech/image2.jpg"></div>
                                                     </div>
-                                                    <div class="col-md-5 product-info"><a class="product-name" href="#">{{name}}</a>
+                                                    <div class="col-md-5 product-info"><a class="product-name" href="/restaurant/{{idRestaurant}}">{{name}}</a>
                                                         <div class="product-specs">
                                                             <div><span>Descripci&oacute;n: &nbsp;</span><span class="value">{{description}}</span></div>
                                                         </div>
@@ -136,8 +136,8 @@
                                             </div>
                                         </div>
                                         <div class="summary">
-                                            <h3>Total</h3>
-                                            <h4><span class="text-info">Total:</span><span class="price"> {{price}}€</span></h4>
+                                            <h4><span class="summary">Gastos de envío:</span><span class="price"> 5€</span></h4>
+                                            <h3><span class="total">Total:</span><span class="price"> {{price}}€</span></h3>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-4">

@@ -26,7 +26,7 @@ public class UserController extends RestaurantHolder{
         boolean mostrarAhora=!vacio;
         model.addAttribute("vacio",vacio);
         model.addAttribute("now",mostrarAhora);
-        return getString(model, user);
+        return getString(model);
     }
 
     @GetMapping("/addcarrito/{id1}/{id2}")
@@ -40,7 +40,7 @@ public class UserController extends RestaurantHolder{
     public String deleteShoppingCart(Model model,@PathVariable long id1, @PathVariable long id2){
         Dishes dish= restaurantHolder.getDish(id1,id2);
         userHolder.deleteDishFromCart(1,dish);
-        return getString(model, userHolder.getUser(1));
+        return "deleteSuccesful";
     }
 
     @GetMapping("/deleteCart")
@@ -122,8 +122,8 @@ public class UserController extends RestaurantHolder{
         return comida;
     }
 
-    private String getString(Model model, User user) {
-        Collection<Dishes> cart = user.allCart();
+    private String getString(Model model) {
+        Collection<Dishes> cart = userHolder.getUser(1).allCart();
         model.addAttribute("cart",cart);
         int comida=foodCart();
         int total=5+comida;

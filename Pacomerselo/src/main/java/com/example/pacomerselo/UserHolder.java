@@ -22,9 +22,6 @@ public class UserHolder {
 
     public UserHolder(){
         addUser(new User("Anonimo","Sicilia","Crack","sici@urjc.es","oleole"));
-        addDishToCart(1,new Dishes("Kevin","Bacon",14));
-        addDishToCart(1,new Dishes("Pigma","Huevo",11));
-        addDishToCart(1,new Dishes("Pigma","Huevo",11));
     }
 
     public void addUser(User user){

@@ -22,11 +22,13 @@ public class UserRESTController{
 
     //////////////////////CART REST CONTROLLER//////////////////////
 
+    //Get the cart
     @GetMapping("/cart")
     public Collection<Dishes> getDishes(){
         return userHolder.getDishes(1);
     }
 
+    //Add a new dish (ID2) of a restaurant (ID1) to the cart
     @PostMapping("/addcart/{id1}/{id2}")
     public ResponseEntity<Dishes> addToCart(@PathVariable long id1, @PathVariable long id2){
         if(restaurantHolder.getDish(id1,id2)!=null){
@@ -37,6 +39,7 @@ public class UserRESTController{
         }
     }
 
+    //Update the cart, deleting a single dish of the cart (ID)
     @PutMapping("/deletedish/{id}")
     public ResponseEntity<Dishes> deleteDishFromCart(@PathVariable long id){
         if(userHolder.getDishFromCart(1,id)!=null){
@@ -47,6 +50,7 @@ public class UserRESTController{
         }
     }
 
+    //Delete all the cart
     @DeleteMapping("/deletecart")
     public ResponseEntity<List<Dishes>> deleteAllCart(){
         if(userHolder.getDishes(1)!=null){
@@ -60,11 +64,13 @@ public class UserRESTController{
 
     //////////////////////ORDERS REST CONTROLLER//////////////////////
 
+    //Get all the orders of the user
     @GetMapping("/orders")
     public Collection<Order> getOrders(){
         return userHolder.getUser(1).getOrders().values();
     }
 
+    //Add a new order to the user
     @PostMapping("/proccessOrder")
     public ResponseEntity<Order> proccessOrder(){
         if(userHolder.getUser(1).getCart()!=null){
@@ -78,11 +84,13 @@ public class UserRESTController{
 
     //////////////////////USER REST CONTROLLER//////////////////////
 
+    //Get the user of the ID given
     @GetMapping("/user/{id}")
     public User getUser(@PathVariable long id){
         return userHolder.getUser(id);
     }
 
+    //Log in a user
     @GetMapping("/login")
     public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password){
         if(userHolder.validUser(username,password)){
@@ -93,12 +101,14 @@ public class UserRESTController{
         }
     }
 
+    //Add a new user to the App
     @PostMapping("/register")
     public ResponseEntity<User> newUser(@RequestBody User user){
         userHolder.addUser(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
+    //Update a user profile given (ID)
     @PutMapping("/changeprofile/{id}/")
     public ResponseEntity<User> updateProfile(@PathVariable long id,@RequestBody User newUser){
         User oldUser= userHolder.getUser(id);
@@ -111,6 +121,7 @@ public class UserRESTController{
         }
     }
 
+    //Delete the user given (ID)
     @DeleteMapping("/deleteuser/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable long id) {
         User user = userHolder.removeUser(id);

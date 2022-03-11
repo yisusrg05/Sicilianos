@@ -15,6 +15,7 @@ public class RestaurantHolder {
     private AtomicLong lastIDRestaurant= new AtomicLong();
     private AtomicLong lastIDdishes= new AtomicLong();
 
+    //Adding the default restaurants and dishes
     public RestaurantHolder(){
         addRestaurant(new Restaurant("La Bonita","Comida Original","Mediterránea"));
         addRestaurant(new Restaurant("Fellina","Comida Italiana Sofisticada","Italiana"));
@@ -27,7 +28,7 @@ public class RestaurantHolder {
         addDish(2, new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9));
     }
 
-
+    //Adding a new restaurant and giving it its unique ID
     public void addRestaurant(Restaurant restaurant){
         long id = lastIDRestaurant.incrementAndGet();
         restaurant.setId(id);
@@ -50,6 +51,7 @@ public class RestaurantHolder {
         restaurants.put(id,restaurant);
     }
 
+    //Adding a new dish and giving it its unique ID and its restaurant ID
     public void addDish(long idRestaurant, Dishes dish){
         long id = lastIDdishes.incrementAndGet();
         dish.setId(id);
@@ -65,9 +67,7 @@ public class RestaurantHolder {
         return restaurants.get(idRestaurant).getDish(idDishes);
     }
 
-    public Dishes removeDish(long idRestaurant, long idDishes){
-        return restaurants.get(idRestaurant).removeDish(idDishes);
-    }
+    public Dishes removeDish(long idRestaurant, long idDishes){return restaurants.get(idRestaurant).removeDish(idDishes);}
 
     public void updateDish(long idRestaurant,long idDish,Dishes dish){
         restaurants.get(idRestaurant).add(idDish,dish);

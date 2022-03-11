@@ -10,23 +10,27 @@ import java.util.Collection;
 
 @RequestMapping("/api")
 @RestController
-public class RESTController {
+public class RestaurantRESTController {
 
     @Autowired
     RestaurantHolder restaurantHolder;
 
     //////////////////////RESTAURANTS REST CONTROLLER//////////////////////
+
+    //Add a new Restaurant to the catalog
     @PostMapping("/restaurant")
     public ResponseEntity<Restaurant> newRestaurant(@RequestBody Restaurant restaurant){
         restaurantHolder.addRestaurant(restaurant);
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 
+    //Get the list of all the restaurants
     @GetMapping("/restaurant")
     public Collection<Restaurant> getRestaurants(){
         return restaurantHolder.getRestaurants();
     }
 
+    //Get the restaurant given (ID)
     @GetMapping("/restaurant/{id}")
     public ResponseEntity<Restaurant> getRestaurants(@PathVariable long id){
         Restaurant restaurant = restaurantHolder.getRestaurant(id);
@@ -37,6 +41,7 @@ public class RESTController {
         }
     }
 
+    //Update the restaurant given (ID)
     @PutMapping("/restaurant/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(@PathVariable long id, @RequestBody Restaurant newRestaurant) {
         Restaurant oldRestaurant = restaurantHolder.getRestaurant(id);
@@ -50,6 +55,7 @@ public class RESTController {
         }
     }
 
+    //Delete the restaurant given (ID)
     @DeleteMapping("/restaurant/{id}")
     public ResponseEntity<Restaurant> deleteRestaurant(@PathVariable long id) {
         Restaurant restaurant = restaurantHolder.removeRestaurant(id);
@@ -61,6 +67,7 @@ public class RESTController {
     }
 
     //////////////////////DISHES REST CONTROLLER//////////////////////
+    //Add a new dish to the restaurant catalog (given the ID)
     @PostMapping("/restaurant/{id}/dishes")
     public ResponseEntity<Dishes> newDish(@PathVariable long id,@RequestBody Dishes dish){
         Restaurant restaurant = restaurantHolder.getRestaurant(id);
@@ -72,11 +79,13 @@ public class RESTController {
         }
     }
 
+    //Get all the dishes of the restaurant catalog (given the ID)
     @GetMapping("/restaurant/{id}/dishes")
     public Collection<Dishes> getDishes(@PathVariable long id){
         return restaurantHolder.getDishes(id);
     }
 
+    //Get the dish (ID2) of the restaurant catalog (ID1)
     @GetMapping("/restaurant/{id1}/dishes/{id2}")
     public ResponseEntity<Dishes> getDish(@PathVariable long id1,@PathVariable long id2){
         Dishes dish = restaurantHolder.getDish(id1,id2);
@@ -87,6 +96,7 @@ public class RESTController {
         }
     }
 
+    //Update the dish (ID2) of the restaurant catalog (ID1)
     @PutMapping("/restaurant/{id1}/dishes/{id2}")
     public ResponseEntity<Dishes> updateDish(@PathVariable long id1, @PathVariable long id2, @RequestBody Dishes newDish) {
         Dishes oldDish=restaurantHolder.getDish(id1,id2);
@@ -100,6 +110,7 @@ public class RESTController {
         }
     }
 
+    //Delete the dish (ID2) of the restaurant catalog (ID1)
     @DeleteMapping("/restaurant/{id1}/dishes/{id2}")
     public ResponseEntity<Dishes> deleteDish(@PathVariable long id1,@PathVariable long id2) {
         Dishes dish= restaurantHolder.removeDish(id1,id2);

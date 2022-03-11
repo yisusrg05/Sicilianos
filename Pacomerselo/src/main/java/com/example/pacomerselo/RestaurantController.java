@@ -158,7 +158,7 @@ public class RestaurantController {
     @GetMapping ("/restaurant/{id1}/updateDish/{id2}")
     public String updateDishes(Model model, @PathVariable long id1 /*Restaurant ID*/, @PathVariable long id2/*Dish ID*/){
         Dishes dish = restaurantHolder.getDish(id1, id2);
-        
+
         model.addAttribute("id1",id1);
         model.addAttribute("id2",id2);
         model.addAttribute("dish",dish);

@@ -53,6 +53,7 @@ public class RestaurantController {
         Collection<Dishes> dishes = restaurant.allDishes();
 
         model.addAttribute("dishes",dishes);
+        model.addAttribute("id1",id);
 
         return "catalog-page";
     }

@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Order {
+    //As web have @NoArgsConstructor, we do not need to create a new Constructor. Moreover, the Order's Attributes, are the price, a list and an id.
 
     private int price=0;
     private List<Dishes> dishes;

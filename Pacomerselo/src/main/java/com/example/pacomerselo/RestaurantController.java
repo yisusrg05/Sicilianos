@@ -15,8 +15,7 @@ public class RestaurantController {
     //Get all the restaurants available
     @GetMapping("/restaurant")
     public String restaurant(Model model){
-        Collection<Restaurant> restaurants =restaurantHolder.getRestaurants()
-                ;
+        Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
         model.addAttribute("restaurants",restaurants);
 
         return "pricing";

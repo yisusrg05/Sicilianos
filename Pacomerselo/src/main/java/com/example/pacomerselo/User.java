@@ -2,6 +2,7 @@ package com.example.pacomerselo;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
+
 
 public class User {
     /*The entity user has his own attributes: username (as we want the user get registered with it), name, surname,
@@ -20,7 +23,9 @@ public class User {
     Dish: it contains the dishes that the user want to order. Also, as we want to know if a user is a consumer or is
     an Admin, that can create Restaurants, we have a boolean to know what category the User is. Also, we have an ID to identify also a user.
      */
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     private String username;
     private String name;
@@ -28,9 +33,13 @@ public class User {
     private String email;
     private String password;
     private Boolean admin;
-    private Map<Long,Order> orders;
-    private List<Dishes> cart;
-    private long id=-1;
+
+    //private List<Dishes> cart;
+    @OneToMany()
+    private List<Order> orders=new ArrayList<>();
+
+
+
 
     //Constructor of user:
 
@@ -41,9 +50,9 @@ public class User {
         this.email=email;
         this.password=password;
         this.admin=false;
-        this.orders=new ConcurrentHashMap<>();
-        this.cart=new ArrayList<>();
+        //this.cart=new ArrayList<>();
     }
+    /*
     //A Method that allows the user to add a dish to the cart.
 
     public void addDish(Dishes dish){
@@ -63,5 +72,5 @@ public class User {
 
     public void addOrder(long id, Order order){
         this.orders.put(id,order);
-    }
+    }*/
 }

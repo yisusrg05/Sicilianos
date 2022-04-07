@@ -34,10 +34,11 @@ public class Restaurant {
         this.description=description;
         this.type=type;
     }
-    /*//As we have a Map to collect dishes for the restaurant, we have the methods to add a dish to a Restaurant. It key is the id of the restaurant.
-    public Dishes add(long id, Dishes dish){
-        return this.dishes.put(id,dish);
+    //As we have a Map to collect dishes for the restaurant, we have the methods to add a dish to a Restaurant. It key is the id of the restaurant.
+    public void add(Dishes dish){
+        this.dishesList.add(dish);
     }
+    /*
     //We have a method to get all the dishes from the Map which stores al the dishes of the restaurant.
     public Collection<Dishes> allDishes (){
         return this.dishes.values();

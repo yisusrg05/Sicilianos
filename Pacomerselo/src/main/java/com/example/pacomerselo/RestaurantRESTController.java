@@ -13,27 +13,27 @@ import java.util.Collection;
 public class RestaurantRESTController {
 
     @Autowired
-    RestaurantHolder restaurantHolder;
+    RestaurantManager restaurantManager;
 
     //////////////////////RESTAURANTS REST CONTROLLER//////////////////////
 
     //Add a new Restaurant to the catalog
     @PostMapping("/restaurant")
     public ResponseEntity<Restaurant> newRestaurant(@RequestBody Restaurant restaurant){
-        restaurantHolder.addRestaurant(restaurant);
+        restaurantManager.addRestaurant(restaurant);
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 
     //Get the list of all the restaurants
     @GetMapping("/restaurant")
     public Collection<Restaurant> getRestaurants(){
-        return restaurantHolder.getRestaurants();
+        return restaurantManager.getRestaurants();
     }
 
     //Get the restaurant given (ID)
     @GetMapping("/restaurant/{id}")
     public ResponseEntity<Restaurant> getRestaurants(@PathVariable long id){
-        Restaurant restaurant = restaurantHolder.getRestaurant(id);
+        Restaurant restaurant = restaurantManager.getRestaurant(id);
         if(restaurant != null){
             return new ResponseEntity<>(restaurant,HttpStatus.OK);
         }else{
@@ -44,11 +44,8 @@ public class RestaurantRESTController {
     //Update the restaurant given (ID)
     @PutMapping("/restaurant/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(@PathVariable long id, @RequestBody Restaurant newRestaurant) {
-        Restaurant oldRestaurant = restaurantHolder.getRestaurant(id);
-        if (oldRestaurant!= null) {
-            newRestaurant.setId(id);
-            newRestaurant.setDishes(oldRestaurant.getDishes());
-            restaurantHolder.updateRestaurant(id,newRestaurant);
+        Restaurant restaurant = restaurantManager.updateRestaurant(id,newRestaurant);
+        if (restaurant!= null) {
             return new ResponseEntity<>(newRestaurant, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -58,7 +55,7 @@ public class RestaurantRESTController {
     //Delete the restaurant given (ID)
     @DeleteMapping("/restaurant/{id}")
     public ResponseEntity<Restaurant> deleteRestaurant(@PathVariable long id) {
-        Restaurant restaurant = restaurantHolder.removeRestaurant(id);
+        Restaurant restaurant=restaurantManager.removeRestaurant(id);
         if(restaurant != null){
             return new ResponseEntity<>(restaurant,HttpStatus.OK);
         }else{
@@ -70,9 +67,9 @@ public class RestaurantRESTController {
     //Add a new dish to the restaurant catalog (given the ID)
     @PostMapping("/restaurant/{id}/dishes")
     public ResponseEntity<Dishes> newDish(@PathVariable long id,@RequestBody Dishes dish){
-        Restaurant restaurant = restaurantHolder.getRestaurant(id);
+        Restaurant restaurant = restaurantManager.getRestaurant(id);
         if (restaurant!= null) {
-            restaurantHolder.addDish(id,dish);
+            restaurantManager.addDish(id,dish);
             return new ResponseEntity<>(dish, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -82,13 +79,13 @@ public class RestaurantRESTController {
     //Get all the dishes of the restaurant catalog (given the ID)
     @GetMapping("/restaurant/{id}/dishes")
     public Collection<Dishes> getDishes(@PathVariable long id){
-        return restaurantHolder.getDishes(id);
+        return restaurantManager.getDishes(id);
     }
 
     //Get the dish (ID2) of the restaurant catalog (ID1)
     @GetMapping("/restaurant/{id1}/dishes/{id2}")
     public ResponseEntity<Dishes> getDish(@PathVariable long id1,@PathVariable long id2){
-        Dishes dish = restaurantHolder.getDish(id1,id2);
+        Dishes dish = restaurantManager.getDish(id2);
         if(dish != null){
             return new ResponseEntity<>(dish,HttpStatus.OK);
         }else{
@@ -99,11 +96,9 @@ public class RestaurantRESTController {
     //Update the dish (ID2) of the restaurant catalog (ID1)
     @PutMapping("/restaurant/{id1}/dishes/{id2}")
     public ResponseEntity<Dishes> updateDish(@PathVariable long id1, @PathVariable long id2, @RequestBody Dishes newDish) {
-        Dishes oldDish=restaurantHolder.getDish(id1,id2);
-        if (oldDish!= null) {
-            newDish.setId(id2);
-            newDish.setIdRestaurant(id1);
-            restaurantHolder.updateDish(id1,id2,newDish);
+        Dishes dish=restaurantManager.getDish(id2);
+        if (dish!= null) {
+            restaurantManager.updateDish(id2,newDish);
             return new ResponseEntity<>(newDish, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -113,7 +108,7 @@ public class RestaurantRESTController {
     //Delete the dish (ID2) of the restaurant catalog (ID1)
     @DeleteMapping("/restaurant/{id1}/dishes/{id2}")
     public ResponseEntity<Dishes> deleteDish(@PathVariable long id1,@PathVariable long id2) {
-        Dishes dish= restaurantHolder.removeDish(id1,id2);
+        Dishes dish= restaurantManager.removeDish(id2);
         if(dish != null){
             return new ResponseEntity<>(dish,HttpStatus.OK);
         }else{

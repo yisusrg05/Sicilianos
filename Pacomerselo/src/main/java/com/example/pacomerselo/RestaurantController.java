@@ -10,60 +10,50 @@ import java.util.Collection;
 public class RestaurantController {
 
     @Autowired
-    RestaurantHolder restaurantHolder;
+    RestaurantManager restaurantManager;
 
     //Get all the restaurants available
     @GetMapping("/restaurant")
     public String restaurant(Model model){
-        Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
+        Collection<Restaurant> restaurants=restaurantManager.getRestaurants();
         model.addAttribute("restaurants",restaurants);
-
         return "pricing";
     }
 
     //Get a single restaurant, given the ID
     @GetMapping("/restaurant/{id1}")
     public String restaurantId(Model model, @PathVariable long id1){
-        Restaurant restaurant = restaurantHolder.getRestaurant(id1);
-        Collection<Dishes> dishes = restaurant.allDishes();
-
+        Collection<Dishes> dishes = restaurantManager.getDishes(id1);
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id1);
-
         return "catalog-page";
     }
 
     //Add a new restaurant
     @PostMapping("/restaurant")
     public String addRestaurant (Model model, Restaurant restaurant){
-        restaurantHolder.addRestaurant(restaurant);
-        Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
-
+        restaurantManager.addRestaurant(restaurant);
+        Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
         model.addAttribute("restaurants",restaurants);
-
         return "pricing";
     }
 
     //Add a new dish to the restaurant given(
     @PostMapping("/restaurant/{id}")
     public String addDish (Model model, @PathVariable long id, Dishes dish){
-        restaurantHolder.addDish(id,dish);
-        Restaurant restaurant = restaurantHolder.getRestaurant(id);
-        Collection<Dishes> dishes = restaurant.allDishes();
-
+        restaurantManager.addDish(id,dish);
+        Collection<Dishes> dishes = restaurantManager.getDishes(id);
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id);
-
         return "catalog-page";
     }
 
     //Update an already existing dish (ID2) from a given restaurant (ID1)
     @PostMapping("/restaurant/{id1}/updateDish/{id2}")
     public String updateDish(Model model, @PathVariable long id1, @PathVariable long id2, Dishes newDish) {
-        newDish.setId(id2);
-        newDish.setIdRestaurant(id1);
-        restaurantHolder.updateDish(id1,id2,newDish);
-        Collection<Dishes> dishes = restaurantHolder.getDishes(id1);
+
+        restaurantManager.updateDish(id2,newDish);
+        Collection<Dishes> dishes = restaurantManager.getDishes(id1);
 
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id1);
@@ -75,8 +65,8 @@ public class RestaurantController {
     //Delete an already existing dish (ID2) from a given restaurant (ID1)
     @GetMapping("/restaurant/{id1}/deleteDish/{id2}")
     public String deleteDish (Model model, @PathVariable long id1, @PathVariable long id2){
-        restaurantHolder.removeDish(id1,id2);
-        Collection<Dishes> dishes = restaurantHolder.getDishes(id1);
+        restaurantManager.removeDish(id2);
+        Collection<Dishes> dishes = restaurantManager.getDishes(id1);
 
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id1);
@@ -88,21 +78,18 @@ public class RestaurantController {
     //Update an already existing restaurant given the ID
     @PostMapping("/updateRestaurant/{id}")
     public String putRestaurant (Model model,@PathVariable long id,Restaurant newRestaurant){
-        newRestaurant.setId(id);
-        newRestaurant.setDishes(restaurantHolder.getRestaurant(id).getDishes());
-        restaurantHolder.updateRestaurant(id, newRestaurant);
-        Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
+        restaurantManager.updateRestaurant(id,newRestaurant);
+        Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
 
         model.addAttribute("restaurants",restaurants);
-
         return "updateSuccesful";
     }
 
     //Delete an already existing restaurant given the ID
     @GetMapping("/deleteRestaurant/{id}")
     public String deleteRestaurant (Model model, @PathVariable long id){
-        restaurantHolder.removeRestaurant(id);
-        Collection<Restaurant> restaurants =restaurantHolder.getRestaurants();
+        restaurantManager.removeRestaurant(id);
+        Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
 
         model.addAttribute("restaurants",restaurants);
 
@@ -146,7 +133,7 @@ public class RestaurantController {
     //Giving the needed information to update a restaurant
     @GetMapping ("/updateRestaurant/{id}")
     public String updateRestaurant(Model model, @PathVariable long id){
-        Restaurant restaurant = restaurantHolder.getRestaurant(id);
+        Restaurant restaurant = restaurantManager.getRestaurant(id);
 
         model.addAttribute("id",id);
         model.addAttribute("restaurant",restaurant);
@@ -157,7 +144,7 @@ public class RestaurantController {
     //Giving the needed information to update a dish
     @GetMapping ("/restaurant/{id1}/updateDish/{id2}")
     public String updateDishes(Model model, @PathVariable long id1 /*Restaurant ID*/, @PathVariable long id2/*Dish ID*/){
-        Dishes dish = restaurantHolder.getDish(id1, id2);
+        Dishes dish = restaurantManager.getDish(id2);
 
         model.addAttribute("id1",id1);
         model.addAttribute("id2",id2);

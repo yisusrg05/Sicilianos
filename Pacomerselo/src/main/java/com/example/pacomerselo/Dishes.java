@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlIDREF;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +28,9 @@ public class Dishes {
 
     @ManyToOne
     private Restaurant restaurant;
+
+    @ManyToMany
+    private List<Order> orders;
 
     //2 public constructors for Dishes: The first one receive name, description and price.
     //The second one the same as the first and also the id of the dish and the id of the Restaurant

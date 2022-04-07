@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 
@@ -24,10 +21,15 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private int price=0;
+
+    @ManyToMany
     private List<Dishes> dishes;
 
+    @ManyToOne
+    private User user;
 
-    public Order(List<Dishes> dish){
-        this.dishes=dish;
+
+    public Order(int price){
+        this.price=price;
     }
 }

@@ -1,27 +1,24 @@
 package com.example.pacomerselo;
 
 
-import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
-import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class UserRESTController{
 
     @Autowired
-    UserHolder userHolder;
+    UserManager userManager;
     @Autowired
-    RestaurantHolder restaurantHolder;
+    RestaurantManager restaurantManager;
 
     //////////////////////CART REST CONTROLLER//////////////////////
-
+    /*
     //Get the cart
     @GetMapping("/cart")
     public Collection<Dishes> getDishes(){
@@ -61,15 +58,16 @@ public class UserRESTController{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+    */
     //////////////////////ORDERS REST CONTROLLER//////////////////////
 
     //Get all the orders of the user
     @GetMapping("/orders")
     public Collection<Order> getOrders(){
-        return userHolder.getUser(1).getOrders().values();
+        return userManager.getOrders(1);
     }
 
+    /*
     //Add a new order to the user
     @PostMapping("/proccessOrder")
     public ResponseEntity<Order> proccessOrder(){
@@ -81,15 +79,17 @@ public class UserRESTController{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    */
 
     //////////////////////USER REST CONTROLLER//////////////////////
 
     //Get the user of the ID given
     @GetMapping("/user/{id}")
     public User getUser(@PathVariable long id){
-        return userHolder.getUser(id);
+        return userManager.getUser(id);
     }
 
+    /*
     //Log in a user
     @GetMapping("/login")
     public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password){
@@ -101,20 +101,20 @@ public class UserRESTController{
         }
     }
 
+     */
+
     //Add a new user to the App
     @PostMapping("/register")
     public ResponseEntity<User> newUser(@RequestBody User user){
-        userHolder.addUser(user);
+        userManager.addUser(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     //Update a user profile given (ID)
     @PutMapping("/changeprofile/{id}/")
     public ResponseEntity<User> updateProfile(@PathVariable long id,@RequestBody User newUser){
-        User oldUser= userHolder.getUser(id);
-        if (oldUser!= null) {
-            newUser.setId(id);
-            userHolder.updateUser(id,newUser);
+        User user= userManager.updateUser(id,newUser);
+        if (user!= null) {
             return new ResponseEntity<>(newUser, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -124,7 +124,7 @@ public class UserRESTController{
     //Delete the user given (ID)
     @DeleteMapping("/deleteuser/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable long id) {
-        User user = userHolder.removeUser(id);
+        User user = userManager.removeUser(id);
         if(user != null){
             return new ResponseEntity<>(user,HttpStatus.OK);
         }else{

@@ -35,10 +35,8 @@ public class User {
     private Boolean admin;
 
     //private List<Dishes> cart;
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Order> orders=new ArrayList<>();
-
-
 
 
     //Constructor of user:
@@ -68,9 +66,11 @@ public class User {
     public List<Dishes> allCart(){
         return this.cart;
     }
+    */
+
     //To store the order tha the user has bought in the historial:
 
-    public void addOrder(long id, Order order){
-        this.orders.put(id,order);
-    }*/
+    public void addOrder(Order order){
+        this.orders.add(order);
+    }
 }

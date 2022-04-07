@@ -9,16 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collection;
-
 @Controller
-public class UserController extends RestaurantHolder{
+public class UserController extends RestaurantManager {
 
     @Autowired
-    UserHolder userHolder;
-    @Autowired
-    RestaurantHolder restaurantHolder;
+    UserManager userManager;
 
+    /*
     //Get the cart
     @GetMapping("/carrito")
     public String shoppingCart(Model model){
@@ -37,7 +34,7 @@ public class UserController extends RestaurantHolder{
     //Adding a new dish to the cart, given its id (ID1) and the restaurant id (ID2)
     @GetMapping("/addcarrito/{id1}/{id2}")
     public String addShoppingCart(@PathVariable long id1, @PathVariable long id2){
-        Dishes dish= restaurantHolder.getDish(id1,id2);
+        Dishes dish= restaurantManager.getDish(id2);
         userHolder.addDishToCart(1,dish);
 
         return "addToCartSuccessful";
@@ -47,7 +44,7 @@ public class UserController extends RestaurantHolder{
     //Deleting a new dish from the cart, given its id (ID1) and the restaurant id (ID2)
     @GetMapping("/deletecart/{id1}/{id2}")
     public String deleteShoppingCart(Model model,@PathVariable long id1, @PathVariable long id2){
-        Dishes dish= restaurantHolder.getDish(id1,id2);
+        Dishes dish= restaurantManager.getDish(id2);
         userHolder.deleteDishFromCart(1,dish);
 
         return "deleteCartSuccssesful";
@@ -59,9 +56,10 @@ public class UserController extends RestaurantHolder{
        userHolder.deleteCart(1);
 
        return "deleteCartSuccssesful";
-    }
+    }*/
 
 
+    /*
     //Allows login, getting the username and password as Parameters
     // , and showing diferent results in the HTML depending on the login result
     @PostMapping("/login")
@@ -75,6 +73,8 @@ public class UserController extends RestaurantHolder{
         return "loginResult";
     }
 
+     */
+    /*
     //Get the checkout page, showing a little summary of the cart
     @GetMapping("/payment")
     public String payment(Model model){
@@ -87,15 +87,14 @@ public class UserController extends RestaurantHolder{
         model.addAttribute("total",total);
 
         return "payment-page";
-    }
+    }*/
 
     //Get the profile information (personal data and orders)
     @GetMapping("/profile")
     public String profile(Model model){
-        User user= userHolder.getUser(1);
-
+        User user= userManager.getUser(1);
         model.addAttribute("user",user);
-        model.addAttribute("order",user.getOrders().values());
+        //model.addAttribute("order",user.getOrders().values());
 
         return "profile";
     }
@@ -103,18 +102,14 @@ public class UserController extends RestaurantHolder{
     //Updating the profile, except the password
     @PostMapping("/profile")
     public String updateProfile(Model model, User newUser){
-        newUser.setId(1);
-        newUser.setCart(userHolder.getDishes(1));
-        newUser.setOrders(userHolder.getOrders(1));
-        newUser.setPassword(userHolder.getPassword(1));
-        userHolder.updateUser(1,newUser);
-
-        model.addAttribute("order",newUser.getOrders().values());
-        model.addAttribute("user",newUser);
-
+        userManager.updateUser(1,newUser);
+        User user= userManager.getUser(1);
+        //model.addAttribute("order",newUser.getOrders().values());
+        model.addAttribute("user",user);
         return "profile";
     }
 
+    /*
     //Update just the password, not all the User
     @PostMapping("/forgottenPassword")
     public String updatePassword(@RequestParam String username,@RequestParam String email, @RequestParam String password){
@@ -129,19 +124,22 @@ public class UserController extends RestaurantHolder{
 
         return "login";
     }
+     */
 
+    /*
     @GetMapping("/orderPlaced")
     public String placeOrder(){
-        userHolder.proccessOrder(1);
+        userManager.proccessOrder(1);
         return "orderPlaced";
     }
+    */
 
     @PostMapping("/register")
     public String addUser(User newUser){
-        userHolder.addUser(newUser);
+        userManager.addUser(newUser);
         return "registerSuccessful";
     }
-
+    /*
     //Private function thet calculates all the price of the cart, excluding the shipping taxes
     private int foodCart(){
         User user= userHolder.getUser(1);
@@ -165,5 +163,5 @@ public class UserController extends RestaurantHolder{
         model.addAttribute("total",total);
 
         return "cart";
-    }
+    }*/
 }

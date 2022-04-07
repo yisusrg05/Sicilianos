@@ -1,61 +1,86 @@
 package com.example.pacomerselo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 
 
 @Service
-public class UserHolder {
+public class UserManager {
 
-    private Map<Long,User> users= new ConcurrentHashMap<>();
-    private AtomicLong lastIDUser= new AtomicLong();
-    private AtomicLong lastIDOrder= new AtomicLong();
-    private Map<String,Long> userIDs= new ConcurrentHashMap<>();
+    @Autowired
+    OrderRepository orderRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
     static final int SHIPPING_COSTS = 5;
 
-    public UserHolder(){ //Adding our single user (for now)
-        addUser(new User("Anonimo","Paco","Mérselo","paco@pacomerselo.es","oleole"));
+    public UserManager(){ //Adding our single user (for now)
+        User admin=new User("Anonimo","Paco","Mérselo","paco@pacomerselo.es","oleole");
+
+        userRepository.save(admin);
+
     }
 
     //Adding a user, plus setting its ID, adding it to the user map and adding it to our <Username,ID> map
     public void addUser(User user){
-        long id = lastIDUser.incrementAndGet();
-        user.setId(id);
-        users.put(id,user);
-        userIDs.put(user.getUsername(),id);
+        userRepository.save(user);
     }
 
     public User getUser(long id){
-        return users.get(id);
+        Optional<User> op= userRepository.findById(id);
+        return op.orElse(null);
+
     }
 
-    public User getUser(String user){
-        return users.get(userIDs.get(user));
-    }
 
     public String getPassword(long id){
-        return users.get(id).getPassword();
+        Optional<User> op= userRepository.findById(id);
+        if(op.isPresent()){
+            User user=op.get();
+            return user.getPassword();
+        }
+        else{
+            return null;
+        }
     }
 
     public User removeUser(long id){
-        userIDs.remove(users.get(id).getUsername()); //Remove from the <Username,ID> Map
-        return users.remove(id);
+        Optional<User> op= userRepository.findById(id);
+        if(op.isPresent()){
+            User user=op.get();
+            user.getOrders().size();
+            userRepository.deleteById(id);
+            return user;
+        }else{
+            return null;
+        }
     }
 
     //Updating an existing user
-    public void updateUser(long id,User user){
-        user.setOrders(users.get(id).getOrders());//Set the new User orders to the old one
-        user.setCart(users.get(id).getCart());//Set the new User cart to the old one
-        users.put(id,user);//Overwrite the old user
-        userIDs.put(user.getUsername(),id); //Overwrite the old registe
+    public User updateUser(long id,User newUser){
+        Optional<User> op= userRepository.findById(id);
+        if(op.isPresent()){
+            User user=op.get();
+            user.setName(newUser.getName());
+            user.setPassword(newUser.getPassword());
+            user.setEmail(newUser.getEmail());
+            user.setUsername(newUser.getUsername());
+            user.setSurname(newUser.getSurname());
+            user.setOrders(newUser.getOrders());
+            userRepository.save(user);
+            return user;
+        }
+        else{
+            return null;
+        }
     }
+    /*
 
     //The login function
     public boolean validUser(String username,String password){
@@ -116,9 +141,17 @@ public class UserHolder {
         }
         return validDish;
     }
+    */
 
-    public Map<Long,Order> getOrders (long id){
-        return users.get(id).getOrders();
+    public Collection<Order> getOrders (long id){
+        Optional<User> op= userRepository.findById(id);
+        if(op.isPresent()){
+            User user=op.get();
+            return user.getOrders();
+        }
+        else{
+            return null;
+        }
     }
 
 }

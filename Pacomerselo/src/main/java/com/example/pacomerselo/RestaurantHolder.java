@@ -19,13 +19,13 @@ public class RestaurantHolder {
     public RestaurantHolder(){
         addRestaurant(new Restaurant("La Bonita","Comida Original","Mediterránea"));
         addRestaurant(new Restaurant("Fellina","Comida Italiana Sofisticada","Italiana"));
-        addDish(1, new Dishes("Croquetas Gourmet", "6ud",12));
-        addDish(1, new Dishes("Ensalada de Burrata", "Con miel y trufa",20));
-        addDish(1, new Dishes("Solomillo de Ternera", "Con patatas baby especiadas",25));
-        addDish(1, new Dishes("Cappellacci", "Relleno de verduras",15));
-        addDish(2, new Dishes("Ensalada de Queso de Cabra", "Con tomate y rúcula",17));
-        addDish(2, new Dishes("Pappardelle", "Con ternera y queso",19));
-        addDish(2, new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9));
+        addDish(1, new Dishes("Croquetas Gourmet", "6ud",12,"Entrante"));
+        addDish(1, new Dishes("Ensalada de Burrata", "Con miel y trufa",20,"Entrante"));
+        addDish(1, new Dishes("Solomillo de Ternera", "Con patatas baby especiadas",25,"Principal"));
+        addDish(1, new Dishes("Cappellacci", "Relleno de verduras",15,"Principal"));
+        addDish(2, new Dishes("Ensalada de Queso de Cabra", "Con tomate y rúcula",17,"Entrante"));
+        addDish(2, new Dishes("Pappardelle", "Con ternera y queso",19,"Principal"));
+        addDish(2, new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9,"Entrante"));
     }
 
     //Adding a new restaurant and giving it its unique ID

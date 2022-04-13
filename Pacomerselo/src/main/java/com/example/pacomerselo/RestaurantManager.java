@@ -31,13 +31,13 @@ public class RestaurantManager {
 
 
 
-        Dishes dish11=new Dishes("Croquetas Gourmet", "6ud",12,"Entrante");
-        Dishes dish12=new Dishes("Ensalada de Burrata", "Con miel y trufa",20,"Entrante");
-        Dishes dish13=new Dishes("Solomillo de Ternera", "Con patatas baby especiadas",25,"Principal");
-        Dishes dish14=new Dishes("Cappellacci", "Relleno de verduras",15,"Principal");
-        Dishes dish21=new Dishes("Ensalada de Queso de Cabra", "Con tomate y rúcula",17,"Entrante");
-        Dishes dish22=new Dishes("Pappardelle", "Con ternera y queso",19,"Principal");
-        Dishes dish23= new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9,"Entrante");
+        Dishes dish11=new Dishes("Croquetas Gourmet", "6ud",12,DishType.STARTER);
+        Dishes dish12=new Dishes("Ensalada de Burrata", "Con miel y trufa",20,DishType.STARTER);
+        Dishes dish13=new Dishes("Solomillo de Ternera", "Con patatas baby especiadas",25,DishType.PRINCIPAL);
+        Dishes dish14=new Dishes("Cappellacci", "Relleno de verduras",15,DishType.PRINCIPAL);
+        Dishes dish21=new Dishes("Ensalada de Queso de Cabra", "Con tomate y rúcula",17,DishType.STARTER);
+        Dishes dish22=new Dishes("Pappardelle", "Con ternera y queso",19,DishType.PRINCIPAL);
+        Dishes dish23= new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9,DishType.STARTER);
 
         laBonita.add(dish11);
         laBonita.add(dish12);

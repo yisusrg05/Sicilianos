@@ -37,6 +37,14 @@
             <form action="/restaurant/{{id}}" method="post">
                 <div class="mb-3"><label class="form-label" >Nombre</label><input class="form-control item" type="text" name="name"></div>
                 <div class="mb-3"><label class="form-label" >Descripción</label><input class="form-control item" type="text" name="description"></div>
+                <div class="mb-3"> <label >Tipo de Plato</label><br>
+                    <select name="type" id="type">
+                        <option value="select">--Seleccione el Tipo de Plato--</option>
+                        <option value="starter">Entrante</option>
+                        <option value="main">Principal</option>
+                        <option value="dessert">Postre</option>
+                    </select>
+                </div><br>
                 <div class="mb-3"><label class="form-label" >Precio</label><input class="form-control item" type="number" name="price"></div><button class="btn btn-outline-warning" type="submit">Registrar</button>
             </form>
         </div>

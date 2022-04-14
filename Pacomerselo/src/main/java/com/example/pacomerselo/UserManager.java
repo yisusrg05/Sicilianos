@@ -3,6 +3,7 @@ package com.example.pacomerselo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -20,7 +21,8 @@ public class UserManager {
 
     static final int SHIPPING_COSTS = 5;
 
-    public UserManager(){ //Adding our single user (for now)
+    @PostConstruct
+    public void init(){ //Adding our single user (for now)
         User admin=new User("Anonimo","Paco","Mérselo","paco@pacomerselo.es","oleole");
 
         userRepository.save(admin);

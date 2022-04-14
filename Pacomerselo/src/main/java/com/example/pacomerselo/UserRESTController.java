@@ -17,6 +17,7 @@ public class UserRESTController{
     @Autowired
     RestaurantManager restaurantManager;
 
+
     //////////////////////CART REST CONTROLLER//////////////////////
     /*
     //Get the cart

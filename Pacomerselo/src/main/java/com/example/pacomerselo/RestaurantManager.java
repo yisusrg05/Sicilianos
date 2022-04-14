@@ -4,6 +4,7 @@ package com.example.pacomerselo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -21,15 +22,10 @@ public class RestaurantManager {
     DishesRepository dishesRepository;
 
     //Adding the default restaurants and dishes
-    public RestaurantManager(){
+    @PostConstruct
+    public void init(){
         Restaurant laBonita=new Restaurant("La Bonita","Comida Original","Mediterránea");
         Restaurant fellina=new Restaurant("Fellina","Comida Italiana Sofisticada","Italiana");
-
-        restaurantRepository.save(laBonita);
-
-        restaurantRepository.save(fellina);
-
-
 
         Dishes dish11=new Dishes("Croquetas Gourmet", "6ud",12,DishType.STARTER);
         Dishes dish12=new Dishes("Ensalada de Burrata", "Con miel y trufa",20,DishType.STARTER);
@@ -48,6 +44,10 @@ public class RestaurantManager {
         fellina.add(dish22);
         fellina.add(dish23);
 
+        restaurantRepository.save(laBonita);
+
+        restaurantRepository.save(fellina);
+
         dishesRepository.save(dish11);
         dishesRepository.save(dish12);
         dishesRepository.save(dish13);
@@ -55,6 +55,8 @@ public class RestaurantManager {
         dishesRepository.save(dish21);
         dishesRepository.save(dish22);
         dishesRepository.save(dish23);
+
+
 
     }
 

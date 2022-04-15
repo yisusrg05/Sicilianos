@@ -92,7 +92,7 @@ public class UserController extends RestaurantManager {
     //Get the profile information (personal data and orders)
     @GetMapping("/profile")
     public String profile(Model model){
-        User user= userManager.getUser(1);
+        User user= userManager.getUser(10);
         model.addAttribute("user",user);
         //model.addAttribute("order",user.getOrders().values());
 
@@ -102,8 +102,8 @@ public class UserController extends RestaurantManager {
     //Updating the profile, except the password
     @PostMapping("/profile")
     public String updateProfile(Model model, User newUser){
-        userManager.updateUser(1,newUser);
-        User user= userManager.getUser(1);
+        userManager.updateUser(10,newUser);
+        User user= userManager.getUser(10);
         //model.addAttribute("order",newUser.getOrders().values());
         model.addAttribute("user",user);
         return "profile";

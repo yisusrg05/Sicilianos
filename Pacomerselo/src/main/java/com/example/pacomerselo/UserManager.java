@@ -24,7 +24,6 @@ public class UserManager {
     @PostConstruct
     public void init(){ //Adding our single user (for now)
         User admin=new User("Anonimo","Paco","Mérselo","paco@pacomerselo.es","oleole");
-
         userRepository.save(admin);
 
     }
@@ -70,11 +69,9 @@ public class UserManager {
         if(op.isPresent()){
             User user=op.get();
             user.setName(newUser.getName());
-            user.setPassword(newUser.getPassword());
             user.setEmail(newUser.getEmail());
             user.setUsername(newUser.getUsername());
             user.setSurname(newUser.getSurname());
-            user.setOrders(newUser.getOrders());
             userRepository.save(user);
             return user;
         }

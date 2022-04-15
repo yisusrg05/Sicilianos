@@ -27,6 +27,10 @@ public class RestaurantManager {
         Restaurant laBonita=new Restaurant("La Bonita","Comida Original","Mediterránea");
         Restaurant fellina=new Restaurant("Fellina","Comida Italiana Sofisticada","Italiana");
 
+        restaurantRepository.save(laBonita);
+
+        restaurantRepository.save(fellina);
+
         Dishes dish11=new Dishes("Croquetas Gourmet", "6ud",12,DishType.STARTER);
         Dishes dish12=new Dishes("Ensalada de Burrata", "Con miel y trufa",20,DishType.STARTER);
         Dishes dish13=new Dishes("Solomillo de Ternera", "Con patatas baby especiadas",25,DishType.PRINCIPAL);
@@ -40,13 +44,20 @@ public class RestaurantManager {
         laBonita.add(dish13);
         laBonita.add(dish14);
 
+        dish11.setRestaurant(laBonita);
+        dish12.setRestaurant(laBonita);
+        dish13.setRestaurant(laBonita);
+        dish14.setRestaurant(laBonita);
+
         fellina.add(dish21);
         fellina.add(dish22);
         fellina.add(dish23);
 
-        restaurantRepository.save(laBonita);
+        dish21.setRestaurant(fellina);
+        dish22.setRestaurant(fellina);
+        dish23.setRestaurant(fellina);
 
-        restaurantRepository.save(fellina);
+
 
         dishesRepository.save(dish11);
         dishesRepository.save(dish12);

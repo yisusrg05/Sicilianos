@@ -1,0 +1,30 @@
+
+ .greek-symbols {
+        list-style-type:lower-greek;
+      }
+
+      .background-grey li:nth-child(2n) {
+        background-color: #ccc;
+      }
+
+      cite {
+        background-color: #eee;
+        padding: 10px 10px;
+        position: relative;
+        border-radius: 10px;
+      }
+
+      .autor {
+        position: absolute;
+        bottom: -15px;
+        text-align: right;
+        right: 5px;
+      }
+
+      .left {
+        float: left;
+      }
+
+      .right {
+        float: right;
+      }

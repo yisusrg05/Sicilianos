@@ -47,7 +47,9 @@
                                 <h3>{{name}}</h3>
                             </div>
                             <div class="image"><img class="img-fluid d-block mx-auto" src="../assets/img/restaurants/{{id}}.jpg"></div>
+                            <div id="editor">
                             <p>{{description}}</p>
+                            </div>
                             <div class="features">
                                 <h4><span class="feature">Tipo de comida: </span><span>{{type}}</span></h4>
                             </div>
@@ -102,6 +104,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 <script src="assets/js/vanilla-zoom.js"></script>
 <script src="assets/js/theme.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
 </body>
 
 </html>

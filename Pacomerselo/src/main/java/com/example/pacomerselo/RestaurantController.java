@@ -40,6 +40,15 @@ public class RestaurantController {
         return "catalog-page";
     }
 
+    @PostMapping("/restaurant/{id1}/search")
+    public String restaurantDishesSearch(Model model, @PathVariable long id1, @RequestParam String name){
+        Restaurant restaurant=restaurantManager.getRestaurant(id1);
+        Collection<Dishes> dishes = restaurantRepository.findbyNameDish(restaurant,name);
+        model.addAttribute("dishes",dishes);
+        model.addAttribute("id1",id1);
+        return "catalog-page";
+    }
+
     //Add a new restaurant
     @PostMapping("/restaurant")
     public String addRestaurant (Model model, Restaurant restaurant){

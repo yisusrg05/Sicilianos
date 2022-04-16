@@ -22,47 +22,6 @@ public class RestaurantManager{
     DishesRepository dishesRepository;
 
     //Adding the default restaurants and dishes
-    @PostConstruct
-    public void init(){
-        Restaurant laBonita=new Restaurant("La Bonita","Comida Original","Mediterránea");
-        Restaurant fellina=new Restaurant("Fellina","Comida Italiana Sofisticada","Italiana");
-
-        restaurantRepository.save(laBonita);
-
-        Dishes dish11=new Dishes("Croquetas Gourmet", "6ud",12,DishType.STARTER);
-        Dishes dish12=new Dishes("Ensalada de Burrata", "Con miel y trufa",20,DishType.STARTER);
-        Dishes dish13=new Dishes("Solomillo de Ternera", "Con patatas baby especiadas",25,DishType.PRINCIPAL);
-        Dishes dish14=new Dishes("Cappellacci", "Relleno de verduras",15,DishType.PRINCIPAL);
-        Dishes dish21=new Dishes("Ensalada de Queso de Cabra", "Con tomate y rúcula",17,DishType.STARTER);
-        Dishes dish22=new Dishes("Pappardelle", "Con ternera y queso",19,DishType.PRINCIPAL);
-        Dishes dish23= new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9,DishType.DESSERT);
-
-        laBonita.add(dish11);
-        laBonita.add(dish12);
-        laBonita.add(dish13);
-        laBonita.add(dish14);
-
-        dish11.setRestaurant(laBonita);
-        dish12.setRestaurant(laBonita);
-        dish13.setRestaurant(laBonita);
-        dish14.setRestaurant(laBonita);
-        restaurantRepository.save(fellina);
-        fellina.add(dish21);
-        fellina.add(dish22);
-        fellina.add(dish23);
-
-        dish21.setRestaurant(fellina);
-        dish22.setRestaurant(fellina);
-        dish23.setRestaurant(fellina);
-
-        dishesRepository.save(dish11);
-        dishesRepository.save(dish12);
-        dishesRepository.save(dish13);
-        dishesRepository.save(dish14);
-        dishesRepository.save(dish21);
-        dishesRepository.save(dish22);
-        dishesRepository.save(dish23);
-    }
 
     //Adding a new restaurant and giving it its unique ID
     public void addRestaurant(Restaurant restaurant){

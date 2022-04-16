@@ -94,7 +94,7 @@ public class UserController extends RestaurantManager {
     public String profile(Model model){
         User user= userManager.getUser(10);
         model.addAttribute("user",user);
-        //model.addAttribute("order",user.getOrders().values());
+        model.addAttribute("order", userManager.orderRepository.findbyNameRestaurant(user));
 
         return "profile";
     }

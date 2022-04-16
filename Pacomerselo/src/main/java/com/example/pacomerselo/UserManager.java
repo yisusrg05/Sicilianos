@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 
 @Service
-public class UserManager {
+public class UserManager extends RestaurantManager{
 
     @Autowired
     OrderRepository orderRepository;
@@ -19,14 +19,8 @@ public class UserManager {
     @Autowired
     UserRepository userRepository;
 
+
     static final int SHIPPING_COSTS = 5;
-
-    @PostConstruct
-    public void init(){ //Adding our single user (for now)
-        User admin=new User("Anonimo","Paco","Mérselo","paco@pacomerselo.es","oleole");
-        userRepository.save(admin);
-
-    }
 
     //Adding a user, plus setting its ID, adding it to the user map and adding it to our <Username,ID> map
     public void addUser(User user){

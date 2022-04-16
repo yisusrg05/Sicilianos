@@ -36,7 +36,7 @@ public class User {
 
     //private List<Dishes> cart;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<Order> orders=new ArrayList<>();
+    private List<Order> orders;
 
 
     //Constructor of user:
@@ -48,6 +48,7 @@ public class User {
         this.email=email;
         this.password=password;
         this.admin=false;
+        this.orders=new ArrayList<>();
         //this.cart=new ArrayList<>();
     }
     /*

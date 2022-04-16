@@ -6,15 +6,11 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum DishType {
-    STARTER(0,"Entrante"),
-    PRINCIPAL(1,"Principal"),
-    DESSERT(2,"Postre");
+    STARTER("Entrante"),
+    MAIN("Principal"),
+    DESSERT("Postre");
 
-    int code;
-    String label;
 
-    //★ Point 1
-    public String getName() {
-        return name();
-    }
+    public String label;
+
 }

@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Carta - Paco M&eacute;rselo</title>
-    <link rel="shortcut icon" href="../assets/img/scenery/logo.jpg">
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="../../assets/img/scenery/logo.jpg">
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-    <link rel="stylesheet" href="../assets/fonts/simple-line-icons.min.css">
-    <link rel="stylesheet" href="../https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href="../assets/css/untitled.css">
-    <link rel="stylesheet" href="../assets/css/vanilla-zoom.min.css">
+    <link rel="stylesheet" href="../../assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="../../https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href="../../assets/css/untitled.css">
+    <link rel="stylesheet" href="../../assets/css/vanilla-zoom.min.css">
 </head>
 
 <body>
@@ -36,11 +36,34 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-11">
-                    <input class=" border-dark d-block w-100"  width= 200px style="margin:10px" type ="search" placeholder="Buscar Plato">
+                    <form method="post" action="/restaurant/{{id1}}/search">
+                        <label>
+                            <input class=" border-dark d-block w-100"  width= 200px style="margin:10px" type="text" placeholder="Buscar Restaurante" name="name">
+                        </label>
+                        <button class="btn btn-outline-warning" type="submit">Buscar</button>
+                    </form>
                 </div>
             </div>
             <div class="content">
                 <div class="row justify-content-evenly">
+                    <div class="row">
+                        <div class=" col-12 col-md-2">
+                            <div class="card px-2">
+                                <h2 class="text-center">Filter by</h2>
+                                <hr>
+                                <h4>Price:</h4>
+                                <div class="card-body">
+                                    <form id="price-range-form">
+                                        <label for="min-price" class="form-label">Min price: </label>
+                                        <span id="min-price-txt">$0</span>
+                                        <input type="range" class="form-range" min="0" max="99" id="min-price" step="1" value="0">
+                                        <label for="max-price" class="form-label">Max price: </label>
+                                        <span id="max-price-txt">$100</span>
+                                        <input type="range" class="form-range" min="1" max="100" id="max-price" step="1" value="100">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     <div class="col-md-9">
                         <div class="products">
                             <ul>
@@ -107,10 +130,10 @@
         <p>© 2022 Paco Mérselo.</p>
     </div>
 </footer>
-<script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-<script src="../assets/js/vanilla-zoom.js"></script>
-<script src="../assets/js/theme.js"></script>
+<script src="../../assets/js/vanilla-zoom.js"></script>
+<script src="../../assets/js/theme.js"></script>
 </body>
 
 </html>

@@ -21,10 +21,10 @@ public class RestaurantRepositoryImpl{
         return query.setParameter("nombre",nombre).getResultList();
     }
 
-    public List<Dishes> findbyNameDish(Long id,String nombre) {
+    public List<Dishes> findbyNameDish(Restaurant restaurant,String nombre) {
         TypedQuery<Dishes> query= entityManager.createQuery
-                ("SELECT d FROM Dishes d WHERE d.restaurant=:idRest AND (d.name LIKE CONCAT('%',:nombre,'%'))",Dishes.class);
-        return query.setParameter("nombre",nombre).setParameter("idRest",id).getResultList();
+                ("SELECT d FROM Dishes d WHERE d.restaurant=:restaurant AND (d.name LIKE CONCAT('%',:nombre,'%'))",Dishes.class);
+        return query.setParameter("nombre",nombre).setParameter("restaurant",restaurant).getResultList();
     }
 
     public List<Dishes> findbyPriceRangeDish(Long id,int top, int bottom) {

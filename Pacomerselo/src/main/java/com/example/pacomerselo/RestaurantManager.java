@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class RestaurantManager {
+public class RestaurantManager{
 
 
     @Autowired
@@ -27,7 +27,7 @@ public class RestaurantManager {
         Restaurant laBonita=new Restaurant("La Bonita","Comida Original","Mediterránea");
         Restaurant fellina=new Restaurant("Fellina","Comida Italiana Sofisticada","Italiana");
 
-        //restaurantRepository.save(laBonita);
+        restaurantRepository.save(laBonita);
 
         Dishes dish11=new Dishes("Croquetas Gourmet", "6ud",12,DishType.STARTER);
         Dishes dish12=new Dishes("Ensalada de Burrata", "Con miel y trufa",20,DishType.STARTER);
@@ -35,7 +35,7 @@ public class RestaurantManager {
         Dishes dish14=new Dishes("Cappellacci", "Relleno de verduras",15,DishType.PRINCIPAL);
         Dishes dish21=new Dishes("Ensalada de Queso de Cabra", "Con tomate y rúcula",17,DishType.STARTER);
         Dishes dish22=new Dishes("Pappardelle", "Con ternera y queso",19,DishType.PRINCIPAL);
-        Dishes dish23= new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9,DishType.STARTER);
+        Dishes dish23= new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9,DishType.DESSERT);
 
         laBonita.add(dish11);
         laBonita.add(dish12);
@@ -55,10 +55,10 @@ public class RestaurantManager {
         dish22.setRestaurant(fellina);
         dish23.setRestaurant(fellina);
 
-        //dishesRepository.save(dish11);
-        //dishesRepository.save(dish12);
-        //dishesRepository.save(dish13);
-        //dishesRepository.save(dish14);
+        dishesRepository.save(dish11);
+        dishesRepository.save(dish12);
+        dishesRepository.save(dish13);
+        dishesRepository.save(dish14);
         dishesRepository.save(dish21);
         dishesRepository.save(dish22);
         dishesRepository.save(dish23);

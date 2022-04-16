@@ -26,7 +26,6 @@ public class Dishes {
     private int price;
     private DishType type;
 
-
     @ManyToOne
     private Restaurant restaurant;
 
@@ -41,6 +40,5 @@ public class Dishes {
         this.description=description;
         this.price=price;
         this.type=type;
-
     }
 }

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 import java.util.Collection;
 
 @Controller
@@ -11,11 +13,20 @@ public class RestaurantController {
 
     @Autowired
     RestaurantManager restaurantManager;
+    @Autowired
+    RestaurantRepositoryImpl restaurantRepository;
 
     //Get all the restaurants available
     @GetMapping("/restaurant")
     public String restaurant(Model model){
         Collection<Restaurant> restaurants=restaurantManager.getRestaurants();
+        model.addAttribute("restaurants",restaurants);
+        return "pricing";
+    }
+
+    @PostMapping("/restaurant/search")
+    public String restaurantSearch(Model model, @RequestParam String name){
+        Collection<Restaurant> restaurants=restaurantRepository.findbyNameRestaurant(name);
         model.addAttribute("restaurants",restaurants);
         return "pricing";
     }
@@ -41,6 +52,7 @@ public class RestaurantController {
     //Add a new dish to the restaurant given(
     @PostMapping("/restaurant/{id}")
     public String addDish (Model model, @PathVariable long id, Dishes dish){
+        dish.setRestaurant(restaurantManager.getRestaurant(id));
         restaurantManager.addDish(id,dish);
         Collection<Dishes> dishes = restaurantManager.getDishes(id);
         model.addAttribute("dishes",dishes);
@@ -122,6 +134,7 @@ public class RestaurantController {
     @GetMapping("/{id}/registerDish")
     public String registerDish(Model model, @PathVariable long id){
         model.addAttribute("id",id);
+        model.addAttribute("types", Arrays.asList(DishType.values()));
         return "registrationDish";
     }
 

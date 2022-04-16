@@ -1,13 +1,20 @@
 package com.example.pacomerselo;
 
-public enum DishType {
-    STARTER, PRINCIPAL, DESSERT;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-    public String toString(){
-        switch (this){
-            case STARTER: return "Entrante";
-            case DESSERT: return "Postre";
-            default: return "Principal";
-        }
+@AllArgsConstructor
+@Getter
+public enum DishType {
+    STARTER(0,"Entrante"),
+    PRINCIPAL(1,"Principal"),
+    DESSERT(2,"Postre");
+
+    int code;
+    String label;
+
+    //★ Point 1
+    public String getName() {
+        return name();
     }
 }

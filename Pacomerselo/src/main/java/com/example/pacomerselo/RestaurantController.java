@@ -1,5 +1,7 @@
 package com.example.pacomerselo;
 
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,8 @@ public class RestaurantController {
     RestaurantManager restaurantManager;
     @Autowired
     RestaurantRepositoryImpl restaurantRepository;
+
+    private PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
 
     //Get all the restaurants available
     @GetMapping("/restaurant")
@@ -53,6 +57,7 @@ public class RestaurantController {
     //Add a new restaurant
     @PostMapping("/restaurant")
     public String addRestaurant (Model model, Restaurant restaurant){
+        restaurant.setDescription(policy.sanitize(restaurant.getDescription()));
         restaurantManager.addRestaurant(restaurant);
         Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
         model.addAttribute("restaurants",restaurants);
@@ -63,6 +68,7 @@ public class RestaurantController {
     @PostMapping("/restaurant/{id}")
     public String addDish (Model model, @PathVariable long id, Dishes dish){
         dish.setRestaurant(restaurantManager.getRestaurant(id));
+        dish.setDescription(policy.sanitize(dish.getDescription()));
         restaurantManager.addDish(id,dish);
         Collection<Dishes> dishes = restaurantManager.getDishes(id);
         model.addAttribute("dishes",dishes);
@@ -73,6 +79,7 @@ public class RestaurantController {
     //Update an already existing dish (ID2) from a given restaurant (ID1)
     @PostMapping("/restaurant/{id1}/updateDish/{id2}")
     public String updateDish(Model model, @PathVariable long id1, @PathVariable long id2, Dishes newDish) {
+        newDish.setDescription(policy.sanitize(newDish.getDescription()));
         restaurantManager.updateDish(id2,newDish);
         Collection<Dishes> dishes = restaurantManager.getDishes(id1);
 
@@ -99,6 +106,7 @@ public class RestaurantController {
     //Update an already existing restaurant given the ID
     @PostMapping("/updateRestaurant/{id}")
     public String putRestaurant (Model model,@PathVariable long id,Restaurant newRestaurant){
+        newRestaurant.setDescription(policy.sanitize(newRestaurant.getDescription()));
         restaurantManager.updateRestaurant(id,newRestaurant);
         Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
 

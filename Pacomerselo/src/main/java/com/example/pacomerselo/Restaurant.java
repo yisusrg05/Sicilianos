@@ -24,7 +24,7 @@ public class Restaurant {
     private String description;
     private String type;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "restaurant")
+    @OneToMany(cascade = CascadeType.DETACH,mappedBy = "restaurant")
     private List<Dishes> dishesList=new ArrayList<>();
 
     //Constructor for Restaurant:

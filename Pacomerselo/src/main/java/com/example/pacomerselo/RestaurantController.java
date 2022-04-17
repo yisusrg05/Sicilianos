@@ -155,6 +155,10 @@ public class RestaurantController {
     public String incorrectEmailOPassword(){
         return "incorrectEmailoPassword";
     }
+    @GetMapping("/alredyExistingUser")
+    public String alredyExistingUser(){
+        return "alredyExistingUser";
+    }
 
     @GetMapping ("/registerRestaurant")
     public String registerRestaurant(){

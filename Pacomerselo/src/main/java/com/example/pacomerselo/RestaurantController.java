@@ -151,6 +151,10 @@ public class RestaurantController {
     public String cartInConstruction(){
         return "cartInConstruction";
     }
+    @GetMapping("/incorrectEmailOPassword")
+    public String incorrectEmailOPassword(){
+        return "incorrectEmailoPassword";
+    }
 
     @GetMapping ("/registerRestaurant")
     public String registerRestaurant(){

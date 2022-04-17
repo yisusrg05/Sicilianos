@@ -64,10 +64,23 @@ public class UserManager extends RestaurantManager{
             User user=op.get();
             user.setName(newUser.getName());
             user.setEmail(newUser.getEmail());
-            user.setUsername(newUser.getUsername());
             user.setSurname(newUser.getSurname());
             userRepository.save(user);
             return user;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public User updateUserPassword(User user,String password){
+        long id= user.getId();
+        Optional<User> op= userRepository.findById(id);
+        if(op.isPresent()){
+            User validUser=op.get();
+            validUser.setPassword(password);
+            userRepository.save(validUser);
+            return validUser;
         }
         else{
             return null;

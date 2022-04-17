@@ -14,8 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @Setter
 @Entity
-
-
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
 public class User {
     /*The entity user has his own attributes: username (as we want the user get registered with it), name, surname,
     email, password, a Map called orders: it's key is a long, which is an ID to identify de order and the Value
@@ -27,7 +26,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(unique = true)
     private String username;
+
     private String name;
     private String surname;
     private String email;

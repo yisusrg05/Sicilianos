@@ -3,6 +3,9 @@ package com.example.pacomerselo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 public enum DishType {
@@ -20,5 +23,13 @@ public enum DishType {
 
 
     public String label;
+
+    public List<String> types(){
+        List<String> types= new ArrayList<>();
+        for (DishType dt : DishType.values()){
+            types.add(dt.label);
+        }
+        return types;
+    }
 
 }

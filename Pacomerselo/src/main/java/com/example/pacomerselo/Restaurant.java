@@ -10,7 +10,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Data
 @NoArgsConstructor
 @Getter
 @Setter
@@ -25,7 +24,7 @@ public class Restaurant {
     private String description;
     private String type;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "restaurant")
+    @OneToMany(cascade = CascadeType.DETACH,mappedBy = "restaurant")
     private List<Dishes> dishesList=new ArrayList<>();
 
     //Constructor for Restaurant:

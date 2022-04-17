@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Controller
 public class RestaurantController {
@@ -72,7 +73,6 @@ public class RestaurantController {
     //Update an already existing dish (ID2) from a given restaurant (ID1)
     @PostMapping("/restaurant/{id1}/updateDish/{id2}")
     public String updateDish(Model model, @PathVariable long id1, @PathVariable long id2, Dishes newDish) {
-
         restaurantManager.updateDish(id2,newDish);
         Collection<Dishes> dishes = restaurantManager.getDishes(id1);
 
@@ -143,7 +143,8 @@ public class RestaurantController {
     @GetMapping("/{id}/registerDish")
     public String registerDish(Model model, @PathVariable long id){
         model.addAttribute("id",id);
-        model.addAttribute("types", Arrays.asList(DishType.values()));
+        List<String> list=DishType.DESSERT.types();
+        model.addAttribute("types", list);
         return "registrationDish";
     }
 
@@ -167,7 +168,9 @@ public class RestaurantController {
     @GetMapping ("/restaurant/{id1}/updateDish/{id2}")
     public String updateDishes(Model model, @PathVariable long id1 /*Restaurant ID*/, @PathVariable long id2/*Dish ID*/){
         Dishes dish = restaurantManager.getDish(id2);
+        List<String> list=DishType.DESSERT.types();
 
+        model.addAttribute("types", list);
         model.addAttribute("id1",id1);
         model.addAttribute("id2",id2);
         model.addAttribute("dish",dish);

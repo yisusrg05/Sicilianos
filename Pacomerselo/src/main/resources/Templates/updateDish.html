@@ -31,12 +31,22 @@
     <section class="clean-block clean-form dark">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-muted">Añade un nuevo plato</h2>
-                <p>Añade un nuevo plato a tu restaurante</p>
+                <h2 class="text-muted">Actualiza un plato</h2>
+                <p>Dale un toque nuevo a un plato de la carta</p>
             </div>
+
             <form action="/restaurant/{{id1}}/updateDish/{{id2}}" method="post">
-                <div class="mb-3"><label class="form-label" >Nombre</label><input class="form-control item" type="text" name="name" placeholder="{{dish.name}}"></div>
-                <div class="mb-3"><label class="form-label" >Descripción</label><input class="form-control item" type="text" name="description" placeholder="{{dish.description}}"></div>
+                <div class="mb-3"><label class="form-label" >Nombre</label><input class="form-control item" placeholder="{{dish.name}}" value="{{dish.name}}" disabled></div>
+                <div class="mb-3"><label class="form-label" >Descripción</label><input class="form-control item" type="text" name="description" placeholder="{{dish.description}}" value="{{dish.description}}"></div>
+                <div class="mb-3"> <label >Tipo de Plato</label><br>
+                    <label>
+                        <select id="type" name="type" type="text">
+                            {{#types}}
+                            <option value="{{.}}">{{.}}</option>
+                            {{/types}}
+                        </select>
+                    </label>
+                </div>
                 <div class="mb-3"><label class="form-label" >Precio</label><input class="form-control item" type="number" name="price" placeholder="{{dish.price}}"></div><button class="btn btn-outline-warning" type="submit">Registrar</button>
             </form>
         </div>

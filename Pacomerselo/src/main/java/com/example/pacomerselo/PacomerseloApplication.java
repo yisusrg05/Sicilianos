@@ -23,13 +23,13 @@ public class PacomerseloApplication {
 
         restaurantRepository.save(laBonita);
 
-        Dishes dish11=new Dishes("Croquetas Gourmet", "6ud",12,DishType.STARTER);
-        Dishes dish12=new Dishes("Ensalada de Burrata", "Con miel y trufa",20,DishType.STARTER);
-        Dishes dish13=new Dishes("Solomillo de Ternera", "Con patatas baby especiadas",25,DishType.MAIN);
-        Dishes dish14=new Dishes("Cappellacci", "Relleno de verduras",15,DishType.MAIN);
-        Dishes dish21=new Dishes("Ensalada de Queso de Cabra", "Con tomate y rúcula",17,DishType.STARTER);
-        Dishes dish22=new Dishes("Pappardelle", "Con ternera y queso",19,DishType.MAIN);
-        Dishes dish23= new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9,DishType.DESSERT);
+        Dishes dish11=new Dishes("Croquetas Gourmet", "6ud",12,DishType.STARTER.label);
+        Dishes dish12=new Dishes("Ensalada de Burrata", "Con miel y trufa",20,DishType.STARTER.label);
+        Dishes dish13=new Dishes("Solomillo de Ternera", "Con patatas baby especiadas",25,DishType.MAIN.label);
+        Dishes dish14=new Dishes("Cappellacci", "Relleno de verduras",15,DishType.MAIN.label);
+        Dishes dish21=new Dishes("Ensalada de Queso de Cabra", "Con tomate y rúcula",17,DishType.STARTER.label);
+        Dishes dish22=new Dishes("Pappardelle", "Con ternera y queso",19,DishType.MAIN.label);
+        Dishes dish23= new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9,DishType.DESSERT.label);
 
         laBonita.add(dish11);
         laBonita.add(dish12);
@@ -64,9 +64,6 @@ public class PacomerseloApplication {
         Order order1= new Order();
         Order order2= new Order();
         Order order3= new Order(34);
-
-        List<Dishes> dishesList1= Arrays.asList(dish11,dish13,dish22);
-        List<Dishes> dishesList2= Arrays.asList(dish11,dish14,dish21);
 
         order1.add(dish11);
         order1.add(dish13);

@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlIDREF;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @NoArgsConstructor
 @Setter
 @Getter
@@ -25,7 +24,7 @@ public class Dishes {
     private String name;
     private String description;
     private int price;
-    private DishType type;
+    private String type;
 
     @ManyToOne
     private Restaurant restaurant;
@@ -36,7 +35,7 @@ public class Dishes {
     //2 public constructors for Dishes: The first one receive name, description and price.
     //The second one the same as the first and also the id of the dish and the id of the Restaurant
 
-    public Dishes(String name, String description, int price, DishType type){
+    public Dishes(String name, String description, int price, String type){
         this.name=name;
         this.description=description;
         this.price=price;

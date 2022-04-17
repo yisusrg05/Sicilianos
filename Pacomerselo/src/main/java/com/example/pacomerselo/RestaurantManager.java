@@ -42,6 +42,9 @@ public class RestaurantManager{
         if(op.isPresent()){
             Restaurant restaurant=op.get();
             restaurant.getDishesList().size();
+            for(Dishes d : restaurant.getDishesList()){
+                d.setRestaurant(null);
+            }
             restaurantRepository.deleteById(id);
             return restaurant;
         }else{
@@ -69,8 +72,8 @@ public class RestaurantManager{
         Optional<Restaurant> op= restaurantRepository.findById(idRestaurant);
         if(op.isPresent()){
             Restaurant restaurant=op.get();
-            dishesRepository.save(dish);
             restaurant.add(dish);
+            dishesRepository.save(dish);
             restaurantRepository.save(restaurant);
             return restaurant;
         }else{
@@ -91,7 +94,8 @@ public class RestaurantManager{
         Optional<Dishes> op= dishesRepository.findById(id);
         if(op.isPresent()){
             Dishes dish=op.get();
-            dishesRepository.deleteById(id);
+            dish.setRestaurant(null);
+            dishesRepository.save(dish);
             return dish;
         }
         else{
@@ -103,7 +107,6 @@ public class RestaurantManager{
         Optional<Dishes> op= dishesRepository.findById(idDish);
         if(op.isPresent()){
             Dishes dish=op.get();
-            dish.setName(newDish.getName());
             dish.setDescription(newDish.getDescription());
             dish.setType(newDish.getType());
             dish.setPrice(newDish.getPrice());

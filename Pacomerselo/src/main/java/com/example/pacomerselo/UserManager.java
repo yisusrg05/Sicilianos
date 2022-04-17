@@ -140,7 +140,7 @@ public class UserManager extends RestaurantManager{
         Optional<User> op= userRepository.findById(id);
         if(op.isPresent()){
             User user=op.get();
-            return user.getOrders();
+            return orderRepository.findbyNameRestaurant(user);
         }
         else{
             return null;

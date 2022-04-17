@@ -35,14 +35,15 @@ public class Order {
     private List<Dishes> dishes=new ArrayList<>();
 
     public Order(){
-        this.price=0;
+        this.price=5;
     }
 
     public Order(int price){
-        this.price=price;
+        this.price=price+5;
     }
 
     public void add(Dishes dish){
         this.dishes.add(dish);
+        this.price+=dish.getPrice();
     }
 }

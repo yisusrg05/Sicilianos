@@ -104,27 +104,26 @@ public class UserController extends RestaurantManager {
     public String updateProfile(Model model, User newUser){
         userManager.updateUser(10,newUser);
         User user= userManager.getUser(10);
-        //model.addAttribute("order",newUser.getOrders().values());
+        model.addAttribute("order",userManager.orderRepository.findbyNameRestaurant(user));
         model.addAttribute("user",user);
         return "profile";
     }
 
-    /*
     //Update just the password, not all the User
     @PostMapping("/forgottenPassword")
     public String updatePassword(@RequestParam String username,@RequestParam String email, @RequestParam String password){
-        User user=userHolder.getUser(username);
+        User user= userManager.userRepository.findByUsernameAndEmail(username,email);
 
-        if(user!=null&&user.getEmail().equals(email)){
-            user.setPassword(password);
+        if(user!=null){
+            userManager.updateUserPassword(user,password);
+
+            return "login";
+        }else{
+            return "about-us";
         }
 
-        assert user != null;
-        userHolder.updateUser(user.getId(),user);
-
-        return "login";
     }
-     */
+
 
     /*
     @GetMapping("/orderPlaced")

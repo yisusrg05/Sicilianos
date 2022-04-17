@@ -10,6 +10,14 @@ public enum DishType {
     MAIN("Principal"),
     DESSERT("Postre");
 
+    public String toString(){
+        switch (this){
+            case STARTER : return "Entrante";
+            case MAIN: return "Principal";
+            default: return "Postre";
+        }
+    }
+
 
     public String label;
 

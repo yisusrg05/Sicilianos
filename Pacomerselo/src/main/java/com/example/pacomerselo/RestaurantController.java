@@ -147,6 +147,10 @@ public class RestaurantController {
         model.addAttribute("types", list);
         return "registrationDish";
     }
+    @GetMapping("/cartInConstruction")
+    public String cartInConstruction(){
+        return "cartInConstruction";
+    }
 
     @GetMapping ("/registerRestaurant")
     public String registerRestaurant(){

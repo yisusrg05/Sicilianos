@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlIDREF;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @NoArgsConstructor
 @Setter
 @Getter

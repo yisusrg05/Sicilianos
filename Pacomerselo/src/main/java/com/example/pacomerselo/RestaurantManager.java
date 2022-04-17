@@ -91,7 +91,8 @@ public class RestaurantManager{
         Optional<Dishes> op= dishesRepository.findById(id);
         if(op.isPresent()){
             Dishes dish=op.get();
-            dishesRepository.deleteById(id);
+            dish.setRestaurant(null);
+            dishesRepository.save(dish);
             return dish;
         }
         else{

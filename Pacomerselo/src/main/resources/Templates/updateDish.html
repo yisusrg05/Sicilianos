@@ -92,8 +92,10 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 
 <script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
+     ClassicEditor
+        .create( document.querySelector( '#editor'),{
+        toolbar: [ 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ]
+        })
         .catch( error => {
             console.error( error );
         } );

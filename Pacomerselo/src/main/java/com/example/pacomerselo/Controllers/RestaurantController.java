@@ -74,9 +74,15 @@ public class RestaurantController {
         dish.setRestaurant(restaurantManager.getRestaurant(id));
         dish.setDescription(policy.sanitize(dish.getDescription()));
         restaurantManager.addDish(id,dish);
+
         Collection<Dishes> dishes = restaurantManager.getDishes(id);
+
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id);
+        model.addAttribute("filter", false);
+        model.addAttribute("minimun",0);
+        model.addAttribute("maximum",0);
+        model.addAttribute("type",0);
         return "catalog-page";
     }
 
@@ -84,8 +90,13 @@ public class RestaurantController {
     public String filterDish (Model model, @PathVariable long id, @RequestParam int min,@RequestParam int max, @RequestParam String type){
         Restaurant restaurant=restaurantManager.getRestaurant(id);
         Collection<Dishes> dishes = restaurantManager.findByPriceRangeAndType(min,max,type,restaurant);
+
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id);
+        model.addAttribute("filter", true);
+        model.addAttribute("minimum",min);
+        model.addAttribute("maximum",max);
+        model.addAttribute("type",type);
         return "catalog-page";
     }
 

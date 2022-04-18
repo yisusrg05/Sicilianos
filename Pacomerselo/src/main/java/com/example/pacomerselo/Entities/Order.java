@@ -1,8 +1,7 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Entities;
 
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;

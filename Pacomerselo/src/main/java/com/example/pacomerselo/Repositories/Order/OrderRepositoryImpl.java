@@ -1,5 +1,7 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Repositories.Order;
 
+import com.example.pacomerselo.Entities.Order;
+import com.example.pacomerselo.Entities.User;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;

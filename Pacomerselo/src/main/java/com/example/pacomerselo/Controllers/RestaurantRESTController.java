@@ -1,6 +1,9 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Controllers;
 
 
+import com.example.pacomerselo.Entities.Dishes;
+import com.example.pacomerselo.Entities.Restaurant;
+import com.example.pacomerselo.Managers.RestaurantManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +69,7 @@ public class RestaurantRESTController {
     //////////////////////DISHES REST CONTROLLER//////////////////////
     //Add a new dish to the restaurant catalog (given the ID)
     @PostMapping("/restaurant/{id}/dishes")
-    public ResponseEntity<Dishes> newDish(@PathVariable long id,@RequestBody Dishes dish){
+    public ResponseEntity<Dishes> newDish(@PathVariable long id, @RequestBody Dishes dish){
         Restaurant restaurant = restaurantManager.getRestaurant(id);
         if (restaurant!= null) {
             restaurantManager.addDish(id,dish);

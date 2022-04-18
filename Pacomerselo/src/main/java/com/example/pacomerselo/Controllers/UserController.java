@@ -1,16 +1,19 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Controllers;
 
 
+import com.example.pacomerselo.Entities.User;
+import com.example.pacomerselo.Managers.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
-public class UserController extends RestaurantManager {
+public class UserController {
 
     @Autowired
     UserManager userManager;
@@ -94,7 +97,7 @@ public class UserController extends RestaurantManager {
     public String profile(Model model){
         User user= userManager.getUser(10);
         model.addAttribute("user",user);
-        model.addAttribute("order", userManager.orderRepository.findbyNameRestaurant(user));
+        model.addAttribute("order", userManager.findByNameRestaurant(user));
 
         return "profile";
     }
@@ -104,7 +107,7 @@ public class UserController extends RestaurantManager {
     public String updateProfile(Model model, User newUser){
         userManager.updateUser(10,newUser);
         User user= userManager.getUser(10);
-        model.addAttribute("order",userManager.orderRepository.findbyNameRestaurant(user));
+        model.addAttribute("order",userManager.findByNameRestaurant(user));
         model.addAttribute("user",user);
         return "profile";
     }
@@ -112,14 +115,12 @@ public class UserController extends RestaurantManager {
     //Update just the password, not all the User
     @PostMapping("/forgottenPassword")
     public String updatePassword(@RequestParam String username,@RequestParam String email, @RequestParam String password){
-        User user= userManager.userRepository.findByUsernameAndEmail(username,email);
-
-        if(user!=null){
-            userManager.updateUserPassword(user,password);
-
+        List<User> user= userManager.findByUsernameAndEmail(username,email);
+        if(!user.isEmpty()){
+            userManager.updateUserPassword(user.get(0),password);
             return "login";
         }else{
-            return "about-us";
+            return "incorrectEmailOrPassword";
         }
 
     }
@@ -135,8 +136,13 @@ public class UserController extends RestaurantManager {
 
     @PostMapping("/register")
     public String addUser(User newUser){
-        userManager.addUser(newUser);
-        return "registerSuccessful";
+        if(userManager.findByUsername(newUser.getUsername()).isEmpty()){
+            userManager.addUser(newUser);
+            return "registerSuccessful";
+        }
+        else{
+            return "alreadyExistingUser";
+        }
     }
     /*
     //Private function thet calculates all the price of the cart, excluding the shipping taxes

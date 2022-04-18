@@ -1,14 +1,12 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Entities;
 
-import lombok.Data;
+import com.example.pacomerselo.Entities.Dishes;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 @NoArgsConstructor
 @Getter

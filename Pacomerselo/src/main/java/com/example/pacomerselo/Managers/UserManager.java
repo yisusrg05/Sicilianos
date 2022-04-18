@@ -1,20 +1,20 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Managers;
 
+import com.example.pacomerselo.Entities.Order;
+import com.example.pacomerselo.Entities.User;
+import com.example.pacomerselo.Repositories.Order.OrderRepository;
+import com.example.pacomerselo.Repositories.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
-
 
 
 @Service
-public class UserManager extends RestaurantManager{
+public class UserManager extends RestaurantManager {
 
     @Autowired
-    OrderRepository orderRepository;
+    protected OrderRepository orderRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -85,6 +85,18 @@ public class UserManager extends RestaurantManager{
         else{
             return null;
         }
+    }
+
+    public List<User> findByUsernameAndEmail(String username, String email){
+        return userRepository.findByUsernameAndEmail(username, email);
+    }
+
+    public List<User> findByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
+    public List<Order> findByNameRestaurant(User user){
+        return orderRepository.findbyNameRestaurant(user);
     }
     /*
 

@@ -1,6 +1,10 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Controllers;
 
 
+import com.example.pacomerselo.Entities.Order;
+import com.example.pacomerselo.Entities.User;
+import com.example.pacomerselo.Managers.RestaurantManager;
+import com.example.pacomerselo.Managers.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

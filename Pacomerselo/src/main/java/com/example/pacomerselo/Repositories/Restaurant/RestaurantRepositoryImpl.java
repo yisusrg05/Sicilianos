@@ -1,7 +1,8 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Repositories.Restaurant;
 
+import com.example.pacomerselo.Entities.Dishes;
+import com.example.pacomerselo.Entities.Restaurant;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,7 +22,7 @@ public class RestaurantRepositoryImpl{
         return query.setParameter("nombre",nombre).getResultList();
     }
 
-    public List<Dishes> findbyNameDish(Restaurant restaurant,String nombre) {
+    public List<Dishes> findbyNameDish(Restaurant restaurant, String nombre) {
         TypedQuery<Dishes> query= entityManager.createQuery
                 ("SELECT d FROM Dishes d WHERE d.restaurant=:restaurant AND (d.name LIKE CONCAT('%',:nombre,'%'))",Dishes.class);
         return query.setParameter("nombre",nombre).setParameter("restaurant",restaurant).getResultList();

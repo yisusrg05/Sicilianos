@@ -1,18 +1,20 @@
 package com.example.pacomerselo;
 
+import com.example.pacomerselo.Entities.*;
+import com.example.pacomerselo.Repositories.Dishes.DishesRepository;
+import com.example.pacomerselo.Repositories.Order.OrderRepository;
+import com.example.pacomerselo.Repositories.Restaurant.RestaurantRepository;
+import com.example.pacomerselo.Repositories.User.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class PacomerseloApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext configurableApplicationContext=SpringApplication.run(PacomerseloApplication.class, args);
-
+        /*
         RestaurantRepository restaurantRepository= configurableApplicationContext.getBean(RestaurantRepository.class);
         DishesRepository dishesRepository= configurableApplicationContext.getBean(DishesRepository.class);
         OrderRepository orderRepository= configurableApplicationContext.getBean(OrderRepository.class);
@@ -23,7 +25,7 @@ public class PacomerseloApplication {
 
         restaurantRepository.save(laBonita);
 
-        Dishes dish11=new Dishes("Croquetas Gourmet", "6ud",12,DishType.STARTER.label);
+        Dishes dish11=new Dishes("Croquetas Gourmet", "6ud",12, DishType.STARTER.label);
         Dishes dish12=new Dishes("Ensalada de Burrata", "Con miel y trufa",20,DishType.STARTER.label);
         Dishes dish13=new Dishes("Solomillo de Ternera", "Con patatas baby especiadas",25,DishType.MAIN.label);
         Dishes dish14=new Dishes("Cappellacci", "Relleno de verduras",15,DishType.MAIN.label);
@@ -83,6 +85,7 @@ public class PacomerseloApplication {
         orderRepository.save(order2);
         orderRepository.save(order3);
 
+         */
     }
 
 }

@@ -1,5 +1,10 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Controllers;
 
+import com.example.pacomerselo.Entities.DishType;
+import com.example.pacomerselo.Entities.Dishes;
+import com.example.pacomerselo.Entities.Restaurant;
+import com.example.pacomerselo.Managers.RestaurantManager;
+import com.example.pacomerselo.Repositories.Restaurant.RestaurantRepositoryImpl;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -71,6 +75,15 @@ public class RestaurantController {
         dish.setDescription(policy.sanitize(dish.getDescription()));
         restaurantManager.addDish(id,dish);
         Collection<Dishes> dishes = restaurantManager.getDishes(id);
+        model.addAttribute("dishes",dishes);
+        model.addAttribute("id1",id);
+        return "catalog-page";
+    }
+
+    @PostMapping("/restaurant/{id}/filter")
+    public String filterDish (Model model, @PathVariable long id, @RequestParam int min,@RequestParam int max, @RequestParam String type){
+        Restaurant restaurant=restaurantManager.getRestaurant(id);
+        Collection<Dishes> dishes = restaurantManager.findByPriceRangeAndType(min,max,type,restaurant);
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id);
         return "catalog-page";
@@ -151,7 +164,7 @@ public class RestaurantController {
     @GetMapping("/{id}/registerDish")
     public String registerDish(Model model, @PathVariable long id){
         model.addAttribute("id",id);
-        List<String> list=DishType.DESSERT.types();
+        List<String> list= DishType.DESSERT.types();
         model.addAttribute("types", list);
         return "registrationDish";
     }
@@ -165,7 +178,7 @@ public class RestaurantController {
     }
     @GetMapping("/alredyExistingUser")
     public String alredyExistingUser(){
-        return "alredyExistingUser";
+        return "alreadyExistingUser";
     }
 
     @GetMapping ("/registerRestaurant")

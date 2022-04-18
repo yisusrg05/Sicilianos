@@ -1,5 +1,7 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Repositories.Restaurant;
 
+import com.example.pacomerselo.Entities.Dishes;
+import com.example.pacomerselo.Entities.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +12,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant,Long>{
 
     public List<Restaurant> findbyNameRestaurant(String nombre);
 
-    public List<Dishes> findbyNameDish(Restaurant restaurant,String nombre);
+    public List<Dishes> findbyNameDish(Restaurant restaurant, String nombre);
 
     public List<Dishes> findbyPriceRangeDish(Long id, int top, int bottom);
 }

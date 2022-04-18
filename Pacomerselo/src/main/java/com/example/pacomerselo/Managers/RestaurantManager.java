@@ -1,15 +1,16 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Managers;
 
 
+import com.example.pacomerselo.Repositories.Dishes.DishesRepository;
+import com.example.pacomerselo.Entities.Dishes;
+import com.example.pacomerselo.Entities.Restaurant;
+import com.example.pacomerselo.Repositories.Restaurant.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Collection;
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class RestaurantManager{
@@ -116,5 +117,9 @@ public class RestaurantManager{
         else{
             return null;
         }
+    }
+
+    public List<Dishes> findByPriceRangeAndType(int min, int max, String type,Restaurant restaurant){
+        return dishesRepository.findByPriceRangeAndType(min, max, type,restaurant);
     }
 }

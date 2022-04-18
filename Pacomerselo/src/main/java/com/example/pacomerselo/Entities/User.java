@@ -1,13 +1,11 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Entities;
 
+import com.example.pacomerselo.Entities.Order;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Data
 @NoArgsConstructor

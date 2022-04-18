@@ -1,4 +1,4 @@
-package com.example.pacomerselo;
+package com.example.pacomerselo.Entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

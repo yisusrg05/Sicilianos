@@ -36,7 +36,7 @@
             </div>
             <form action="/restaurant/{{id}}" method="post">
                 <div class="mb-3"><label class="form-label" >Nombre</label><input class="form-control item" type="text" name="name"></div>
-                <div class="mb-3"><label class="form-label" >Descripción</label><input class="form-control item" type="text" name="description"></div>
+                <textarea class="form-label" name="description" id="editor">Descripción</textarea>
                 <div class="mb-3"> <label >Tipo de Plato</label><br>
                     <label>
                         <select id="type" name="type" type="text">
@@ -88,6 +88,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 <script src="../assets/js/vanilla-zoom.js"></script>
 <script src="../assets/js/theme.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
 </body>
 
 </html>

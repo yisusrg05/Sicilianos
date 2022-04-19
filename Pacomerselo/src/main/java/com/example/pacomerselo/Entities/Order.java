@@ -7,9 +7,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 
-@Data
+
 @Getter
 @Setter
 @Entity
@@ -20,6 +21,11 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Transient
+    private static long lastId=0;
+
+    private long orderNumber=0;
     private int price;
 
     @ManyToOne
@@ -34,6 +40,7 @@ public class Order {
     private List<Dishes> dishes=new ArrayList<>();
 
     public Order(){
+        this.orderNumber=lastId++;
         this.price=5;
     }
 

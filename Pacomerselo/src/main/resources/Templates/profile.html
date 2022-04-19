@@ -81,8 +81,9 @@
                     <div class="card-body">
                         <div class="row">
                             {{#order}}
+                            <br>
                             <div class="col-md-6">
-                                    <div class="mb-3"><label class="form-label" ><strong>Pedido #{{id}}</strong><br></label></div>
+                                    <div class="mb-3"><h2><label class="title" ><strong>Pedido #{{orderNumber}}</strong><br></label></h2></div>
                             </div>
                             <div class="content">
                                 <div class="row g-0">
@@ -94,13 +95,14 @@
                                                     <div class="col-md-2">
                                                         <div class="product-image"><img class="img-fluid d-block mx-auto image" src="assets/img/dishes/{{id}}.jpg"></div>
                                                     </div>
-                                                    <div class="col-md-5 product-info"><a class="product-name" href="/restaurant/{{restaurant.id}}">{{name}}</a>
+                                                    <div class="col-md-5 product-info"><span class="product-name" >{{name}}</span>
                                                         <div class="product-specs">
                                                             <div><span><b>Descripci&oacute;n:</b> &nbsp;</span><span class="value">{{description}}</span></div>
+                                                            <div><span><b>Restaurante:</b> &nbsp;</span><a class="value" href="/restaurant/{{restaurant.id}}">{{restaurant.name}}</a></div>
                                                         </div>
                                                     </div>
                                                     <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block">Cantidad</label><input type="text" id="number" class="form-control quantity-input" value="1"  disabled></div>
-                                                    <div class="col-6 col-md-2 price"><span>{{price}}€</span></div>
+                                                    <div class="col-6 col-md-2 price"><h4><span>{{price}}€</span></h4></div>
                                                 </div>
                                                 <br>
                                                 {{/dishes}}
@@ -108,11 +110,12 @@
                                         </div>
                                         <div class="summary">
                                             <h6><span class="summary">Gastos de envío:</span><span class="price" style="margin: 10px"> 5€</span></h6>
-                                            <h3><span class="total"><b>Total:</b></span><span class="price"> {{price}}€</span></h3>
+                                            <h4><span class="total"><b>Total:</b></span><span class="price"> {{price}}€</span></h4>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-4">
                                     </div>
+                                    <div class="card shadow"></div>
                                 </div>
                             </div>
                             {{/order}}

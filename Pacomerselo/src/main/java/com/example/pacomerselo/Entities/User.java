@@ -7,12 +7,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"username"})}, name = "Users")
 public class User {
     /*The entity user has his own attributes: username (as we want the user get registered with it), name, surname,
     email, password, a Map called orders: it's key is a long, which is an ID to identify de order and the Value
@@ -47,6 +47,17 @@ public class User {
         this.email=email;
         this.password=password;
         this.admin=false;
+        this.orders=new ArrayList<>();
+        //this.cart=new ArrayList<>();
+    }
+
+    public User(String username,String name, String surname, String email, String password,Boolean admin){
+        this.username=username;
+        this.name=name;
+        this.surname=surname;
+        this.email=email;
+        this.password=password;
+        this.admin=admin;
         this.orders=new ArrayList<>();
         //this.cart=new ArrayList<>();
     }

@@ -12,6 +12,7 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
+@Table(name="Restaurants")
 public class Restaurant {
     //Attributes for the Restaurant Entity
     @Id

@@ -14,6 +14,7 @@ public class PacomerseloApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext configurableApplicationContext=SpringApplication.run(PacomerseloApplication.class, args);
+
         /*
         RestaurantRepository restaurantRepository= configurableApplicationContext.getBean(RestaurantRepository.class);
         DishesRepository dishesRepository= configurableApplicationContext.getBean(DishesRepository.class);
@@ -31,7 +32,7 @@ public class PacomerseloApplication {
         Dishes dish14=new Dishes("Cappellacci", "Relleno de verduras",15,DishType.MAIN.label);
         Dishes dish21=new Dishes("Ensalada de Queso de Cabra", "Con tomate y rúcula",17,DishType.STARTER.label);
         Dishes dish22=new Dishes("Pappardelle", "Con ternera y queso",19,DishType.MAIN.label);
-        Dishes dish23= new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9,DishType.DESSERT.label);
+        Dishes dish23= new Dishes("Tabla embutidos", "Jamón, focaccia, ...",9,DishType.STARTER.label);
 
         laBonita.add(dish11);
         laBonita.add(dish12);
@@ -59,13 +60,13 @@ public class PacomerseloApplication {
         dishesRepository.save(dish22);
         dishesRepository.save(dish23);
 
-        User admin=new User("Anonimo","Paco","Mérselo","paco@pacomerselo.es","oleole");
-        User yisus= new User("Yisus","Jesus","Ramirez","yisus@urjc.es","ibaiNoob");
-
+        User paco=new User("Anonimo","Paco","Mérselo","paco@pacomerselo.es","oleole",true);
+        User yisus= new User("Yisus","Jesus","Ramirez","yisus@urjc.es","ibaiNoob",false);
 
         Order order1= new Order();
         Order order2= new Order();
-        Order order3= new Order(34);
+        Order order3= new Order();
+
 
         order1.add(dish11);
         order1.add(dish13);
@@ -75,10 +76,14 @@ public class PacomerseloApplication {
         order2.add(dish23);
         order2.add(dish11);
 
-        order1.setUser(admin);
-        order2.setUser(yisus);
+        order3.add(dish14);
+        order3.add(dish12);
 
-        userRepository.save(admin);
+        order1.setUser(paco);
+        order2.setUser(yisus);
+        order3.setUser(paco);
+
+        userRepository.save(paco);
         userRepository.save(yisus);
 
         orderRepository.save(order1);
@@ -86,6 +91,10 @@ public class PacomerseloApplication {
         orderRepository.save(order3);
 
          */
+
+
+
+
     }
 
 }

@@ -95,7 +95,7 @@ public class UserController {
     //Get the profile information (personal data and orders)
     @GetMapping("/profile")
     public String profile(Model model){
-        User user= userManager.getUser(10);
+        User user= userManager.getUser(24);
         model.addAttribute("user",user);
         model.addAttribute("order", userManager.findOrdersByUser(user));
 
@@ -105,8 +105,8 @@ public class UserController {
     //Updating the profile, except the password
     @PostMapping("/profile")
     public String updateProfile(Model model, User newUser){
-        userManager.updateUser(10,newUser);
-        User user= userManager.getUser(10);
+        userManager.updateUser(24,newUser);
+        User user= userManager.getUser(24);
         model.addAttribute("order",userManager.findOrdersByUser(user));
         model.addAttribute("user",user);
         return "profile";

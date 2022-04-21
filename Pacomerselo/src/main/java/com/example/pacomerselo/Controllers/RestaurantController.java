@@ -251,4 +251,9 @@ public class RestaurantController {
     public String forgottenPassword(){
         return "forgottenPassword";
     }
+
+    @GetMapping("/addcarrito/{id1}/{id2}")
+    public String cartConstruction(){
+        return "cartInConstruction";
+    }
 }

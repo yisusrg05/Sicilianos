@@ -59,9 +59,9 @@
                             <form id="price-range-form" method="post" action="/restaurant/{{id1}}/filter">
                                 <div class="centrar"><h5>Tipo de Plato:</h5></div>
                                 <div id="product1" class="card-body">
-                                    <input type="radio" value="Entrante" id="product-1-1" name="type" checked> Entrante<br/>
-                                    <input type="radio" value="Principal" id="product-1-2" name="type" > Principal<br/>
-                                    <input type="radio" value="Postre" id="product-1-3" name="type" > Postre<br/>
+                                    {{#types}}
+                                    <input type="checkbox" value="{{.}}" id="product-1-1" name="type" >{{.}}<br/>
+                                    {{/types}}
                                 </div>
                                 <br>
                                 <div class="centrar"><h5>Precio:</h5></div>

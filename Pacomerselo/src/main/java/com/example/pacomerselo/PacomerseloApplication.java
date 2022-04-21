@@ -15,7 +15,7 @@ public class PacomerseloApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext configurableApplicationContext=SpringApplication.run(PacomerseloApplication.class, args);
 
-        /*
+
         RestaurantRepository restaurantRepository= configurableApplicationContext.getBean(RestaurantRepository.class);
         DishesRepository dishesRepository= configurableApplicationContext.getBean(DishesRepository.class);
         OrderRepository orderRepository= configurableApplicationContext.getBean(OrderRepository.class);
@@ -89,11 +89,6 @@ public class PacomerseloApplication {
         orderRepository.save(order1);
         orderRepository.save(order2);
         orderRepository.save(order3);
-
-         */
-
-
-
 
     }
 

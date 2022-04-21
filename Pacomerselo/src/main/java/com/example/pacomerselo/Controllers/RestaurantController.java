@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class RestaurantController {
 
     @PostMapping("/restaurant/search")
     public String restaurantSearch(Model model, @RequestParam String name){
-        Collection<Restaurant> restaurants=restaurantRepository.findbyNameRestaurant(name);
+        Collection<Restaurant> restaurants=restaurantManager.findRestaurantByName(name);
         model.addAttribute("restaurants",restaurants);
         return "pricing";
     }
@@ -44,6 +45,9 @@ public class RestaurantController {
     @GetMapping("/restaurant/{id1}")
     public String restaurantId(Model model, @PathVariable long id1){
         Collection<Dishes> dishes = restaurantManager.getDishes(id1);
+        List<String> list= DishType.DESSERT.types();
+
+        model.addAttribute("types", list);
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id1);
         return "catalog-page";
@@ -52,7 +56,10 @@ public class RestaurantController {
     @PostMapping("/restaurant/{id1}/search")
     public String restaurantDishesSearch(Model model, @PathVariable long id1, @RequestParam String name){
         Restaurant restaurant=restaurantManager.getRestaurant(id1);
-        Collection<Dishes> dishes = restaurantRepository.findbyNameDish(restaurant,name);
+        Collection<Dishes> dishes = restaurantManager.findDishByName(restaurant,name);
+        List<String> list= DishType.DESSERT.types();
+
+        model.addAttribute("types", list);
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id1);
         return "catalog-page";
@@ -76,7 +83,9 @@ public class RestaurantController {
         restaurantManager.addDish(id,dish);
 
         Collection<Dishes> dishes = restaurantManager.getDishes(id);
+        List<String> list= DishType.DESSERT.types();
 
+        model.addAttribute("types", list);
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id);
         model.addAttribute("filter", false);
@@ -87,10 +96,16 @@ public class RestaurantController {
     }
 
     @PostMapping("/restaurant/{id}/filter")
-    public String filterDish (Model model, @PathVariable long id, @RequestParam int min,@RequestParam int max, @RequestParam String type){
+    public String filterDish (Model model, @PathVariable long id, @RequestParam int min,@RequestParam int max, @RequestParam List<String> type){
         Restaurant restaurant=restaurantManager.getRestaurant(id);
-        Collection<Dishes> dishes = restaurantManager.findByPriceRangeAndType(min,max,type,restaurant);
+        List<Dishes> dishes = switch (type.size()) {
+            case 1 -> restaurantManager.findByPriceRangeAndType(min, max, type.get(0), restaurant);
+            case 2 -> restaurantManager.findByPriceRangeAndTwoTypes(min, max, type.get(0),type.get(1), restaurant);
+            default -> restaurantManager.findByPriceRange(min, max, restaurant);
+        };
+        List<String> list= DishType.DESSERT.types();
 
+        model.addAttribute("types", list);
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id);
         model.addAttribute("filter", true);

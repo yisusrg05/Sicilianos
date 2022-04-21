@@ -1,6 +1,8 @@
 package com.example.pacomerselo.Entities;
 
 import com.example.pacomerselo.Entities.Order;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,6 +37,8 @@ public class User {
 
     //private List<Dishes> cart;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    @JsonManagedReference
+    @JsonIgnore
     private List<Order> orders;
 
 

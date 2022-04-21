@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order,Long> {
 
-    public List<Order> findbyNameRestaurant(User user);
+    public List<Order> findOrdersByUser(User user);
+
+    public List<Order> findByUsername(String username);
 }

@@ -1,5 +1,7 @@
 package com.example.pacomerselo.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +31,7 @@ public class Order {
     private int price;
 
     @ManyToOne
+    @JsonBackReference
     private User user;
 
     @ManyToMany
@@ -37,6 +40,7 @@ public class Order {
             joinColumns= @JoinColumn(name = "order_id"),
             inverseJoinColumns= @JoinColumn(name="dish_id")
     )
+    @JsonManagedReference
     private List<Dishes> dishes=new ArrayList<>();
 
     public Order(){

@@ -1,6 +1,8 @@
 package com.example.pacomerselo.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +15,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
+@Table(name="Dishes")
 public class Dishes {
     //Attributes for Dishes:
     @Id
@@ -25,9 +28,11 @@ public class Dishes {
     private String type;
 
     @ManyToOne
+    @JsonIgnore
     private Restaurant restaurant;
 
     @ManyToMany(mappedBy = "dishes")
+    @JsonIgnore
     private List<Order> orders=new ArrayList<>();
 
     //2 public constructors for Dishes: The first one receive name, description and price.

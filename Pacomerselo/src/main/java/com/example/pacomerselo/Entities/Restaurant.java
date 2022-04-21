@@ -1,6 +1,8 @@
 package com.example.pacomerselo.Entities;
 
 import com.example.pacomerselo.Entities.Dishes;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +14,7 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
+@Table(name="Restaurants")
 public class Restaurant {
     //Attributes for the Restaurant Entity
     @Id
@@ -23,6 +26,7 @@ public class Restaurant {
     private String type;
 
     @OneToMany(cascade = CascadeType.DETACH,mappedBy = "restaurant")
+    @JsonIgnore
     private List<Dishes> dishesList=new ArrayList<>();
 
     //Constructor for Restaurant:

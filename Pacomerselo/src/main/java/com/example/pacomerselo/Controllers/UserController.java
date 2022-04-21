@@ -97,7 +97,7 @@ public class UserController {
     public String profile(Model model){
         User user= userManager.getUser(10);
         model.addAttribute("user",user);
-        model.addAttribute("order", userManager.findByNameRestaurant(user));
+        model.addAttribute("order", userManager.findOrdersByUser(user));
 
         return "profile";
     }
@@ -107,7 +107,7 @@ public class UserController {
     public String updateProfile(Model model, User newUser){
         userManager.updateUser(10,newUser);
         User user= userManager.getUser(10);
-        model.addAttribute("order",userManager.findByNameRestaurant(user));
+        model.addAttribute("order",userManager.findOrdersByUser(user));
         model.addAttribute("user",user);
         return "profile";
     }

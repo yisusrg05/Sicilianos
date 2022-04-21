@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -16,21 +18,16 @@ public class RestaurantRepositoryImpl{
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<Restaurant> findbyNameRestaurant(String nombre) {
+    public List<Restaurant> findRestaurantByName(String name) {
         TypedQuery<Restaurant> query= entityManager.createQuery
-                ("SELECT r FROM Restaurant r WHERE (r.name LIKE CONCAT('%',:nombre,'%'))",Restaurant.class);
-        return query.setParameter("nombre",nombre).getResultList();
+                ("SELECT r FROM Restaurant r WHERE (r.name LIKE CONCAT('%',:name,'%'))",Restaurant.class);
+        return query.setParameter("name",name).getResultList();
     }
 
-    public List<Dishes> findbyNameDish(Restaurant restaurant, String nombre) {
-        TypedQuery<Dishes> query= entityManager.createQuery
-                ("SELECT d FROM Dishes d WHERE d.restaurant=:restaurant AND (d.name LIKE CONCAT('%',:nombre,'%'))",Dishes.class);
-        return query.setParameter("nombre",nombre).setParameter("restaurant",restaurant).getResultList();
-    }
-
-    public List<Dishes> findbyPriceRangeDish(Long id,int top, int bottom) {
-        TypedQuery<Dishes> query= entityManager.createQuery
-                ("SELECT d FROM Dishes d WHERE d.restaurant=:idRest AND d.price BETWEEN :bottom AND :top",Dishes.class);
-        return query.setParameter("top",top).setParameter("bottom",bottom).setParameter("idRest",id).getResultList();
+    @Transactional
+    public int deleteRestaurant(long id){
+        Query query = entityManager.createQuery
+                ("DELETE FROM Restaurant r WHERE r.id=:id");
+        return query.setParameter("id",id).executeUpdate();
     }
 }

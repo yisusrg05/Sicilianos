@@ -1,5 +1,7 @@
 package com.example.pacomerselo.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,9 +9,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 
-@Data
+
 @Getter
 @Setter
 @Entity
@@ -20,9 +23,15 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Transient
+    private static long lastId=0;
+
+    private long orderNumber=0;
     private int price;
 
     @ManyToOne
+    @JsonBackReference
     private User user;
 
     @ManyToMany
@@ -31,9 +40,11 @@ public class Order {
             joinColumns= @JoinColumn(name = "order_id"),
             inverseJoinColumns= @JoinColumn(name="dish_id")
     )
+    @JsonManagedReference
     private List<Dishes> dishes=new ArrayList<>();
 
     public Order(){
+        this.orderNumber=lastId++;
         this.price=5;
     }
 

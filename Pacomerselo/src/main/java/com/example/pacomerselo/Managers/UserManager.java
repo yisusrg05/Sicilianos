@@ -58,19 +58,8 @@ public class UserManager extends RestaurantManager {
     }
 
     //Updating an existing user
-    public User updateUser(long id,User newUser){
-        Optional<User> op= userRepository.findById(id);
-        if(op.isPresent()){
-            User user=op.get();
-            user.setName(newUser.getName());
-            user.setEmail(newUser.getEmail());
-            user.setSurname(newUser.getSurname());
-            userRepository.save(user);
-            return user;
-        }
-        else{
-            return null;
-        }
+    public int updateUser(long id,User newUser){
+        return userRepository.updateUser(id, newUser.getName(), newUser.getSurname(), newUser.getEmail());
     }
 
     public User updateUserPassword(User user,String password){
@@ -95,8 +84,12 @@ public class UserManager extends RestaurantManager {
         return userRepository.findByUsername(username);
     }
 
-    public List<Order> findByNameRestaurant(User user){
-        return orderRepository.findbyNameRestaurant(user);
+    public List<Order> findOrdersByUsername(String username){
+        return orderRepository.findByUsername(username);
+    }
+
+    public List<Order> findOrdersByUser(User user){
+        return orderRepository.findOrdersByUser(user);
     }
     /*
 
@@ -160,16 +153,5 @@ public class UserManager extends RestaurantManager {
         return validDish;
     }
     */
-
-    public Collection<Order> getOrders (long id){
-        Optional<User> op= userRepository.findById(id);
-        if(op.isPresent()){
-            User user=op.get();
-            return orderRepository.findbyNameRestaurant(user);
-        }
-        else{
-            return null;
-        }
-    }
 
 }

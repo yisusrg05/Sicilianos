@@ -67,9 +67,9 @@ public class UserRESTController{
     //////////////////////ORDERS REST CONTROLLER//////////////////////
 
     //Get all the orders of the user
-    @GetMapping("/orders")
-    public Collection<Order> getOrders(){
-        return userManager.getOrders(1);
+    @GetMapping("/orders/{username}")
+    public Collection<Order> getOrders(@PathVariable String username){
+        return userManager.findOrdersByUsername(username);
     }
 
     /*
@@ -116,11 +116,11 @@ public class UserRESTController{
     }
 
     //Update a user profile given (ID)
-    @PutMapping("/changeprofile/{id}/")
+    @PutMapping("/changeprofile/{id}")
     public ResponseEntity<User> updateProfile(@PathVariable long id,@RequestBody User newUser){
-        User user= userManager.updateUser(id,newUser);
-        if (user!= null) {
-            return new ResponseEntity<>(newUser, HttpStatus.OK);
+        int usersUpdated=userManager.updateUser(id,newUser);
+        if (usersUpdated==1) {
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -131,7 +131,7 @@ public class UserRESTController{
     public ResponseEntity<User> deleteUser(@PathVariable long id) {
         User user = userManager.removeUser(id);
         if(user != null){
-            return new ResponseEntity<>(user,HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

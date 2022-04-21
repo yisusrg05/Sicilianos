@@ -15,9 +15,15 @@ public class OrderRepositoryImpl{
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<Order> findbyNameRestaurant(User user) {
+    public List<Order> findOrdersByUser(User user) {
         TypedQuery<Order> query= entityManager.createQuery
                 ("SELECT o FROM Order o WHERE o.user=:user",Order.class);
         return query.setParameter("user",user).getResultList();
+    }
+
+    public List<Order> findByUsername(String username){
+        TypedQuery<Order> query= entityManager.createQuery(
+                "SELECT o FROM Order o WHERE o.user IN (SELECT u FROM User u WHERE u.username=:username)" ,Order.class);
+        return query.setParameter("username",username).getResultList();
     }
 }

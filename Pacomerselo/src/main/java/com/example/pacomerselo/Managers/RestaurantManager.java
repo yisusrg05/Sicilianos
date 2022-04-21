@@ -38,19 +38,8 @@ public class RestaurantManager{
         return op.orElse(null);
     }
 
-    public Restaurant removeRestaurant(long id){
-        Optional<Restaurant> op= restaurantRepository.findById(id);
-        if(op.isPresent()){
-            Restaurant restaurant=op.get();
-            restaurant.getDishesList().size();
-            for(Dishes d : restaurant.getDishesList()){
-                d.setRestaurant(null);
-            }
-            restaurantRepository.deleteById(id);
-            return restaurant;
-        }else{
-            return null;
-        }
+    public int removeRestaurant (long id){
+        return restaurantRepository.deleteRestaurant(id);
     }
 
     public Restaurant updateRestaurant(long id,Restaurant newRestaurant){
@@ -69,14 +58,14 @@ public class RestaurantManager{
     }
 
     //Adding a new dish and giving it its unique ID and its restaurant ID
-    public Restaurant addDish(long idRestaurant, Dishes dish){
+    public Dishes addDish(long idRestaurant, Dishes dish){
         Optional<Restaurant> op= restaurantRepository.findById(idRestaurant);
         if(op.isPresent()){
             Restaurant restaurant=op.get();
             restaurant.add(dish);
             dishesRepository.save(dish);
             restaurantRepository.save(restaurant);
-            return restaurant;
+            return dish;
         }else{
             return null;
         }
@@ -91,17 +80,8 @@ public class RestaurantManager{
         return op.orElse(null);
     }
 
-    public Dishes removeDish(long id){
-        Optional<Dishes> op= dishesRepository.findById(id);
-        if(op.isPresent()){
-            Dishes dish=op.get();
-            dish.setRestaurant(null);
-            dishesRepository.save(dish);
-            return dish;
-        }
-        else{
-            return null;
-        }
+    public int removeDish(long id){
+        return dishesRepository.deleteDish(id);
     }
 
     public Dishes updateDish(long idDish,Dishes newDish){
@@ -119,7 +99,24 @@ public class RestaurantManager{
         }
     }
 
+    public List<Restaurant> findRestaurantByName(String name){
+        return restaurantRepository.findRestaurantByName(name);
+    }
+
+    public List<Dishes> findDishByName (Restaurant restaurant,String name){
+        return dishesRepository.findDishByName(restaurant,name);
+    }
+
     public List<Dishes> findByPriceRangeAndType(int min, int max, String type,Restaurant restaurant){
         return dishesRepository.findByPriceRangeAndType(min, max, type,restaurant);
     }
+
+    public List<Dishes> findByPriceRange(int min, int max, Restaurant restaurant){
+        return dishesRepository.findByPriceRange(min,max,restaurant);
+    }
+
+    public List<Dishes> findByPriceRangeAndTwoTypes (int min, int max, String type1,String type2, Restaurant restaurant){
+        return dishesRepository.findByPriceRangeAndTwoTypes(min, max, type1, type2, restaurant);
+    }
+
 }

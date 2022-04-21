@@ -31,7 +31,7 @@ public class PacomerseloApplication {
             Dishes dish12 = new Dishes("Ensalada de Burrata", "Con miel y trufa", 20, DishType.STARTER.label);
             Dishes dish13 = new Dishes("Solomillo de Ternera", "Con patatas baby especiadas", 25, DishType.MAIN.label);
             Dishes dish14 = new Dishes("Cappellacci", "Relleno de verduras", 15, DishType.MAIN.label);
-            Dishes dish15 = new Dishes("Capellacci de Salmón", "Con crema de Gambas", 20, DishType.MAIN.label);
+            Dishes dish15 = new Dishes("Tarta de Calabaza", "Con violetas", 10, DishType.DESSERT.label);
             Dishes dish16 = new Dishes("Pizza de Mortadela ", "Tomate, mortadela trufada y muuuucho queso", 13, DishType.MAIN.label);
             Dishes dish17 = new Dishes("Ensaladilla de Batata", "con lingotes de ventresca y mahonesa de eneldo", 11, DishType.STARTER.label);
             Dishes dish18 = new Dishes("Mejillones de Roca", "En salsa de tomate, ajo y albahaca fresca", 11, DishType.STARTER.label);

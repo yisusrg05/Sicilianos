@@ -1,0 +1,588 @@
+{
+	"info": {
+		"_postman_id": "969a68de-fccb-4012-86e1-b6ca6289e775",
+		"name": "Paco Mérselo  - Fase 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PEDIDOS",
+			"item": [
+				{
+					"name": "Devuelve todos los pedidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/orders/yisus",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"orders",
+								"yisus"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "USUARIO",
+			"item": [
+				{
+					"name": "Devuelve el usuario del ID enviado",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/user/10",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar un nuevo usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Yisus\",\r\n    \"name\": \"Es un\",\r\n    \"surname\": \"Crack\",\r\n    \"email\": \"yisus@urjc.es\",\r\n    \"password\": \"yisus\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar un usuario ya creado (aqui no se puede actualizar la contraseña)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"CRACK\",\r\n    \"name\": \"Sicilia\",\r\n    \"surname\": \"Crack\",\r\n    \"email\": \"sici@urjc.es\",\r\n    \"password\": \"oleole\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/changeprofile/1/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"changeprofile",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/deleteuser/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"deleteuser",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RESTAURANTE",
+			"item": [
+				{
+					"name": "Devuelve todos los restaurantes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/restaurant",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Devuelve el restaurante correspondiente al ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/restaurant/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crea un Restaurante",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Goiko\",\r\n    \"description\": \"Hamburguesas y mucho chorreo\",\r\n    \"type\": \"Americana\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/restaurant",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualiza un Restaurante",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ojo\",\r\n    \"description\": \"Piojo\",\r\n    \"type\": \"Que te cojo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/restaurant/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Elimina un restaurante",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/restaurant/15",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Búsqueda",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"bon\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/restaurant/search",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PLATOS",
+			"item": [
+				{
+					"name": "Devuelve todos los Platos de un restaurante",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/restaurant/1/dishes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"1",
+								"dishes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Devuelve el plato del ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/restaurant/1/dishes/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"1",
+								"dishes",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crea un plato en el restaurante indicado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Solomillo de Ternera\",\r\n    \"description\": \"Con patatas baby especiadas\",\r\n    \"price\": 25\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/restaurant/2/dishes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"2",
+								"dishes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualiza el plato indicado (el nombre del plato no se puede modificar)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Paappa\",\r\n    \"description\": \"Llego una bomba e hizo PUM, ya esta aquí la guerra\",\r\n    \"price\": 17,\r\n    \"type\": \"Postre\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/restaurant/2/dishes/8",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"2",
+								"dishes",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Elimina el plato indicado (se desvincula del restaurante)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/restaurant/2/dishes/8",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"2",
+								"dishes",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Búsqueda por nombre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/restaurant/1/dishes/search/ens",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"1",
+								"dishes",
+								"search",
+								"ens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrado por precio y 1 tipo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/restaurant/1/dishes/filter?min=15&max=30&type=Entrante",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"1",
+								"dishes",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "min",
+									"value": "15"
+								},
+								{
+									"key": "max",
+									"value": "30"
+								},
+								{
+									"key": "type",
+									"value": "Entrante"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrado por precio y 2 tipos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/restaurant/1/dishes/filter?min=18&max=45&type=Entrante,Principal",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"1",
+								"dishes",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "min",
+									"value": "18"
+								},
+								{
+									"key": "max",
+									"value": "45"
+								},
+								{
+									"key": "type",
+									"value": "Entrante,Principal"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrado por precio y los 3 tipos/solo por el precio (es lo mismo)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/restaurant/1/dishes/filter?min=1&max=45&type=Entrante,Principal,Postre",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurant",
+								"1",
+								"dishes",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "min",
+									"value": "1"
+								},
+								{
+									"key": "max",
+									"value": "45"
+								},
+								{
+									"key": "type",
+									"value": "Entrante,Principal,Postre"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

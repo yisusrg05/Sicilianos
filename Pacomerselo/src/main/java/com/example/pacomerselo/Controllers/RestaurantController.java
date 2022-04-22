@@ -23,7 +23,7 @@ public class RestaurantController {
     @Autowired
     RestaurantRepositoryImpl restaurantRepository;
 
-    private PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+    private final PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
 
     //Get all the restaurants available
     @GetMapping("/restaurant")
@@ -31,6 +31,7 @@ public class RestaurantController {
         Collection<Restaurant> restaurants=restaurantManager.getRestaurants();
         model.addAttribute("restaurants",restaurants);
         model.addAttribute("empty",restaurants.isEmpty());
+        model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
         return "pricing";
     }
 
@@ -53,6 +54,7 @@ public class RestaurantController {
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id1);
         model.addAttribute("empty",dishes.isEmpty());
+        model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
         return "catalog-page";
     }
 
@@ -77,6 +79,8 @@ public class RestaurantController {
         restaurantManager.addRestaurant(restaurant);
         Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
         model.addAttribute("restaurants",restaurants);
+        model.addAttribute("empty",restaurants.isEmpty());
+        model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
         return "pricing";
     }
 
@@ -98,6 +102,7 @@ public class RestaurantController {
         model.addAttribute("maximum",0);
         model.addAttribute("type",0);
         model.addAttribute("empty",dishes.isEmpty());
+        model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
         return "catalog-page";
     }
 
@@ -119,6 +124,7 @@ public class RestaurantController {
         model.addAttribute("type",type);
         model.addAttribute("stringFilter",filter);
         model.addAttribute("empty",dishes.isEmpty());
+        model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
         return "catalog-page";
     }
 

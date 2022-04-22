@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,6 +30,7 @@ public class RestaurantController {
     public String restaurant(Model model){
         Collection<Restaurant> restaurants=restaurantManager.getRestaurants();
         model.addAttribute("restaurants",restaurants);
+        model.addAttribute("empty",restaurants.isEmpty());
         return "pricing";
     }
 
@@ -38,6 +38,8 @@ public class RestaurantController {
     public String restaurantSearch(Model model, @RequestParam String name){
         Collection<Restaurant> restaurants=restaurantManager.findRestaurantByName(name);
         model.addAttribute("restaurants",restaurants);
+        model.addAttribute("empty",restaurants.isEmpty());
+        model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
         return "pricing";
     }
 
@@ -50,6 +52,7 @@ public class RestaurantController {
         model.addAttribute("types", list);
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id1);
+        model.addAttribute("empty",dishes.isEmpty());
         return "catalog-page";
     }
 
@@ -62,6 +65,8 @@ public class RestaurantController {
         model.addAttribute("types", list);
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id1);
+        model.addAttribute("empty",dishes.isEmpty());
+        model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
         return "catalog-page";
     }
 
@@ -92,6 +97,7 @@ public class RestaurantController {
         model.addAttribute("minimun",0);
         model.addAttribute("maximum",0);
         model.addAttribute("type",0);
+        model.addAttribute("empty",dishes.isEmpty());
         return "catalog-page";
     }
 
@@ -99,20 +105,35 @@ public class RestaurantController {
     public String filterDish (Model model, @PathVariable long id, @RequestParam int min,@RequestParam int max, @RequestParam List<String> type){
         Restaurant restaurant=restaurantManager.getRestaurant(id);
         List<Dishes> dishes = switch (type.size()) {
-            case 1 -> restaurantManager.findByPriceRangeAndType(min, max, type.get(0), restaurant);
-            case 2 -> restaurantManager.findByPriceRangeAndTwoTypes(min, max, type.get(0),type.get(1), restaurant);
+            case 2 -> restaurantManager.findByPriceRangeAndType(min, max, type.get(0), restaurant);
+            case 3 -> restaurantManager.findByPriceRangeAndTwoTypes(min, max, type.get(0),type.get(1), restaurant);
             default -> restaurantManager.findByPriceRange(min, max, restaurant);
         };
         List<String> list= DishType.DESSERT.types();
+        String filter=toStringFilter(type,min,max);
 
         model.addAttribute("types", list);
         model.addAttribute("dishes",dishes);
         model.addAttribute("id1",id);
         model.addAttribute("filter", true);
-        model.addAttribute("minimum",min);
-        model.addAttribute("maximum",max);
         model.addAttribute("type",type);
+        model.addAttribute("stringFilter",filter);
+        model.addAttribute("empty",dishes.isEmpty());
         return "catalog-page";
+    }
+
+
+    private String toStringFilter(List<String> lista, int min, int max){
+        StringBuilder sb = new StringBuilder();
+        if(lista.size()==3){
+            sb.append("Platos de los tipos ").append(lista.get(0)).append(" y ").append(lista.get(1)).append(" en el intervalo de ").append(min).append("€ a ").append(max).append("€");
+        }else if(lista.size()==2){
+            sb.append("Platos del tipo ").append(lista.get(0)).append(" en el intervalo de ").append(min).append("€ a ").append(max).append("€");
+
+        }else{
+            sb.append("Platos de todos los tipos en el intervalo de ").append(min).append("€ a ").append(max).append("€");
+        }
+        return sb.toString();
     }
 
     //Update an already existing dish (ID2) from a given restaurant (ID1)

@@ -16,6 +16,13 @@
     .centrar {
         text-align: center;
     }
+    .container2{
+        position: relative;
+    }
+    .button{
+        position: absolute;
+        bottom: 0;
+    }
 </style>
 </head>
 
@@ -46,7 +53,7 @@
                 </form>
             </div>
                 {{#filter}}
-                <div class="centrar"><h2><strong>Resultados entre {{minimum}} y {{maximum}} del tipo {{type}}</strong></h2></div>
+                <div class="centrar"><h2><strong>{{stringFilter}}</strong></h2></div>
                 {{/filter}}
         </div>
             <div class="content">
@@ -62,6 +69,7 @@
                                     {{#types}}
                                     <input type="checkbox" value="{{.}}" id="product-1-1" name="type" >{{.}}<br/>
                                     {{/types}}
+                                    <input type="checkbox" value="TODOS" name="type" checked hidden><br/>
                                 </div>
                                 <br>
                                 <div class="centrar"><h5>Precio:</h5></div>
@@ -80,6 +88,9 @@
                         </div>
                     <div class="col-md-9">
                         <div class="products">
+                            {{#empty}}
+                            <div class="centrar"><h4><strong>{{stringEmpty}}</strong></h4></div>
+                            {{/empty}}
                             <ul>
                             <div class="row g-0">
                                 {{#dishes}}
@@ -93,7 +104,7 @@
                                                 <h3>{{price}}€</h3>
                                             </div>
                                             <br>
-                                        </div>
+                                        </div >
                                         <div class="description"><h6><u>{{type}}</u></h6></div><br>
                                         <div>
                                         <button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/restaurant/{{id1}}/deleteDish/{{id}}'" type="button">BORRAR</button>

@@ -46,6 +46,11 @@
             </div>
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-8">
+                        {{#empty}}
+                        <div class="clean-pricing-item">
+                            <div class="centrar"><h3><strong>{{stringEmpty}}</strong></h3></div>
+                        </div>
+                        {{/empty}}
                         {{#restaurants}}
                         <div class="clean-pricing-item">
                             <div class="heading">

@@ -38,8 +38,9 @@ public class RestaurantManager{
         return op.orElse(null);
     }
 
-    public int removeRestaurant (long id){
-        return restaurantRepository.deleteRestaurant(id);
+    public void removeRestaurant (long id){
+        dishesRepository.deleteAllDishes(restaurantRepository.getById(id));
+        restaurantRepository.delete(restaurantRepository.getById(id));
     }
 
     public Restaurant updateRestaurant(long id,Restaurant newRestaurant){

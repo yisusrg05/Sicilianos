@@ -4,6 +4,8 @@ package com.example.pacomerselo.Controllers;
 import com.example.pacomerselo.Entities.Dishes;
 import com.example.pacomerselo.Entities.Restaurant;
 import com.example.pacomerselo.Managers.RestaurantManager;
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +23,14 @@ public class RestaurantRESTController {
     @Autowired
     RestaurantManager restaurantManager;
 
+    private final PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+
     //////////////////////RESTAURANTS REST CONTROLLER//////////////////////
 
     //Add a new Restaurant to the catalog
     @PostMapping("/restaurant")
     public ResponseEntity<Restaurant> newRestaurant(@RequestBody Restaurant restaurant){
+        restaurant.setDescription(policy.sanitize(restaurant.getDescription()));
         restaurantManager.addRestaurant(restaurant);
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
@@ -50,6 +55,7 @@ public class RestaurantRESTController {
     //Update the restaurant given (ID)
     @PutMapping("/restaurant/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(@PathVariable long id, @RequestBody Restaurant newRestaurant) {
+        newRestaurant.setDescription(policy.sanitize(newRestaurant.getDescription()));
         Restaurant restaurant = restaurantManager.updateRestaurant(id,newRestaurant);
         if (restaurant!= null) {
             return new ResponseEntity<>(newRestaurant, HttpStatus.OK);
@@ -61,10 +67,10 @@ public class RestaurantRESTController {
     //Delete the restaurant given (ID)
     @DeleteMapping("/restaurant/{id}")
     public ResponseEntity<Restaurant> deleteRestaurant(@PathVariable long id) {
-        int restaurantsDeleted= restaurantManager.removeRestaurant(id);
-        if(restaurantsDeleted==1){
+        Restaurant restaurant = new Restaurant();
+        if (restaurant!= null) {
             return new ResponseEntity<>(HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -78,6 +84,7 @@ public class RestaurantRESTController {
     //Add a new dish to the restaurant catalog (given the ID)
     @PostMapping("/restaurant/{id}/dishes")
     public ResponseEntity<Dishes> newDish(@PathVariable long id, @RequestBody Dishes dish){
+        dish.setDescription(policy.sanitize(dish.getDescription()));
         Dishes dishAdded = restaurantManager.addDish(id,dish);
         if (dishAdded!= null) {
             return new ResponseEntity<>(dishAdded, HttpStatus.CREATED);
@@ -106,6 +113,7 @@ public class RestaurantRESTController {
     //Update the dish (ID2) of the restaurant catalog (ID1)
     @PutMapping("/restaurant/{id1}/dishes/{id2}")
     public ResponseEntity<Dishes> updateDish(@PathVariable long id1, @PathVariable long id2, @RequestBody Dishes newDish) {
+        newDish.setDescription(policy.sanitize(newDish.getDescription()));
         Dishes dish=restaurantManager.getDish(id2);
         if (dish!= null) {
             restaurantManager.updateDish(id2,newDish);

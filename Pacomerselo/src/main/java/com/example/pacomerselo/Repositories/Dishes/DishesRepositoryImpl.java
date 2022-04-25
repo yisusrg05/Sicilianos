@@ -49,4 +49,11 @@ public class DishesRepositoryImpl {
         return query.setParameter("id",id).executeUpdate();
     }
 
+    @Transactional
+    public int deleteAllDishes(Restaurant restaurant){
+        Query query = entityManager.createQuery
+                ("UPDATE Dishes d SET d.restaurant=null WHERE d.restaurant=:restaurant");
+        return query.setParameter("restaurant",restaurant).executeUpdate();
+    }
+
 }

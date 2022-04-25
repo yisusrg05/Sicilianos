@@ -122,7 +122,6 @@ public class UserController {
         }else{
             return "incorrectEmailOrPassword";
         }
-
     }
 
 

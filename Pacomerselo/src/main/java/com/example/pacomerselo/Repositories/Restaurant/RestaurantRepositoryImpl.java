@@ -23,11 +23,4 @@ public class RestaurantRepositoryImpl{
                 ("SELECT r FROM Restaurant r WHERE (r.name LIKE CONCAT('%',:name,'%'))",Restaurant.class);
         return query.setParameter("name",name).getResultList();
     }
-
-    @Transactional
-    public int deleteRestaurant(long id){
-        Query query = entityManager.createQuery
-                ("DELETE FROM Restaurant r WHERE r.id=:id");
-        return query.setParameter("id",id).executeUpdate();
-    }
 }

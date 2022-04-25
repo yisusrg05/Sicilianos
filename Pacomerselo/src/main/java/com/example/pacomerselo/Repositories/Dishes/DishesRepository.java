@@ -13,13 +13,17 @@ public interface DishesRepository extends JpaRepository<Dishes,Long> {
 
     public List<Dishes> findDishByName(Restaurant restaurant, String name);
 
-    public List<Dishes> findByPriceRangeAndType (int min, int max, String type, Restaurant restaurant);
+    public List<Dishes> findByPriceRangeAndType(int min, int max, String type, Restaurant restaurant);
 
-    public List<Dishes> findByPriceRangeAndTwoTypes (int min, int max, String type1,String type2, Restaurant restaurant);
+    public List<Dishes> findByPriceRangeAndTwoTypes(int min, int max, String type1, String type2, Restaurant restaurant);
 
 
     public List<Dishes> findByPriceRange(int min, int max, Restaurant restaurant);
 
     @Transactional
     public int deleteDish(long id);
+
+    @Transactional
+    public int deleteAllDishes(Restaurant restaurant);
+
 }

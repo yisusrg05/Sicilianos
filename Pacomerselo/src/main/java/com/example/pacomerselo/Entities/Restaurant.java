@@ -39,7 +39,9 @@ public class Restaurant {
     public void add(Dishes dish){
         this.dishesList.add(dish);
     }
+
     /*
+
     //We have a method to get all the dishes from the Map which stores al the dishes of the restaurant.
     public Collection<Dishes> allDishes (){
         return this.dishes.values();

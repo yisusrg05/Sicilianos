@@ -5,6 +5,8 @@ import com.example.pacomerselo.Repositories.Dishes.DishesRepository;
 import com.example.pacomerselo.Entities.Dishes;
 import com.example.pacomerselo.Entities.Restaurant;
 import com.example.pacomerselo.Repositories.Restaurant.RestaurantRepository;
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +17,17 @@ import java.util.Optional;
 @Service
 public class RestaurantManager{
 
-
     @Autowired
     RestaurantRepository restaurantRepository;
 
     @Autowired
     DishesRepository dishesRepository;
 
-    //Adding the default restaurants and dishes
+    private final PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
 
     //Adding a new restaurant and giving it its unique ID
     public void addRestaurant(Restaurant restaurant){
+        restaurant.setDescription(policy.sanitize(restaurant.getDescription()));
         restaurantRepository.save(restaurant);
     }
 
@@ -48,7 +50,7 @@ public class RestaurantManager{
         if(op.isPresent()){
             Restaurant restaurant=op.get();
             restaurant.setName(newRestaurant.getName());
-            restaurant.setDescription(newRestaurant.getDescription());
+            restaurant.setDescription(policy.sanitize(newRestaurant.getDescription()));
             restaurant.setType(newRestaurant.getType());
             restaurantRepository.save(restaurant);
             return restaurant;
@@ -63,6 +65,7 @@ public class RestaurantManager{
         Optional<Restaurant> op= restaurantRepository.findById(idRestaurant);
         if(op.isPresent()){
             Restaurant restaurant=op.get();
+            dish.setDescription(policy.sanitize(dish.getDescription()));
             restaurant.add(dish);
             dishesRepository.save(dish);
             restaurantRepository.save(restaurant);
@@ -89,7 +92,7 @@ public class RestaurantManager{
         Optional<Dishes> op= dishesRepository.findById(idDish);
         if(op.isPresent()){
             Dishes dish=op.get();
-            dish.setDescription(newDish.getDescription());
+            dish.setDescription(policy.sanitize(newDish.getDescription()));
             dish.setType(newDish.getType());
             dish.setPrice(newDish.getPrice());
             dishesRepository.save(dish);

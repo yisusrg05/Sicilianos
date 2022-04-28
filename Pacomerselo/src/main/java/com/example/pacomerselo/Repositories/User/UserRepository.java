@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
 
-    public List<User> findByUsernameAndEmail(String username, String email);
+    List<User> findByUsernameAndEmail(String username, String email);
 
-    public List<User> findByUsername(String username);
+    List<User> findByUsername(String username);
 
     @Transactional
-    public int updateUser(long id,String name, String surname, String email);
+    int updateUser(long id, String name, String surname, String email);
 }

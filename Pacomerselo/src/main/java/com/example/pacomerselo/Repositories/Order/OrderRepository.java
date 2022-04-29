@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order,Long> {
 
-    public List<Order> findOrdersByUser(User user);
+    List<Order> findOrdersByUser(User user);
 
-    public List<Order> findByUsername(String username);
+    List<Order> findByUsername(String username);
 }

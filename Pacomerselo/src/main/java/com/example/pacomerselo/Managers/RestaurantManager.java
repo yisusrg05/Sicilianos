@@ -68,7 +68,6 @@ public class RestaurantManager{
             dish.setDescription(policy.sanitize(dish.getDescription()));
             restaurant.add(dish);
             dishesRepository.save(dish);
-            restaurantRepository.save(restaurant);
             return dish;
         }else{
             return null;

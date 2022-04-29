@@ -209,7 +209,7 @@ public class RestaurantController {
 
     @GetMapping("/{id}/registerDish")
     public String registerDish(Model model, @PathVariable long id){
-        model.addAttribute("id",id);
+        model.addAttribute("id1",id);
         List<String> list= DishType.DESSERT.types();
         model.addAttribute("types", list);
         return "registrationDish";

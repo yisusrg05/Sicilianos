@@ -61,7 +61,7 @@ public class PacomerseloApplication {
             Dishes dish44=new Dishes("Trufón de rabo de toro", "Sobre parmentier de patata trufada y foie", 28, DishType.MAIN.label);
             Dishes dish45=new Dishes("Udón Vegano al curry Massaman", "Con curry Massaman, setas shiitake, pak choy, tofu y cebolleta china", 22, DishType.MAIN.label);
             Dishes dish46=new Dishes("Tarta de queso Payoyo (2 pax)", "Con crujiente de regaliz, fina galleta de canela y manzana caramelizada.", 20, DishType.DESSERT.label);
-            Dishes dish47=new Dishes("Tarta de chocolate", "70% de cacao con núcleo de ganache ligero de chocolate y naranja, acompañadas de grageas de colores.", 29, DishType.STARTER.label);
+            Dishes dish47=new Dishes("Tarta de chocolate", "70% de cacao con núcleo de ganache ligero de chocolate y naranja, acompañadas de grageas de colores.", 29, DishType.DESSERT.label);
 
             Dishes dish60=new Dishes("Pulpo sobre alioli de patata", "Con aceite de pimentón y crujiente de jamón.", 10, DishType.STARTER.label);
             Dishes dish61=new Dishes("Berenjena caramelizada", "Con shitake, crema agria y romesco.", 12, DishType.STARTER.label);

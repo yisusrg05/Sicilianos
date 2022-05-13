@@ -185,6 +185,15 @@ public class RestaurantController {
     @PreAuthorize("hasRole('ROLE_VIEWER')")
     @GetMapping("/nosotros")
     public String nosotros(){return "about-us";}
+    
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+    @GetMapping("/accessDenied")
+    public String accessDenied(){
+        return "accessDenied";
+    }
 
     @GetMapping("/reviews")
     public String reviews(){

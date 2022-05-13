@@ -5,9 +5,8 @@ import com.example.pacomerselo.Entities.Dishes;
 import com.example.pacomerselo.Entities.Restaurant;
 import com.example.pacomerselo.Managers.RestaurantManager;
 import com.example.pacomerselo.Repositories.Restaurant.RestaurantRepositoryImpl;
-import org.owasp.html.PolicyFactory;
-import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,6 @@ public class RestaurantController {
     RestaurantManager restaurantManager;
     @Autowired
     RestaurantRepositoryImpl restaurantRepository;
-
 
 
     //Get all the restaurants available
@@ -184,13 +182,9 @@ public class RestaurantController {
         return "deleteRestaurantSuccessful";
     }
 
+    @PreAuthorize("hasRole('ROLE_VIEWER')")
     @GetMapping("/nosotros")
     public String nosotros(){return "about-us";}
-
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
 
     @GetMapping("/reviews")
     public String reviews(){

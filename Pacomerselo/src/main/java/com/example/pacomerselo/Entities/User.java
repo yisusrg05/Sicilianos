@@ -32,8 +32,7 @@ public class User {
     private String name;
     private String surname;
     private String email;
-    private String password;
-    private Boolean admin;
+    private String encodedPassword;
 
     //private List<Dishes> cart;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
@@ -41,30 +40,21 @@ public class User {
     @JsonIgnore
     private List<Order> orders;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
     //Constructor of user:
-
-    public User(String username,String name, String surname, String email, String password){
+    public User(String username,String name, String surname, String email, String password,List<String> roles){
         this.username=username;
         this.name=name;
         this.surname=surname;
         this.email=email;
-        this.password=password;
-        this.admin=false;
+        this.encodedPassword=password;
         this.orders=new ArrayList<>();
+        this.roles=roles;
         //this.cart=new ArrayList<>();
     }
 
-    public User(String username,String name, String surname, String email, String password,Boolean admin){
-        this.username=username;
-        this.name=name;
-        this.surname=surname;
-        this.email=email;
-        this.password=password;
-        this.admin=admin;
-        this.orders=new ArrayList<>();
-        //this.cart=new ArrayList<>();
-    }
     /*
     //A Method that allows the user to add a dish to the cart.
 

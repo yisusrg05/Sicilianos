@@ -1,0 +1,11 @@
+
+==================================================================
+Congratulations! Installed successfully!
+==================================================================
+aaPanel Internet Address: https://129.151.225.188:7800/c27c30c5
+aaPanel Internal Address: https://10.0.0.126:7800/c27c30c5
+username: dgkqvfmz
+password: d8feaf86
+Warning:
+If you cannot access the panel,
+release the following port (7800|888|80|443|20|21) in the security group

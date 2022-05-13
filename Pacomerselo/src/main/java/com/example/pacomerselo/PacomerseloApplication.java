@@ -5,16 +5,20 @@ import com.example.pacomerselo.Repositories.Dishes.DishesRepository;
 import com.example.pacomerselo.Repositories.Order.OrderRepository;
 import com.example.pacomerselo.Repositories.Restaurant.RestaurantRepository;
 import com.example.pacomerselo.Repositories.User.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class PacomerseloApplication {
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public static void main(String[] args) {
             ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(PacomerseloApplication.class, args);
-
 
 
             RestaurantRepository restaurantRepository = configurableApplicationContext.getBean(RestaurantRepository.class);
@@ -218,8 +222,8 @@ public class PacomerseloApplication {
 
 
 
-            User paco = new User("Anonimo", "Paco", "Mérselo", "paco@pacomerselo.es", "oleole", true);
-            User yisus = new User("Yisus", "Jesus", "Ramirez", "yisus@urjc.es", "ibaiNoob", false);
+            //User paco = new User("Anonimo", "Paco", "Mérselo", "paco@pacomerselo.es", "oleole");
+            //User yisus = new User("Yisus", "Jesus", "Ramirez", "yisus@urjc.es", "ibaiNoob");
 
             Order order1 = new Order();
             Order order2 = new Order();
@@ -237,16 +241,18 @@ public class PacomerseloApplication {
             order3.add(dish14);
             order3.add(dish12);
 
-            order1.setUser(paco);
-            order2.setUser(yisus);
-            order3.setUser(paco);
+            //order1.setUser(paco);
+            //order2.setUser(yisus);
+            //order3.setUser(paco);
 
-            userRepository.save(paco);
-            userRepository.save(yisus);
+            //userRepository.save(paco);
+            //userRepository.save(yisus);
 
             orderRepository.save(order1);
             orderRepository.save(order2);
             orderRepository.save(order3);
+
+
 
 
     }

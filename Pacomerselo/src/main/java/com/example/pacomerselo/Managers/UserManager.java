@@ -38,7 +38,7 @@ public class UserManager extends RestaurantManager {
         Optional<User> op= userRepository.findById(id);
         if(op.isPresent()){
             User user=op.get();
-            return user.getPassword();
+            return user.getEncodedPassword();
         }
         else{
             return null;
@@ -67,7 +67,7 @@ public class UserManager extends RestaurantManager {
         Optional<User> op= userRepository.findById(id);
         if(op.isPresent()){
             User validUser=op.get();
-            validUser.setPassword(password);
+            validUser.setEncodedPassword(password);
             userRepository.save(validUser);
             return validUser;
         }

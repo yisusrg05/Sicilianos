@@ -4,12 +4,15 @@ package com.example.pacomerselo.Controllers;
 import com.example.pacomerselo.Entities.User;
 import com.example.pacomerselo.Managers.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -17,6 +20,17 @@ public class UserController {
 
     @Autowired
     UserManager userManager;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @GetMapping("/login")
+    public String login(Model model, HttpServletRequest request){
+
+        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        model.addAttribute("token", token.getToken());
+
+        return "login";
+    }
 
     /*
     //Get the cart
@@ -117,7 +131,7 @@ public class UserController {
     public String updatePassword(@RequestParam String username,@RequestParam String email, @RequestParam String password){
         List<User> user= userManager.findByUsernameAndEmail(username,email);
         if(!user.isEmpty()){
-            userManager.updateUserPassword(user.get(0),password);
+            userManager.updateUserPassword(user.get(0),passwordEncoder.encode(password));
             return "login";
         }else{
             return "incorrectEmailOrPassword";
@@ -136,6 +150,7 @@ public class UserController {
     @PostMapping("/register")
     public String addUser(User newUser){
         if(userManager.findByUsername(newUser.getUsername()).isEmpty()){
+            newUser.setEncodedPassword(passwordEncoder.encode(newUser.getEncodedPassword()));
             userManager.addUser(newUser);
             return "registerSuccessful";
         }

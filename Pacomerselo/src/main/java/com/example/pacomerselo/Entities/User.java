@@ -44,14 +44,14 @@ public class User {
     private List<String> roles;
 
     //Constructor of user:
-    public User(String username,String name, String surname, String email, String password,List<String> roles){
+    public User(String username,String name, String surname, String email, String password,String... roles){
         this.username=username;
         this.name=name;
         this.surname=surname;
         this.email=email;
         this.encodedPassword=password;
         this.orders=new ArrayList<>();
-        this.roles=roles;
+        this.roles=List.of(roles);
         //this.cart=new ArrayList<>();
     }
 

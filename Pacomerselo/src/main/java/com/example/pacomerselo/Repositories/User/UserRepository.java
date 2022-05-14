@@ -7,13 +7,14 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
 
     List<User> findByUsernameAndEmail(String username, String email);
 
-    List<User> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
     @Transactional
     int updateUser(long id, String name, String surname, String email);

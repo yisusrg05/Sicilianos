@@ -30,7 +30,6 @@ public class UserManager extends RestaurantManager {
     public User getUser(long id){
         Optional<User> op= userRepository.findById(id);
         return op.orElse(null);
-
     }
 
 
@@ -76,13 +75,14 @@ public class UserManager extends RestaurantManager {
         }
     }
 
+    public Optional<User> findByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
     public List<User> findByUsernameAndEmail(String username, String email){
         return userRepository.findByUsernameAndEmail(username, email);
     }
 
-    public List<User> findByUsername(String username){
-        return userRepository.findByUsername(username);
-    }
 
     public List<Order> findOrdersByUsername(String username){
         return orderRepository.findByUsername(username);

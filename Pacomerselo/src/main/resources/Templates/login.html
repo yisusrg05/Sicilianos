@@ -31,15 +31,14 @@
     <section class="clean-block clean-form dark">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-warning">Log In</h2>
+                <h2 class="text-warning">Iniciar sesión</h2>
                 <p>Inicia sesión para realizar tu pedido.</p>
             </div>
             <form method="post" action="/login">
-                <div class="mb-3"><label class="form-label" >Email</label><input class="form-control item" type="text" name="username"></div>
-                <div class="mb-3"><label class="form-label">Password</label><input class="form-control" type="password" name="password"></div>
+                <div class="mb-3"><label class="form-label" >Usuario</label><input class="form-control item" type="text" name="username"></div>
+                <div class="mb-3"><label class="form-label">Contraseña</label><input class="form-control" type="password" name="password"></div><div class="mb-3">
                 <input type="hidden" name="_csrf" value="{{token}}"/>
-                <div class="mb-3">
-                </div><button class="btn btn-warning" type="submit">Log In</button>
+                </div><button class="btn btn-warning" type="submit">Iniciar sesión</button>
                 <a class="nav-link" href="/forgottenPassword">¿Olvidaste tu contraseña?</a>
                 <a class="nav-link" href="/register">¿A&uacute;n no tienes cuenta? Reg&iacute;strate ahora.</a>
             </form>

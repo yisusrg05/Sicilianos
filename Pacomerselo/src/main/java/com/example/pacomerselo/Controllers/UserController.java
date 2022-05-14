@@ -4,6 +4,7 @@ package com.example.pacomerselo.Controllers;
 import com.example.pacomerselo.Entities.User;
 import com.example.pacomerselo.Managers.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
@@ -107,9 +108,13 @@ public class UserController {
     }*/
 
     //Get the profile information (personal data and orders)
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/profile")
-    public String profile(Model model){
-        User user= userManager.getUser(45);
+    public String profile(Model model, HttpServletRequest request){
+
+        String username = request.getUserPrincipal().getName();
+        User user= userManager.findByUsername(username).orElseThrow();
+
         model.addAttribute("user",user);
         model.addAttribute("order", userManager.findOrdersByUser(user));
 
@@ -117,10 +122,12 @@ public class UserController {
     }
 
     //Updating the profile, except the password
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/profile")
-    public String updateProfile(Model model, User newUser){
-        userManager.updateUser(45,newUser);
-        User user= userManager.getUser(45);
+    public String updateProfile(Model model, User newUser, HttpServletRequest request){
+        String username = request.getUserPrincipal().getName();
+        User user= userManager.findByUsername(username).orElseThrow();
+        userManager.updateUser(user.getId(),newUser);
         model.addAttribute("order",userManager.findOrdersByUser(user));
         model.addAttribute("user",user);
         return "profile";

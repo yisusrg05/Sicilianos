@@ -185,11 +185,7 @@ public class RestaurantController {
     @PreAuthorize("hasRole('ROLE_VIEWER')")
     @GetMapping("/nosotros")
     public String nosotros(){return "about-us";}
-    
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
+
     @GetMapping("/accessDenied")
     public String accessDenied(){
         return "accessDenied";
@@ -217,13 +213,15 @@ public class RestaurantController {
         model.addAttribute("types", list);
         return "registrationDish";
     }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/cartInConstruction")
     public String cartInConstruction(){
         return "cartInConstruction";
     }
-    @GetMapping("/incorrectEmailOPassword")
+    @GetMapping("/incorrectEmailOrPassword")
     public String incorrectEmailOPassword(){
-        return "incorrectEmailoPassword";
+        return "incorrectEmailOrPassword";
     }
     @GetMapping("/alredyExistingUser")
     public String alredyExistingUser(){

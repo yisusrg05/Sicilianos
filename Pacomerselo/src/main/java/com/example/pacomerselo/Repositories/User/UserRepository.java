@@ -17,5 +17,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByUsername(String username);
 
     @Transactional
-    int updateUser(long id, String name, String surname, String email);
+    int updateUser(String username, String name, String surname, String email);
 }

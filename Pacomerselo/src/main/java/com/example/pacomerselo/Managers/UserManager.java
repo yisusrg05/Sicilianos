@@ -27,29 +27,29 @@ public class UserManager extends RestaurantManager {
         userRepository.save(user);
     }
 
-    public User getUser(long id){
-        Optional<User> op= userRepository.findById(id);
+    public User getUser(String username){
+        Optional<User> op= userRepository.findByUsername(username);
         return op.orElse(null);
     }
 
 
-    public String getPassword(long id){
-        Optional<User> op= userRepository.findById(id);
+    public String getPassword(String username){
+        Optional<User> op= userRepository.findByUsername(username);
         if(op.isPresent()){
             User user=op.get();
-            return user.getEncodedPassword();
+            return user.getPassword();
         }
         else{
             return null;
         }
     }
 
-    public User removeUser(long id){
-        Optional<User> op= userRepository.findById(id);
+    public User removeUser(String username){
+        Optional<User> op= userRepository.findByUsername(username);
         if(op.isPresent()){
             User user=op.get();
             user.getOrders().size();
-            userRepository.deleteById(id);
+            userRepository.delete(user);
             return user;
         }else{
             return null;
@@ -57,16 +57,15 @@ public class UserManager extends RestaurantManager {
     }
 
     //Updating an existing user
-    public int updateUser(long id,User newUser){
-        return userRepository.updateUser(id, newUser.getName(), newUser.getSurname(), newUser.getEmail());
+    public int updateUser(String username,User newUser){
+        return userRepository.updateUser(username, newUser.getName(), newUser.getSurname(), newUser.getEmail());
     }
 
     public User updateUserPassword(User user,String password){
-        long id= user.getId();
-        Optional<User> op= userRepository.findById(id);
+        Optional<User> op= userRepository.findByUsername(user.getUsername());
         if(op.isPresent()){
             User validUser=op.get();
-            validUser.setEncodedPassword(password);
+            validUser.setPassword(password);
             userRepository.save(validUser);
             return validUser;
         }

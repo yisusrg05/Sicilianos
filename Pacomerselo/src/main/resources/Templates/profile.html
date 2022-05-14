@@ -122,6 +122,10 @@
                     </div>
                 </div>
             </div>
+                <form action="/logout" method="post">
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                    <input type="submit" value="Sign Out" />
+                </form>
             </main>
             <script src="assets/bootstrap/js/bootstrap.min.js"></script>
             <script src="assets/js/theme.js"></script>

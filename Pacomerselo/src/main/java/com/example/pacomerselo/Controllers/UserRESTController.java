@@ -88,10 +88,10 @@ public class UserRESTController{
 
     //////////////////////USER REST CONTROLLER//////////////////////
 
-    //Get the user of the ID given
-    @GetMapping("/user/{id}")
-    public User getUser(@PathVariable long id){
-        return userManager.getUser(id);
+    //Get the user of the Username given
+    @GetMapping("/user/{username}")
+    public User getUser(@PathVariable String username){
+        return userManager.getUser(username);
     }
 
     /*
@@ -115,10 +115,10 @@ public class UserRESTController{
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    //Update a user profile given (ID)
-    @PutMapping("/changeprofile/{id}")
-    public ResponseEntity<User> updateProfile(@PathVariable long id,@RequestBody User newUser){
-        int usersUpdated=userManager.updateUser(id,newUser);
+    //Update a user profile given (Username)
+    @PutMapping("/changeprofile/{username}")
+    public ResponseEntity<User> updateProfile(@PathVariable String username,@RequestBody User newUser){
+        int usersUpdated=userManager.updateUser(username,newUser);
         if (usersUpdated==1) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -126,10 +126,10 @@ public class UserRESTController{
         }
     }
 
-    //Delete the user given (ID)
-    @DeleteMapping("/deleteuser/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable long id) {
-        User user = userManager.removeUser(id);
+    //Delete the user given (Username)
+    @DeleteMapping("/deleteuser/{username}")
+    public ResponseEntity<User> deleteUser(@PathVariable String username) {
+        User user = userManager.removeUser(username);
         if(user != null){
             return new ResponseEntity<>(HttpStatus.OK);
         }else{

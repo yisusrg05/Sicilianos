@@ -4,9 +4,11 @@ import com.example.pacomerselo.Entities.Order;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.web.context.annotation.SessionScope;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -14,7 +16,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"username"})}, name = "Users")
+@Table(name = "Users")
+@SessionScope
 public class User {
     /*The entity user has his own attributes: username (as we want the user get registered with it), name, surname,
     email, password, a Map called orders: it's key is a long, which is an ID to identify de order and the Value
@@ -23,16 +26,12 @@ public class User {
     an Admin, that can create Restaurants, we have a boolean to know what category the User is. Also, we have an ID to identify also a user.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @Column(unique = true)
     private String username;
 
     private String name;
     private String surname;
     private String email;
-    private String encodedPassword;
+    private String password;
 
     //private List<Dishes> cart;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
@@ -49,9 +48,9 @@ public class User {
         this.name=name;
         this.surname=surname;
         this.email=email;
-        this.encodedPassword=password;
+        this.password=password;
         this.orders=new ArrayList<>();
-        this.roles=List.of(roles);
+        this.roles= List.of(roles);
         //this.cart=new ArrayList<>();
     }
 

@@ -1,4 +1,4 @@
-package com.example.pacomerselo.Controllers;
+package com.example.pacomerselo.Security;
 
 
 import com.example.pacomerselo.Repositories.User.RepositoryUserDetailsService;
@@ -17,14 +17,13 @@ import java.security.SecureRandom;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     RepositoryUserDetailsService userDetailsService;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10, new SecureRandom());
     }
     @Override
@@ -51,6 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.formLogin().passwordParameter("password");
         http.formLogin().defaultSuccessUrl("/profile");
         http.formLogin().failureUrl("/incorrectEmailOrPassword");
+
         // Logout
         http.logout().logoutUrl("/logout");
         http.logout().logoutSuccessUrl("/");

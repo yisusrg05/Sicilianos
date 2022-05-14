@@ -22,16 +22,10 @@ public class UserRepositoryImpl {
         return query.setParameter("username",username).setParameter("email",email).getResultList();
     }
 
-    public List<User> findByUsername(String username){
-        TypedQuery<User> query= entityManager.createQuery
-                ("SELECT u FROM User u WHERE u.username=:username",User.class);
-        return query.setParameter("username",username).getResultList();
-    }
-
     @Transactional
-    public int updateUser(long id,String name, String surname, String email){
+    public int updateUser(String username,String name, String surname, String email){
         Query query = entityManager.createQuery
-                ("UPDATE User u SET u.name=:name, u.surname=:surname,u.email=:email WHERE u.id=:id");
-        return query.setParameter("id",id).setParameter("name",name).setParameter("surname",surname).setParameter("email",email).executeUpdate();
+                ("UPDATE User u SET u.name=:name, u.surname=:surname,u.email=:email WHERE u.username=:username");
+        return query.setParameter("username",username).setParameter("name",name).setParameter("surname",surname).setParameter("email",email).executeUpdate();
     }
 }

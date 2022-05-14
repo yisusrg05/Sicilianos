@@ -7,10 +7,12 @@ import com.example.pacomerselo.Managers.RestaurantManager;
 import com.example.pacomerselo.Repositories.Restaurant.RestaurantRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.List;
 
@@ -263,10 +265,19 @@ public class RestaurantController {
         return "faq";
     }
 
-    @GetMapping("/index")
-    public String index(){
+    @GetMapping(value = {"/index","/"})
+    public String index(Model model,HttpServletRequest request){
+        boolean logged=false;
+        if(SecurityContextHolder.getContext().getAuthentication()!=null&&request.isUserInRole("ROLE_USER")){
+            String username=request.getUserPrincipal().getName();
+            logged=true;
+            model.addAttribute("username",username);
+        }
+        model.addAttribute("logged",logged);
+        model.addAttribute("notlogged",!(logged));
         return "index";
     }
+
 
     @GetMapping("/forgottenPassword")
     public String forgottenPassword(){

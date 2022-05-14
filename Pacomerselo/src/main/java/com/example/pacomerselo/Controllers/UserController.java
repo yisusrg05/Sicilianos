@@ -1,10 +1,12 @@
 package com.example.pacomerselo.Controllers;
 
 
+import com.example.pacomerselo.Entities.Dishes;
 import com.example.pacomerselo.Entities.User;
 import com.example.pacomerselo.Managers.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,8 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    private List<Dishes> cart;
+
     @GetMapping("/login")
     public String login(Model model, HttpServletRequest request){
 
@@ -33,9 +37,9 @@ public class UserController {
         return "login";
     }
 
-    /*
+
     //Get the cart
-    @GetMapping("/carrito")
+    @GetMapping("/cart")
     public String shoppingCart(Model model){
         User user= userHolder.getUser(1);
         boolean vacio= !user.getCart().isEmpty(); //Boolean for the HTML
@@ -48,6 +52,7 @@ public class UserController {
 
         return getCart(model);//Calling a private function in order to not repeat code
     }
+    /*
 
     //Adding a new dish to the cart, given its id (ID1) and the restaurant id (ID2)
     @GetMapping("/addcarrito/{id1}/{id2}")
@@ -78,21 +83,6 @@ public class UserController {
 
 
     /*
-    //Allows login, getting the username and password as Parameters
-    // , and showing diferent results in the HTML depending on the login result
-    @PostMapping("/login")
-    public String login(Model model, @RequestParam String username, @RequestParam String password){
-        boolean valid= userHolder.validUser(username,password);
-        boolean error= !(userHolder.validUser(username,password));
-
-        model.addAttribute("ok",valid); //Login valid
-        model.addAttribute("error",error); //Login invalid
-
-        return "loginResult";
-    }
-
-     */
-    /*
     //Get the checkout page, showing a little summary of the cart
     @GetMapping("/payment")
     public String payment(Model model){
@@ -111,9 +101,8 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/profile")
     public String profile(Model model, HttpServletRequest request){
-
-        String username = request.getUserPrincipal().getName();
-        User user= userManager.findByUsername(username).orElseThrow();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user= userManager.findByUsername(username).orElse(null);
 
         model.addAttribute("user",user);
         model.addAttribute("order", userManager.findOrdersByUser(user));
@@ -126,8 +115,8 @@ public class UserController {
     @PostMapping("/profile")
     public String updateProfile(Model model, User newUser, HttpServletRequest request){
         String username = request.getUserPrincipal().getName();
-        User user= userManager.findByUsername(username).orElseThrow();
-        userManager.updateUser(user.getId(),newUser);
+        User user= userManager.findByUsername(username).orElse(null);
+        userManager.updateUser(username,newUser);
         model.addAttribute("order",userManager.findOrdersByUser(user));
         model.addAttribute("user",user);
         return "profile";
@@ -157,7 +146,7 @@ public class UserController {
     @PostMapping("/register")
     public String addUser(User newUser){
         if(userManager.findByUsername(newUser.getUsername()).isEmpty()){
-            newUser.setEncodedPassword(passwordEncoder.encode(newUser.getEncodedPassword()));
+            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             userManager.addUser(newUser);
             return "registerSuccessful";
         }

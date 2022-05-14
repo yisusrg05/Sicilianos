@@ -1,4 +1,4 @@
-package com.example.pacomerselo.Controllers;
+package com.example.pacomerselo.Security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.csrf.CsrfToken;

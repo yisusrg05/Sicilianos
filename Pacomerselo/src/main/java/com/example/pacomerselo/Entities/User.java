@@ -4,6 +4,9 @@ import com.example.pacomerselo.Entities.Order;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.service.spi.InjectService;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import javax.persistence.*;
@@ -17,7 +20,6 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "Users")
-@SessionScope
 public class User {
     /*The entity user has his own attributes: username (as we want the user get registered with it), name, surname,
     email, password, a Map called orders: it's key is a long, which is an ID to identify de order and the Value
@@ -28,9 +30,13 @@ public class User {
     @Id
     private String username;
 
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String surname;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
 
     //private List<Dishes> cart;

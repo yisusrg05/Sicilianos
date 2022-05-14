@@ -21,7 +21,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="/index">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/cartInConstruction">El carrito</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/cart">El carrito</a></li>
                 <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
             </ul>
         </div>
@@ -36,25 +36,26 @@
             </div>
             <div class="content">
                 <div class="row g-0">
-                    {{#vacio}}
+                    {{^vacio}}
+                    {{#cart}}
                     <div class="col-md-12 col-lg-8">
                         <div class="items">
-                            {{#cart}}
+                            {{#dishesList}}
                             <div class="product">
                                 <div class="row justify-content-center align-items-center">
                                     <div class="col-md-3">
-                                        <div class="product-image" ><img class="img-fluid d-block mx-auto image" onclick="location.href='/restaurant/{{idRestaurant}}'" src="assets/img/dishes/{{id}}.jpg"></div>
+                                        <div class="product-image" ><img class="img-fluid d-block mx-auto image" onclick="location.href='/restaurant'" src="assets/img/dishes/{{id}}.jpg"></div>
                                     </div>
-                                    <div class="col-md-5 product-info"><h1 onclick="location.href='/restaurant/{{idRestaurant}}'" class="product-name" >{{name}}</h1>
+                                    <div class="col-md-5 product-info"><h1 onclick="location.href='/restaurant'" class="product-name" >{{name}}</h1>
                                         <div class="product-specs">
                                             <div><span>Descripción:</span><span class="value">{{description}}</span></div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-2 price"><span>{{price}}€</span></div>
                                 </div>
-                                <button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/deletecart/{{idRestaurant}}/{{id}}'" type="button">BORRAR</button>
+                                <button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/deletecart/{{id}}'" type="button">BORRAR</button>
                             </div>
-                            {{/cart}}
+                            {{/dishesList}}
                             <button class="btn btn-danger d-block w-50" style="margin: 10px" onclick="location.href='/deleteCart'" type="button">BORRAR TODO EL CARRITO</button>
                         </div>
 
@@ -62,16 +63,17 @@
                     <div class="col-md-12 col-lg-4">
                         <div class="summary">
                             <h3>Resumen</h3>
-                            <h4><span class="text">Comida</span><span class="price">{{comida}}€</span></h4>
+                            <h4><span class="text">Comida</span><span class="price">{{price}}€</span></h4>
                             <h4><span class="text">Envío</span><span class="price">5€</span></h4>
                             <h4><span class="text">Total</span><span class="price">{{total}}€</span></h4><button class="btn btn-warning btn-lg d-block w-100" onclick="location.href='/payment'"type="button">Pagar</button>
                         </div>
                     </div>
                 </div>
+                {{/cart}}
                 {{/vacio}}
-                {{#now}}
+                {{#vacio}}
                 <button class="btn btn-warning d-block w-100"  onclick="location.href='/restaurant'" type="button">¡Descubre nuestros restaurantes y haz un pedido!</button>
-                {{/now}}
+                {{/vacio}}
             </div>
         </div>
     </section>

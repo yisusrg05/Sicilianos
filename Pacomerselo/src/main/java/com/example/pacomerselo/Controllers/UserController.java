@@ -2,8 +2,11 @@ package com.example.pacomerselo.Controllers;
 
 
 import com.example.pacomerselo.Entities.Dishes;
+import com.example.pacomerselo.Entities.SessionCart;
 import com.example.pacomerselo.Entities.User;
+import com.example.pacomerselo.Managers.RestaurantManager;
 import com.example.pacomerselo.Managers.UserManager;
+import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,21 +15,27 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.annotation.SessionScope;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class UserController {
 
     @Autowired
-    UserManager userManager;
+    private UserManager userManager;
     @Autowired
-    PasswordEncoder passwordEncoder;
-
-    private List<Dishes> cart;
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RestaurantManager restaurantManager;
+    @Autowired
+    private SessionCart sessionCart;
 
     @GetMapping("/login")
     public String login(Model model, HttpServletRequest request){
@@ -40,46 +49,45 @@ public class UserController {
 
     //Get the cart
     @GetMapping("/cart")
-    public String shoppingCart(Model model){
-        User user= userHolder.getUser(1);
-        boolean vacio= !user.getCart().isEmpty(); //Boolean for the HTML
-        boolean mostrarAhora=!vacio; //Another Boolean for the HTML
-        //If cart is empty, the HTML showed is a bit different from the used cart,
-        //, so it depends on the result of this booleans
-
+    public String shoppingCart(Model model, HttpServletRequest request,HttpSession httpSession){
+        this.sessionCart= (SessionCart) httpSession.getAttribute("cart");
+        boolean vacio=this.sessionCart.getCart().isEmpty();
+        model.addAttribute("cart",sessionCart);
         model.addAttribute("vacio",vacio);
-        model.addAttribute("now",mostrarAhora);
 
-        return getCart(model);//Calling a private function in order to not repeat code
+        return "cart";//Calling a private function in order to not repeat code
     }
-    /*
+
 
     //Adding a new dish to the cart, given its id (ID1) and the restaurant id (ID2)
-    @GetMapping("/addcarrito/{id1}/{id2}")
-    public String addShoppingCart(@PathVariable long id1, @PathVariable long id2){
-        Dishes dish= restaurantManager.getDish(id2);
-        userHolder.addDishToCart(1,dish);
-
+    @GetMapping("/addcarrito/{id1}")
+    public String addShoppingCart(@PathVariable long id1, HttpSession httpSession){
+        this.sessionCart= (SessionCart) httpSession.getAttribute("cart");
+        this.sessionCart.add(restaurantManager.getDish(id1));
+        httpSession.setAttribute("cart",this.sessionCart);
         return "addToCartSuccessful";
 
     }
 
+
     //Deleting a new dish from the cart, given its id (ID1) and the restaurant id (ID2)
-    @GetMapping("/deletecart/{id1}/{id2}")
-    public String deleteShoppingCart(Model model,@PathVariable long id1, @PathVariable long id2){
-        Dishes dish= restaurantManager.getDish(id2);
-        userHolder.deleteDishFromCart(1,dish);
+    @GetMapping("/deletecart/{id}")
+    public String deleteShoppingCart(Model model,HttpSession httpSession,@PathVariable long id){
+
+        this.sessionCart=(SessionCart) httpSession.getAttribute("cart");
+        this.sessionCart.deleteDish(id);
+        httpSession.setAttribute("cart",this.sessionCart);
 
         return "deleteCartSuccssesful";
     }
 
+
     //Delete all the cart
     @GetMapping("/deleteCart")
-    public String deleteCart(Model model){
-       userHolder.deleteCart(1);
-
+    public String deleteCart(Model model,HttpSession httpSession){
+       httpSession.setAttribute("cart",this.sessionCart= new SessionCart());
        return "deleteCartSuccssesful";
-    }*/
+    }
 
 
     /*
@@ -100,10 +108,11 @@ public class UserController {
     //Get the profile information (personal data and orders)
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/profile")
-    public String profile(Model model, HttpServletRequest request){
+    public String profile(Model model, HttpServletRequest request,HttpSession httpSession){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user= userManager.findByUsername(username).orElse(null);
-
+        this.sessionCart=new SessionCart();
+        httpSession.setAttribute("cart",this.sessionCart);
         model.addAttribute("user",user);
         model.addAttribute("order", userManager.findOrdersByUser(user));
 

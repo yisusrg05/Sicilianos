@@ -14,13 +14,22 @@
 
 <body>
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-  <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+  <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>{{#logged}}<a>Bienvenido, {{username}}</a>{{/logged}}
     <div class="collapse navbar-collapse" id="navcol-1">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="/index">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/index">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
-        <li class="nav-item"><a class="nav-link" href="/cartInConstruction">El carrito</a></li>
-        <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="/cart">El carrito</a></li>
+        {{^logged}}
+        <li class="nav-item"><a class="nav-link" href="/login">Iniciar Sesión</a></li>
+        {{/logged}}
+        {{#logged}}
+        <li class="nav-item"><a class="nav-link" href="/profile">Perfil</a></li>
+        <li class="nav-item"><form action="/logout" method="post">
+          <input type="hidden" name="_csrf" value="{{token}}"/>
+          <button class="nav-link" type="submit">CERRAR SESIÓN</button>
+        </form></li>
+        {{/logged}}
       </ul>
     </div>
   </div>

@@ -104,16 +104,22 @@
                                         </div >
                                         <div class="description"><h6><u>{{type}}</u></h6></div><br>
                                         <div>
-                                        <button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/restaurant/{{id1}}/deleteDish/{{id}}'" type="button">BORRAR</button>
-                                        <button class="btn btn-outline-warning d-block w-100 " style="margin: 10px" onclick="location.href='/restaurant/{{id1}}/updateDish/{{id}}'" type="button">ACTUALIZAR</button>
-                                        <button class="btn btn-warning d-block w-100  " style="margin: 10px" onclick="location.href='/addcarrito/{{id}}'" type="button">Añadir al carrito</button>
+                                            {{#admin}}
+                                            <button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/restaurant/{{id1}}/deleteDish/{{id}}'" type="button">BORRAR</button>
+                                            <button class="btn btn-outline-warning d-block w-100 " style="margin: 10px" onclick="location.href='/restaurant/{{id1}}/updateDish/{{id}}'" type="button">ACTUALIZAR</button>
+                                            {{/admin}}
+                                            {{^admin}}
+                                            <button class="btn btn-warning d-block w-100  " style="margin: 10px" onclick="location.href='/addcarrito/{{id}}'" type="button">Añadir al carrito</button>
+                                            {{/admin}}
                                         </div>
                                     </div>
                                 </div>
                                 {{/dishes}}
                             </div>
                             </ul>
+                            {{#admin}}
                             <button class="btn btn-info d-block w-100 " onclick="location.href='/{{id1}}/registerDish'" type="button">Registra un plato ahora.</button>
+                            {{/admin}}
                         </div>
                     </div>
                     </div>

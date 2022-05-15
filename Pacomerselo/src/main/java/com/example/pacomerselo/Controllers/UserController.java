@@ -6,6 +6,7 @@ import com.example.pacomerselo.Entities.User;
 import com.example.pacomerselo.Managers.RestaurantManager;
 import com.example.pacomerselo.Managers.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,9 +32,9 @@ public class UserController {
     @Autowired
     private RestaurantManager restaurantManager;
     @Autowired
-    private SessionCart sessionCart;
+    private SessionCart sessionCart= new SessionCart();
 
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("permitAll()")
     @GetMapping("/login")
     public String login(Model model, HttpServletRequest request){
 
@@ -43,9 +44,10 @@ public class UserController {
         return "login";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/cart")
-    public String shoppingCart(Model model, HttpServletRequest request,HttpSession httpSession){
+    public String shoppingCart(Model model, HttpServletRequest request){
+        HttpSession httpSession= request.getSession();
         this.sessionCart= (SessionCart) httpSession.getAttribute("cart");
         boolean vacio=this.sessionCart.getCart().isEmpty();
         model.addAttribute("cart",sessionCart);
@@ -56,22 +58,25 @@ public class UserController {
 
 
     //Adding a new dish to the cart, given its id (ID1) and the restaurant id (ID2)
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/addcarrito/{id1}")
-    public String addShoppingCart(@PathVariable long id1, Model model, HttpSession httpSession, HttpServletRequest request){
+    public String addShoppingCart(@PathVariable long id1, Model model, HttpServletRequest request){
+        HttpSession httpSession=request.getSession();
         this.sessionCart= (SessionCart) httpSession.getAttribute("cart");
         this.sessionCart.add(restaurantManager.getDish(id1));
         httpSession.setAttribute("cart",this.sessionCart);
+        long idRestaurant=restaurantManager.getDish(id1).getRestaurant().getId();
+        model.addAttribute("id",idRestaurant);
         return userCustomization(model,request,"addToCartSuccessful");
 
     }
 
 
     //Deleting a new dish from the cart, given its id (ID1) and the restaurant id (ID2)
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/deletecart/{id}")
-    public String deleteShoppingCart(Model model,HttpServletRequest request, HttpSession httpSession,@PathVariable long id){
-
+    public String deleteShoppingCart(Model model,HttpServletRequest request, @PathVariable long id){
+        HttpSession httpSession= request.getSession();
         this.sessionCart=(SessionCart) httpSession.getAttribute("cart");
         this.sessionCart.deleteDish(id);
         httpSession.setAttribute("cart",this.sessionCart);
@@ -81,36 +86,36 @@ public class UserController {
 
 
     //Delete all the cart
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/deleteCart")
-    public String deleteCart(Model model,HttpServletRequest request, HttpSession httpSession){
-       httpSession.setAttribute("cart",this.sessionCart= new SessionCart());
-       return userCustomization(model,request,"deleteCartSuccessful");
+    public String deleteCart(Model model,HttpServletRequest request){
+        HttpSession httpSession=request.getSession();
+        httpSession.setAttribute("cart",this.sessionCart= new SessionCart());
+        return userCustomization(model,request,"deleteCartSuccessful");
     }
 
 
-    /*
+
     //Get the checkout page, showing a little summary of the cart
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/payment")
-    public String payment(Model model){
-        User user= userHolder.getUser(1);
-        Collection<Dishes> cart = user.allCart();
-
-        model.addAttribute("cart",cart);
-
-        int total=5+foodCart();
-        model.addAttribute("total",total);
-
-        return "payment-page";
-    }*/
+    public String payment(Model model, HttpServletRequest request){
+        HttpSession httpSession=request.getSession();
+        this.sessionCart= (SessionCart) httpSession.getAttribute("cart");
+        model.addAttribute("cart",sessionCart);
+        return userCustomization(model,request,"payment-page");
+    }
 
     //Get the profile information (personal data and orders)
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/profile")
-    public String profile(Model model, HttpServletRequest request,HttpSession httpSession){
+    public String profile(Model model, HttpServletRequest request){
+        HttpSession httpSession=request.getSession();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user= userManager.findByUsername(username).orElse(null);
-        this.sessionCart=new SessionCart();
+        if(httpSession.isNew()){
+            this.sessionCart=new SessionCart();
+        }
         httpSession.setAttribute("cart",this.sessionCart);
         model.addAttribute("user",user);
         model.addAttribute("order", userManager.findOrdersByUser(user));
@@ -119,7 +124,7 @@ public class UserController {
     }
 
     //Updating the profile, except the password
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/profile")
     public String updateProfile(Model model, User newUser, HttpServletRequest request){
         String username = request.getUserPrincipal().getName();
@@ -132,7 +137,7 @@ public class UserController {
     }
 
     //Update just the password, not all the User
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("permitAll()")
     @PostMapping("/forgottenPassword")
     public String updatePassword(@RequestParam String username,@RequestParam String email, @RequestParam String password){
         List<User> user= userManager.findByUsernameAndEmail(username,email);
@@ -144,16 +149,18 @@ public class UserController {
         }
     }
 
-
-    /*
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/orderPlaced")
-    public String placeOrder(){
-        userManager.proccessOrder(1);
+    public String placeOrder(Model model, HttpServletRequest request){
+        HttpSession httpSession=request.getSession();
+        this.sessionCart=(SessionCart) httpSession.getAttribute("cart");
+        userManager.proccessOrder(request.getUserPrincipal().getName(),this.sessionCart);
+        httpSession.setAttribute("cart",new SessionCart());
         return "orderPlaced";
     }
-    */
 
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+
+    @PreAuthorize("permitAll()")
     @PostMapping("/register")
     public String addUser(User newUser){
         if(userManager.findByUsername(newUser.getUsername()).isEmpty()){
@@ -164,6 +171,17 @@ public class UserController {
         else{
             return "alreadyExistingUser";
         }
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PostMapping("/payment")
+    public String applyDiscount(Model model, HttpServletRequest request, long total){
+        HttpSession httpSession=request.getSession();
+        this.sessionCart= (SessionCart) httpSession.getAttribute("cart");
+        this.sessionCart.setTotal(total);
+        httpSession.setAttribute("cart", this.sessionCart);
+        model.addAttribute("cart",sessionCart);
+        return userCustomization(model,request,"payment-page");
     }
 
     private String userCustomization(Model model, HttpServletRequest request, String page){

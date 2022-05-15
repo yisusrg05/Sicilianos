@@ -26,6 +26,7 @@ public class RestaurantController {
 
 
     //Get all the restaurants available
+    @PreAuthorize("permitAll()")
     @GetMapping("/restaurant")
     public String restaurant(Model model, HttpServletRequest request){
         Collection<Restaurant> restaurants=restaurantManager.getRestaurants();
@@ -35,6 +36,7 @@ public class RestaurantController {
         return userCustomization(model,request,"pricing");
     }
 
+    @PreAuthorize("permitAll()")
     @PostMapping("/restaurant/search")
     public String restaurantSearch(Model model, HttpServletRequest request, @RequestParam String name){
         Collection<Restaurant> restaurants=restaurantManager.findRestaurantByName(name);
@@ -45,6 +47,7 @@ public class RestaurantController {
     }
 
     //Get a single restaurant, given the ID
+    @PreAuthorize("permitAll()")
     @GetMapping("/restaurant/{id1}")
     public String restaurantId(Model model, HttpServletRequest request, @PathVariable long id1){
         Collection<Dishes> dishes = restaurantManager.getDishes(id1);
@@ -57,6 +60,7 @@ public class RestaurantController {
         model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
         return userCustomization(model,request,"catalog-page");    }
 
+    @PreAuthorize("permitAll()")
     @PostMapping("/restaurant/{id1}/search")
     public String restaurantDishesSearch(Model model, HttpServletRequest request, @PathVariable long id1, @RequestParam String name){
         Restaurant restaurant=restaurantManager.getRestaurant(id1);
@@ -72,7 +76,7 @@ public class RestaurantController {
     }
 
     //Add a new restaurant
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/restaurant")
     public String addRestaurant (Model model, HttpServletRequest request, Restaurant restaurant){
         restaurantManager.addRestaurant(restaurant);
@@ -83,7 +87,7 @@ public class RestaurantController {
         return userCustomization(model,request,"pricing");
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/restaurant/{id}")
     public String addDish (Model model, HttpServletRequest request, @PathVariable long id, Dishes dish){
         dish.setRestaurant(restaurantManager.getRestaurant(id));
@@ -104,6 +108,7 @@ public class RestaurantController {
         return userCustomization(model,request,"catalog-page");
     }
 
+    @PreAuthorize("permitAll()")
     @PostMapping("/restaurant/{id}/filter")
     public String filterDish (Model model, HttpServletRequest request, @PathVariable long id, @RequestParam int min,@RequestParam int max, @RequestParam List<String> type){
         Restaurant restaurant=restaurantManager.getRestaurant(id);
@@ -141,9 +146,10 @@ public class RestaurantController {
     }
 
     //Update an already existing dish (ID2) from a given restaurant (ID1)
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/restaurant/{id1}/updateDish/{id2}")
-    public String updateDish(Model model, HttpServletRequest request, @PathVariable long id1, @PathVariable long id2, Dishes newDish) {restaurantManager.updateDish(id2,newDish);
+    public String updateDish(Model model, HttpServletRequest request, @PathVariable long id1, @PathVariable long id2, Dishes newDish) {
+        restaurantManager.updateDish(id2,newDish);
         Collection<Dishes> dishes = restaurantManager.getDishes(id1);
 
         model.addAttribute("dishes",dishes);
@@ -154,7 +160,7 @@ public class RestaurantController {
     }
 
     //Delete an already existing dish (ID2) from a given restaurant (ID1)
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/restaurant/{id1}/deleteDish/{id2}")
     public String deleteDish (Model model, HttpServletRequest request, @PathVariable long id1, @PathVariable long id2){
         restaurantManager.removeDish(id2);
@@ -168,9 +174,10 @@ public class RestaurantController {
     }
 
     //Update an already existing restaurant given the ID
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/updateRestaurant/{id}")
-    public String putRestaurant (Model model, HttpServletRequest request,@PathVariable long id,Restaurant newRestaurant){restaurantManager.updateRestaurant(id,newRestaurant);
+    public String putRestaurant (Model model, HttpServletRequest request,@PathVariable long id,Restaurant newRestaurant){
+        restaurantManager.updateRestaurant(id,newRestaurant);
         Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
 
         model.addAttribute("restaurants",restaurants);
@@ -178,7 +185,7 @@ public class RestaurantController {
     }
 
     //Delete an already existing restaurant given the ID
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/deleteRestaurant/{id}")
     public String deleteRestaurant (Model model, HttpServletRequest request, @PathVariable long id){
         restaurantManager.removeRestaurant(id);
@@ -189,36 +196,37 @@ public class RestaurantController {
         return userCustomization(model,request,"deleteRestaurantSuccessful");
     }
 
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("permitAll()")
     @GetMapping("/nosotros")
     public String nosotros( Model model, HttpServletRequest request) {
         return userCustomization(model,request,"about-us");
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/accessDenied")
     public String accessDenied( HttpServletRequest request){
         return "accessDenied";
     }
 
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("permitAll()")
     @GetMapping("/reviews")
     public String reviews(Model model, HttpServletRequest request){
         return userCustomization(model,request,"reviews");
     }
 
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("permitAll()")
     @GetMapping("/updateSuccesful")
     public String updateSuccessful( Model model,HttpServletRequest request){
         return userCustomization(model,request,"updateSuccesful");
     }
 
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("permitAll()")
     @GetMapping("/register")
     public String register(){
         return "registration";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}/registerDish")
     public String registerDish(Model model, HttpServletRequest request, @PathVariable long id){
         model.addAttribute("id1",id);
@@ -227,26 +235,26 @@ public class RestaurantController {
         return userCustomization(model,request,"registrationDish");
     }
 
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("permitAll()")
     @GetMapping("/incorrectEmailOrPassword")
     public String incorrectEmailOPassword(){
         return "incorrectEmailOrPassword";
     }
 
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("permitAll()")
     @GetMapping("/alredyExistingUser")
     public String alredyExistingUser(){
         return "alreadyExistingUser";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping ("/registerRestaurant")
     public String registerRestaurant( Model model, HttpServletRequest request){
         return userCustomization(model,request,"registrationRest");
     }
 
     //Giving the needed information to update a restaurant
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping ("/updateRestaurant/{id}")
     public String updateRestaurant(Model model, HttpServletRequest request, @PathVariable long id){
         Restaurant restaurant = restaurantManager.getRestaurant(id);
@@ -258,7 +266,7 @@ public class RestaurantController {
     }
 
     //Giving the needed information to update a dish
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping ("/restaurant/{id1}/updateDish/{id2}")
     public String updateDishes(Model model, HttpServletRequest request, @PathVariable long id1 /*Restaurant ID*/, @PathVariable long id2/*Dish ID*/){
 
@@ -273,19 +281,19 @@ public class RestaurantController {
         return userCustomization(model,request,"updateDish");
     }
 
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("permitAll()")
     @GetMapping("/faq")
     public String faq(Model model,HttpServletRequest request){
         return userCustomization(model,request,"faq");
     }
 
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("permitAll()")
     @GetMapping(value = {"/index","/"})
     public String index(Model model,HttpServletRequest request){
         return userCustomization(model,request,"index");
     }
 
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("permitAll()")
     @GetMapping("/forgottenPassword")
     public String forgottenPassword(){
         return "forgottenPassword";

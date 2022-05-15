@@ -13,7 +13,18 @@
     <link rel="stylesheet" href="assets/css/untitled.css">
     <link rel="stylesheet" href="assets/css/vanilla-zoom.min.css">
 </head>
-
+<style>
+    #message{
+        position: relative;
+        top: 10px;
+        color: #7cb57c;
+    }
+    #err{
+        position: relative;
+        top: 10px;
+        color: #d55454;
+    }
+</style>
 <body>
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
     <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>{{#logged}}<a>Bienvenido, {{username}}</a>{{/logged}}
@@ -47,13 +58,19 @@
                 <div class="products">
                     <h3 class="title">Checkout</h3>
                     {{#cart}}
+                    {{#dishesList}}
                     <div class="item"><span class="price">{{price}}€</span>
                         <p class="item-name">{{name}}</p>
                         <p class="item-description">{{description}}</p>
                     </div>
+                    {{/dishesList}}
+                    <div class="summary"><span>Precio</span><span class="price" >{{price}}€</span></div>
+                    <div class="summary"><span>Gastos de Envío</span><span class="price" id="shipping">5€</span></div>
+                    <div id="total" class="total"><span>Total</span><span type="number" class="price" id="price">{{total}}€</span></div>
+                    <div class="total"><label for="coupon">Cupón</label>
+                        <input type="text" id="coupon"><span id="message"></span><span id="err"></span>
+                    </div>
                     {{/cart}}
-                    <div class="summary"><span>Gastos de Envío</span><span class="price">5€</span></div>
-                    <div class="total"><span>Total</span><span class="price">{{total}}€</span></div>
                 </div>
                 <div class="card-details">
                     <h3 class="title">Tus datos bancarios</h3>
@@ -118,6 +135,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 <script src="assets/js/vanilla-zoom.js"></script>
 <script src="assets/js/theme.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+<script src="../../assets/js/script.js"></script>
 </body>
 
 </html>

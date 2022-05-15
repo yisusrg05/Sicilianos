@@ -1,6 +1,8 @@
 package com.example.pacomerselo.Managers;
 
+import com.example.pacomerselo.Entities.Dishes;
 import com.example.pacomerselo.Entities.Order;
+import com.example.pacomerselo.Entities.SessionCart;
 import com.example.pacomerselo.Entities.User;
 import com.example.pacomerselo.Repositories.Order.OrderRepository;
 import com.example.pacomerselo.Repositories.User.UserRepository;
@@ -11,7 +13,7 @@ import java.util.*;
 
 
 @Service
-public class UserManager extends RestaurantManager {
+public class UserManager{
 
     @Autowired
     protected OrderRepository orderRepository;
@@ -90,56 +92,19 @@ public class UserManager extends RestaurantManager {
     public List<Order> findOrdersByUser(User user){
         return orderRepository.findOrdersByUser(user);
     }
-    /*
 
-    //The login function
-    public boolean validUser(String username,String password){
-        long id;
-        if(userIDs.containsKey(username)){ //Checking if the username is from a valid user
-            id = userIDs.get(username);
-        }else{
-            id=0;
-        }
-        if(id==0){ //If it does not exist, faile login
-            return false;
-        }else{ //If it exits, we check that the information given is the same as the one stored
-            return users.get(id).getUsername().equals(username)&&users.get(id).getPassword().equals(password);
-        }
-    }
-
-    public void addDishToCart(long id,Dishes dish){
-        users.get(id).addDish(dish);
-    }
-
-    public void deleteDishFromCart(long id, Dishes dish){
-        users.get(id).deleteDish(dish);
-    }
-
-    public void deleteCart(long id){
-        users.get(id).setCart(new ArrayList<Dishes>());
-    }
-
-    public List<Dishes> getDishes(long id){
-        return users.get(id).allCart();
-    }
 
 
     //Delete the cart and create a new order, given an user ID
-    public long proccessOrder (long id){
-        Order order = new Order((List<Dishes>) getDishes(id));
-        int price=SHIPPING_COSTS;
-        List<Dishes> list =(List<Dishes>) getDishes(id);
-        for(Dishes dish : list){
-            price+=dish.getPrice();
+    public void proccessOrder(String username, SessionCart cart){
+        Order order= new Order();
+        for(Dishes dish : cart.getDishesList()){
+            order.add(dish);
         }
-        long idOrder = lastIDOrder.incrementAndGet();
-        order.setId(idOrder);
-        order.setPrice(price);
-        deleteCart(id);
-        users.get(id).addOrder(idOrder,order);
-        return idOrder;
+        order.setUser(getUser(username));
+        orderRepository.save(order);
     }
-
+/*
     //Given a user ID and a dish ID, check if that dish is in the cart, and if so, return it
     public Dishes getDishFromCart(long idUser,long id){
         List<Dishes> dishesList=users.get(idUser).getCart();

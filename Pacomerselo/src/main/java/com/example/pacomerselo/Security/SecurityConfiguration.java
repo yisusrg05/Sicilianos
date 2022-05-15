@@ -12,11 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.security.SecureRandom;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -33,16 +33,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // Public pages
-        http.authorizeRequests().antMatchers("/").permitAll();
-        http.authorizeRequests().antMatchers("/login").permitAll();
-        http.authorizeRequests().antMatchers("/restaurants").permitAll();
-        http.authorizeRequests().antMatchers("/incorrectEmailOrPassword").permitAll();
-        http.authorizeRequests().antMatchers("/logout").permitAll();
-        http.authorizeRequests().antMatchers("/","index","/css/*","/js/*","/static/assets/*").permitAll();
-        // Private pages (all other pages)
-        http.authorizeRequests().antMatchers("/reviews").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/profile").hasAnyRole("USER");
 
         // Login form
         http.formLogin().loginPage("/login");

@@ -226,6 +226,8 @@ public class DatabaseUsersLoader {
 
 
         User yisus=new User("Yisus", "Jesus", "Ramirez", "yisus@urjc.es", passwordEncoder.encode("oleole"),"USER");
+        User sicilia=new User("Sici", "Sicilia", "Clemente", "sici@urjc.es", passwordEncoder.encode("ilovenico"),"USER");
+        User jorge=new User("Coke", "Jorge", "Martinez", "jorge@urjc.es", passwordEncoder.encode("paris"),"USER");
         User admin=new User("Administrador","Paco","Mérselo","admin@pacomerselo.me", passwordEncoder.encode("adminpass"),"USER", "ADMIN");
 
         Order order1 = new Order();
@@ -250,6 +252,8 @@ public class DatabaseUsersLoader {
 
         userRepository.save(admin);
         userRepository.save(yisus);
+        userRepository.save(sicilia);
+        userRepository.save(jorge);
 
         orderRepository.save(order1);
         orderRepository.save(order2);

@@ -48,28 +48,28 @@ public class RestaurantController {
 
     //Get a single restaurant, given the ID
     @PreAuthorize("permitAll()")
-    @GetMapping("/restaurant/{id1}")
-    public String restaurantId(Model model, HttpServletRequest request, @PathVariable long id1){
-        Collection<Dishes> dishes = restaurantManager.getDishes(id1);
+    @GetMapping("/restaurant/{name}")
+    public String restaurantId(Model model, HttpServletRequest request, @PathVariable String name){
+        Collection<Dishes> dishes = restaurantManager.getDishes(name);
         List<String> list= DishType.DESSERT.types();
 
         model.addAttribute("types", list);
         model.addAttribute("dishes",dishes);
-        model.addAttribute("id1",id1);
+        model.addAttribute("id1",name);
         model.addAttribute("empty",dishes.isEmpty());
         model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
         return userCustomization(model,request,"catalog-page");    }
 
     @PreAuthorize("permitAll()")
-    @PostMapping("/restaurant/{id1}/search")
-    public String restaurantDishesSearch(Model model, HttpServletRequest request, @PathVariable long id1, @RequestParam String name){
-        Restaurant restaurant=restaurantManager.getRestaurant(id1);
+    @PostMapping("/restaurant/{nameRest}/search")
+    public String restaurantDishesSearch(Model model, HttpServletRequest request, @PathVariable String nameRest, @RequestParam String name){
+        Restaurant restaurant=restaurantManager.getRestaurant(nameRest);
         Collection<Dishes> dishes = restaurantManager.findDishByName(restaurant,name);
         List<String> list= DishType.DESSERT.types();
 
         model.addAttribute("types", list);
         model.addAttribute("dishes",dishes);
-        model.addAttribute("id1",id1);
+        model.addAttribute("id1",nameRest);
         model.addAttribute("empty",dishes.isEmpty());
         model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
         return userCustomization(model,request,"catalog-page");
@@ -88,17 +88,17 @@ public class RestaurantController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PostMapping("/restaurant/{id}")
-    public String addDish (Model model, HttpServletRequest request, @PathVariable long id, Dishes dish){
-        dish.setRestaurant(restaurantManager.getRestaurant(id));
-        restaurantManager.addDish(id,dish);
+    @PostMapping("/restaurant/{name}")
+    public String addDish (Model model, HttpServletRequest request, @PathVariable String name, Dishes dish){
+        dish.setRestaurant(restaurantManager.getRestaurant(name));
+        restaurantManager.addDish(name,dish);
 
-        Collection<Dishes> dishes = restaurantManager.getDishes(id);
+        Collection<Dishes> dishes = restaurantManager.getDishes(name);
         List<String> list= DishType.DESSERT.types();
 
         model.addAttribute("types", list);
         model.addAttribute("dishes",dishes);
-        model.addAttribute("id1",id);
+        model.addAttribute("id1",name);
         model.addAttribute("filter", false);
         model.addAttribute("minimun",0);
         model.addAttribute("maximum",0);
@@ -109,9 +109,9 @@ public class RestaurantController {
     }
 
     @PreAuthorize("permitAll()")
-    @PostMapping("/restaurant/{id}/filter")
-    public String filterDish (Model model, HttpServletRequest request, @PathVariable long id, @RequestParam int min,@RequestParam int max, @RequestParam List<String> type){
-        Restaurant restaurant=restaurantManager.getRestaurant(id);
+    @PostMapping("/restaurant/{name}/filter")
+    public String filterDish (Model model, HttpServletRequest request, @PathVariable String name, @RequestParam int min,@RequestParam int max, @RequestParam List<String> type){
+        Restaurant restaurant=restaurantManager.getRestaurant(name);
         List<Dishes> dishes = switch (type.size()) {
             case 2 -> restaurantManager.findByPriceRangeAndType(min, max, type.get(0), restaurant);
             case 3 -> restaurantManager.findByPriceRangeAndTwoTypes(min, max, type.get(0),type.get(1), restaurant);
@@ -122,7 +122,7 @@ public class RestaurantController {
 
         model.addAttribute("types", list);
         model.addAttribute("dishes",dishes);
-        model.addAttribute("id1",id);
+        model.addAttribute("id1",name);
         model.addAttribute("filter", true);
         model.addAttribute("type",type);
         model.addAttribute("stringFilter",filter);
@@ -147,13 +147,13 @@ public class RestaurantController {
 
     //Update an already existing dish (ID2) from a given restaurant (ID1)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PostMapping("/restaurant/{id1}/updateDish/{id2}")
-    public String updateDish(Model model, HttpServletRequest request, @PathVariable long id1, @PathVariable long id2, Dishes newDish) {
+    @PostMapping("/restaurant/{name}/updateDish/{id2}")
+    public String updateDish(Model model, HttpServletRequest request, @PathVariable String name, @PathVariable long id2, Dishes newDish) {
         restaurantManager.updateDish(id2,newDish);
-        Collection<Dishes> dishes = restaurantManager.getDishes(id1);
+        Collection<Dishes> dishes = restaurantManager.getDishes(name);
 
         model.addAttribute("dishes",dishes);
-        model.addAttribute("id1",id1);
+        model.addAttribute("id1",name);
         model.addAttribute("id2",id2);
 
         return userCustomization(model,request,"updateDishSuccessful");
@@ -161,13 +161,13 @@ public class RestaurantController {
 
     //Delete an already existing dish (ID2) from a given restaurant (ID1)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/restaurant/{id1}/deleteDish/{id2}")
-    public String deleteDish (Model model, HttpServletRequest request, @PathVariable long id1, @PathVariable long id2){
+    @GetMapping("/restaurant/{name}/deleteDish/{id2}")
+    public String deleteDish (Model model, HttpServletRequest request, @PathVariable String name, @PathVariable long id2){
         restaurantManager.removeDish(id2);
-        Collection<Dishes> dishes = restaurantManager.getDishes(id1);
+        Collection<Dishes> dishes = restaurantManager.getDishes(name);
 
         model.addAttribute("dishes",dishes);
-        model.addAttribute("id1",id1);
+        model.addAttribute("id1",name);
         model.addAttribute("id2",id2);
 
         return userCustomization(model,request,"deleteDishSuccessful");
@@ -175,9 +175,9 @@ public class RestaurantController {
 
     //Update an already existing restaurant given the ID
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PostMapping("/updateRestaurant/{id}")
-    public String putRestaurant (Model model, HttpServletRequest request,@PathVariable long id,Restaurant newRestaurant){
-        restaurantManager.updateRestaurant(id,newRestaurant);
+    @PostMapping("/updateRestaurant/{name}")
+    public String putRestaurant (Model model, HttpServletRequest request,@PathVariable String name,Restaurant newRestaurant){
+        restaurantManager.updateRestaurant(name,newRestaurant);
         Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
 
         model.addAttribute("restaurants",restaurants);
@@ -186,9 +186,9 @@ public class RestaurantController {
 
     //Delete an already existing restaurant given the ID
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/deleteRestaurant/{id}")
-    public String deleteRestaurant (Model model, HttpServletRequest request, @PathVariable long id){
-        restaurantManager.removeRestaurant(id);
+    @GetMapping("/deleteRestaurant/{name}")
+    public String deleteRestaurant (Model model, HttpServletRequest request, @PathVariable String name){
+        restaurantManager.removeRestaurant(name);
         Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
 
         model.addAttribute("restaurants",restaurants);
@@ -227,9 +227,9 @@ public class RestaurantController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/{id}/registerDish")
-    public String registerDish(Model model, HttpServletRequest request, @PathVariable long id){
-        model.addAttribute("id1",id);
+    @GetMapping("/{name}/registerDish")
+    public String registerDish(Model model, HttpServletRequest request, @PathVariable String name){
+        model.addAttribute("id1",name);
         List<String> list= DishType.DESSERT.types();
         model.addAttribute("types", list);
         return userCustomization(model,request,"registrationDish");
@@ -255,11 +255,11 @@ public class RestaurantController {
 
     //Giving the needed information to update a restaurant
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping ("/updateRestaurant/{id}")
-    public String updateRestaurant(Model model, HttpServletRequest request, @PathVariable long id){
-        Restaurant restaurant = restaurantManager.getRestaurant(id);
+    @GetMapping ("/updateRestaurant/{name}")
+    public String updateRestaurant(Model model, HttpServletRequest request, @PathVariable String name){
+        Restaurant restaurant = restaurantManager.getRestaurant(name);
 
-        model.addAttribute("id",id);
+        model.addAttribute("id",name);
         model.addAttribute("restaurant",restaurant);
 
         return userCustomization(model,request,"updateRest");
@@ -267,14 +267,14 @@ public class RestaurantController {
 
     //Giving the needed information to update a dish
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping ("/restaurant/{id1}/updateDish/{id2}")
-    public String updateDishes(Model model, HttpServletRequest request, @PathVariable long id1 /*Restaurant ID*/, @PathVariable long id2/*Dish ID*/){
+    @GetMapping ("/restaurant/{name}/updateDish/{id2}")
+    public String updateDishes(Model model, HttpServletRequest request, @PathVariable String name /*Restaurant ID*/, @PathVariable long id2/*Dish ID*/){
 
         Dishes dish = restaurantManager.getDish(id2);
         List<String> list=DishType.DESSERT.types();
 
         model.addAttribute("types", list);
-        model.addAttribute("id1",id1);
+        model.addAttribute("id1",name);
         model.addAttribute("id2",id2);
         model.addAttribute("dish",dish);
 

@@ -42,9 +42,9 @@ public class RestaurantRESTController {
     }
 
     //Get the restaurant given (ID)
-    @GetMapping("/restaurant/{id}")
-    public ResponseEntity<Restaurant> getRestaurants(@PathVariable long id){
-        Restaurant restaurant = restaurantManager.getRestaurant(id);
+    @GetMapping("/restaurant/{name}")
+    public ResponseEntity<Restaurant> getRestaurants(@PathVariable String name){
+        Restaurant restaurant = restaurantManager.getRestaurant(name);
         if(restaurant != null){
             return new ResponseEntity<>(restaurant,HttpStatus.OK);
         }else{
@@ -53,10 +53,10 @@ public class RestaurantRESTController {
     }
 
     //Update the restaurant given (ID)
-    @PutMapping("/restaurant/{id}")
-    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable long id, @RequestBody Restaurant newRestaurant) {
+    @PutMapping("/restaurant/{name}")
+    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable String name, @RequestBody Restaurant newRestaurant) {
         newRestaurant.setDescription(policy.sanitize(newRestaurant.getDescription()));
-        Restaurant restaurant = restaurantManager.updateRestaurant(id,newRestaurant);
+        Restaurant restaurant = restaurantManager.updateRestaurant(name,newRestaurant);
         if (restaurant!= null) {
             return new ResponseEntity<>(newRestaurant, HttpStatus.OK);
         } else {
@@ -65,8 +65,8 @@ public class RestaurantRESTController {
     }
 
     //Delete the restaurant given (ID)
-    @DeleteMapping("/restaurant/{id}")
-    public ResponseEntity<Restaurant> deleteRestaurant(@PathVariable long id) {
+    @DeleteMapping("/restaurant/{name}")
+    public ResponseEntity<Restaurant> deleteRestaurant(@PathVariable String name) {
         Restaurant restaurant = new Restaurant();
         if (restaurant!= null) {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -82,10 +82,10 @@ public class RestaurantRESTController {
 
     //////////////////////DISHES REST CONTROLLER//////////////////////
     //Add a new dish to the restaurant catalog (given the ID)
-    @PostMapping("/restaurant/{id}/dishes")
-    public ResponseEntity<Dishes> newDish(@PathVariable long id, @RequestBody Dishes dish){
+    @PostMapping("/restaurant/{name}/dishes")
+    public ResponseEntity<Dishes> newDish(@PathVariable String name, @RequestBody Dishes dish){
         dish.setDescription(policy.sanitize(dish.getDescription()));
-        Dishes dishAdded = restaurantManager.addDish(id,dish);
+        Dishes dishAdded = restaurantManager.addDish(name,dish);
         if (dishAdded!= null) {
             return new ResponseEntity<>(dishAdded, HttpStatus.CREATED);
         } else {
@@ -94,14 +94,14 @@ public class RestaurantRESTController {
     }
 
     //Get all the dishes of the restaurant catalog (given the ID)
-    @GetMapping("/restaurant/{id}/dishes")
-    public Collection<Dishes> getDishes(@PathVariable long id){
-        return restaurantManager.getDishes(id);
+    @GetMapping("/restaurant/{name}/dishes")
+    public Collection<Dishes> getDishes(@PathVariable String name){
+        return restaurantManager.getDishes(name);
     }
 
     //Get the dish (ID2) of the restaurant catalog (ID1)
-    @GetMapping("/restaurant/{id1}/dishes/{id2}")
-    public ResponseEntity<Dishes> getDish(@PathVariable long id1,@PathVariable long id2){
+    @GetMapping("/restaurant/{name}/dishes/{id2}")
+    public ResponseEntity<Dishes> getDish(@PathVariable String name,@PathVariable long id2){
         Dishes dish = restaurantManager.getDish(id2);
         if(dish != null){
             return new ResponseEntity<>(dish,HttpStatus.OK);
@@ -111,8 +111,8 @@ public class RestaurantRESTController {
     }
 
     //Update the dish (ID2) of the restaurant catalog (ID1)
-    @PutMapping("/restaurant/{id1}/dishes/{id2}")
-    public ResponseEntity<Dishes> updateDish(@PathVariable long id1, @PathVariable long id2, @RequestBody Dishes newDish) {
+    @PutMapping("/restaurant/{name}/dishes/{id2}")
+    public ResponseEntity<Dishes> updateDish(@PathVariable String name, @PathVariable long id2, @RequestBody Dishes newDish) {
         newDish.setDescription(policy.sanitize(newDish.getDescription()));
         Dishes dish=restaurantManager.getDish(id2);
         if (dish!= null) {
@@ -124,8 +124,8 @@ public class RestaurantRESTController {
     }
 
     //Delete the dish (ID2) of the restaurant catalog (ID1)
-    @DeleteMapping("/restaurant/{id1}/dishes/{id2}")
-    public ResponseEntity<Dishes> deleteDish(@PathVariable long id1,@PathVariable long id2) {
+    @DeleteMapping("/restaurant/{name}/dishes/{id2}")
+    public ResponseEntity<Dishes> deleteDish(@PathVariable String name,@PathVariable long id2) {
         int dishesDeleted= restaurantManager.removeDish(id2);
         if(dishesDeleted==1){
             return new ResponseEntity<>(HttpStatus.OK);
@@ -134,17 +134,17 @@ public class RestaurantRESTController {
         }
     }
 
-    @GetMapping("/restaurant/{id}/dishes/search/{name}")
-    public Collection<Dishes> dishesSearch(@PathVariable long id, @PathVariable String name){
-        return restaurantManager.findDishByName(restaurantManager.getRestaurant(id),name);
+    @GetMapping("/restaurant/{nameRest}/dishes/search/{name}")
+    public Collection<Dishes> dishesSearch(@PathVariable String nameRest, @PathVariable String name){
+        return restaurantManager.findDishByName(restaurantManager.getRestaurant(nameRest),name);
     }
 
-    @GetMapping("/restaurant/{id}/dishes/filter")
-    public Collection<Dishes> dishesfilter(@PathVariable long id, @RequestParam int min,@RequestParam int max, @RequestParam List<String> type){
+    @GetMapping("/restaurant/{name}/dishes/filter")
+    public Collection<Dishes> dishesfilter(@PathVariable String name, @RequestParam int min,@RequestParam int max, @RequestParam List<String> type){
         return switch (type.size()) {
-            case 1 -> restaurantManager.findByPriceRangeAndType(min, max, type.get(0), restaurantManager.getRestaurant(id));
-            case 2 -> restaurantManager.findByPriceRangeAndTwoTypes(min, max, type.get(0),type.get(1), restaurantManager.getRestaurant(id));
-            default -> restaurantManager.findByPriceRange(min, max, restaurantManager.getRestaurant(id));
+            case 1 -> restaurantManager.findByPriceRangeAndType(min, max, type.get(0), restaurantManager.getRestaurant(name));
+            case 2 -> restaurantManager.findByPriceRangeAndTwoTypes(min, max, type.get(0),type.get(1), restaurantManager.getRestaurant(name));
+            default -> restaurantManager.findByPriceRange(min, max, restaurantManager.getRestaurant(name));
         };
     }
 }

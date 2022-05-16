@@ -15,12 +15,12 @@ $("#max-price").on("change mousemove", function () {
 
   //set codes
   //this section is for percentage off codes
-  const free = ['free123', 'free456', 'free789'];
-  const percent10 = ['ten1', 'ten2', 'ten3'];
-  const percent20 = ['twenty', 'twenty1', 'twenty2'];
+  const free = ['free'];
+  const percent10 = ['ten'];
+  const percent20 = ['twenty'];
   //this section is for dollar-value codes
-  const dollars20 = ['dollarcode1', 'dollarcode2'];
-  const dollars25 = ['dollarcode3', 'dollarcode4'];
+  const dollars20 = ['dollarcode'];
+  const dollars25 = ['dollarcode2'];
   const shipping =['freeshipping'];
   //set default values to no discount
   let percentDiscount = 1;
@@ -29,8 +29,6 @@ $("#max-price").on("change mousemove", function () {
 
 
 $( "#coupon" ).change( function() {
-  let template=$("#total").html()
-  Mustache.parse(template)
   let price = parseInt($("#price").val())
   let coupon = String($("#coupon").val())
   let found=false;
@@ -67,7 +65,7 @@ $( "#coupon" ).change( function() {
   if(shipping.includes(coupon)){
     priceDiscount=5
     found=true
-    $("#shipping").text("Gastos de envio gratis")
+    $("#shipping").text("Gastos de envío gratis")
   }
 
   let total = price*percentDiscount-priceDiscount
@@ -82,11 +80,14 @@ $( "#coupon" ).change( function() {
   //ensure non-negative total
   if(total < 0){total = 0}
 
-  let totaljson= { total: total}
-
-  let render= Mustache.to_html(template,totaljson)
-  $("#total").empty().html(render);
+  $("#newprice").val(total)
+  $("#form").submit()
 });
+
+$("#form").change( function() {
+  $("#form").submit();
+});
+
 
 
 

@@ -67,9 +67,13 @@
                     <div class="summary"><span>Precio</span><span class="price" >{{price}}€</span></div>
                     <div class="summary"><span>Gastos de Envío</span><span class="price" id="shipping">5€</span></div>
                     <div id="total" class="total"><span>Total</span><span type="number" class="price" id="price">{{total}}€</span></div>
-                    <div class="total"><label for="coupon">Cupón</label>
-                        <input type="text" id="coupon"><span id="message"></span><span id="err"></span>
+                    <div class="total"><label for="coupon">Cupón</label><br><br>
+                        <div class="col-sm-4"><input type="text" id="coupon" class="form-control">    <span id="message"></span><span id="err"></span>
+                        </div>
                     </div>
+                    <form action="/payment" method="post" id="totalform" hidden>
+                        <input type="number" name="newprice" id="newprice" value="0" hidden/>
+                    </form>
                     {{/cart}}
                 </div>
                 <div class="card-details">
@@ -90,7 +94,7 @@
                             <div class="mb-3"><label class="form-label" for="cvc">CVC</label><input class="form-control" type="text" id="cvc" placeholder="CVC" maxlength="3" name="cvc"></div>
                         </div>
                         <div class="col-sm-12">
-                            <div class="mb-3"><button class="btn btn-warning" onclick="location.href='/orderPlaced'" type="button">Proceder al Pago</button>
+                            <div class="mb-3"><button class="btn btn-warning" onclick="location.href='/orderPlaced'" type="button">  Proceder al Pago  </button>
                         </div>
                     </div>
                 </div>

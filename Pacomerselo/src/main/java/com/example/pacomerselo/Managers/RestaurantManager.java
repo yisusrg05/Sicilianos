@@ -35,18 +35,18 @@ public class RestaurantManager{
         return restaurantRepository.findAll();
     }
 
-    public Restaurant getRestaurant(long id){
-        Optional<Restaurant> op= restaurantRepository.findById(id);
+    public Restaurant getRestaurant(String name){
+        Optional<Restaurant> op= restaurantRepository.findByName(name);
         return op.orElse(null);
     }
 
-    public void removeRestaurant (long id){
-        dishesRepository.deleteAllDishes(restaurantRepository.getById(id));
-        restaurantRepository.delete(restaurantRepository.getById(id));
+    public void removeRestaurant (String name){
+        dishesRepository.deleteAllDishes(restaurantRepository.getById(name));
+        restaurantRepository.delete(restaurantRepository.getById(name));
     }
 
-    public Restaurant updateRestaurant(long id,Restaurant newRestaurant){
-        Optional<Restaurant> op= restaurantRepository.findById(id);
+    public Restaurant updateRestaurant(String name,Restaurant newRestaurant){
+        Optional<Restaurant> op= restaurantRepository.findById(name);
         if(op.isPresent()){
             Restaurant restaurant=op.get();
             restaurant.setName(newRestaurant.getName());
@@ -61,8 +61,8 @@ public class RestaurantManager{
     }
 
     //Adding a new dish and giving it its unique ID and its restaurant ID
-    public Dishes addDish(long idRestaurant, Dishes dish){
-        Optional<Restaurant> op= restaurantRepository.findById(idRestaurant);
+    public Dishes addDish(String name, Dishes dish){
+        Optional<Restaurant> op= restaurantRepository.findById(name);
         if(op.isPresent()){
             Restaurant restaurant=op.get();
             dish.setDescription(policy.sanitize(dish.getDescription()));
@@ -75,8 +75,8 @@ public class RestaurantManager{
         }
     }
 
-    public Collection<Dishes> getDishes(long idRestaurant){
-        return restaurantRepository.getById(idRestaurant).getDishesList();
+    public Collection<Dishes> getDishes(String name){
+        return restaurantRepository.getById(name).getDishesList();
     }
 
     public Dishes getDish(long id){

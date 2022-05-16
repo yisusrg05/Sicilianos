@@ -29,12 +29,24 @@ public class DatabaseUsersLoader {
 
     @PostConstruct
     private void initDatabase() {
+
+        Restaurant laBonita = new Restaurant("La Bonita", "Comida Original", "Mediterránea","bonita@pacomerselo.me", passwordEncoder.encode("bonita"),"RESTAURANT");
+        Restaurant fellina = new Restaurant("Fellina", "Comida Italiana Sofisticada", "Italiana","fellina@pacomerselo.me", passwordEncoder.encode("fellina"),"RESTAURANT");
+        Restaurant burmet = new Restaurant("Burmet", "Auténtica Comida Americana en Madrid", "Americana","burmet@pacomerselo.me", passwordEncoder.encode("burmet"),"RESTAURANT");
+        Restaurant zielou = new Restaurant("Zielou", "Un nuevo concepto gastronómico llevado al límite.", "Internacional","zielou@pacomerselo.me", passwordEncoder.encode("zielou"),"RESTAURANT");
+        Restaurant tagoMago = new Restaurant("Tagomago", "En sus platos encontrarás una fusión de sabores", "Internacional","tagomago@pacomerselo.me", passwordEncoder.encode("tagomago"),"RESTAURANT");
+        Restaurant bizzo = new Restaurant("Bizzo", "La pizza más canalla de Madrid", "Pizza","bizzo@pacomerselo.me", passwordEncoder.encode("bizzo"),"RESTAURANT");
+
+
+        /*
         Restaurant laBonita = new Restaurant("La Bonita", "Comida Original", "Mediterránea");
         Restaurant fellina = new Restaurant("Fellina", "Comida Italiana Sofisticada", "Italiana");
         Restaurant burmet = new Restaurant("Burmet", "Auténtica Comida Americana en Madrid", "Americana");
         Restaurant zielou = new Restaurant("Zielou", "Un nuevo concepto gastronómico llevado al límite.", "Internacional");
         Restaurant tagoMago = new Restaurant("Tagomago", "En sus platos encontrarás una fusión de sabores", "Internacional");
         Restaurant bizzo = new Restaurant("Bizzo", "La pizza más canalla de Madrid", "Pizza");
+
+         */
 
 
         restaurantRepository.save(laBonita);

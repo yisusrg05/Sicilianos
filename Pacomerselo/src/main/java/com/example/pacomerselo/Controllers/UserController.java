@@ -65,7 +65,7 @@ public class UserController {
         this.sessionCart= (SessionCart) httpSession.getAttribute("cart");
         this.sessionCart.add(restaurantManager.getDish(id1));
         httpSession.setAttribute("cart",this.sessionCart);
-        long idRestaurant=restaurantManager.getDish(id1).getRestaurant().getId();
+        String idRestaurant=restaurantManager.getDish(id1).getRestaurant().getName();
         model.addAttribute("id",idRestaurant);
         return userCustomization(model,request,"addToCartSuccessful");
 
@@ -175,10 +175,10 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/payment")
-    public String applyDiscount(Model model, HttpServletRequest request, long total){
+    public String applyDiscount(Model model, HttpServletRequest request, long newprice){
         HttpSession httpSession=request.getSession();
         this.sessionCart= (SessionCart) httpSession.getAttribute("cart");
-        this.sessionCart.setTotal(total);
+        this.sessionCart.setTotal(newprice);
         httpSession.setAttribute("cart", this.sessionCart);
         model.addAttribute("cart",sessionCart);
         return userCustomization(model,request,"payment-page");

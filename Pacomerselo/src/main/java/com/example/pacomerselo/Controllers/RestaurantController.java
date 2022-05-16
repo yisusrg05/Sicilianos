@@ -240,11 +240,22 @@ public class RestaurantController {
     public String incorrectEmailOPassword(){
         return "incorrectEmailOrPassword";
     }
+    @PreAuthorize("permitAll()")
+    @GetMapping("/restaurantPanel")
+    public String restaurantPanel(){
+        return "restaurantPanel";
+    }
 
     @PreAuthorize("permitAll()")
     @GetMapping("/alredyExistingUser")
     public String alredyExistingUser(){
         return "alreadyExistingUser";
+    }
+
+    @PreAuthorize("permitAll()")
+    @GetMapping("/adminPage")
+    public String adminPage(){
+        return "adminPage";
     }
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")

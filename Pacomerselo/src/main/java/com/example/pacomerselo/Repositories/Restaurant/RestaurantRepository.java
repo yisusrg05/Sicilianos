@@ -7,9 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface RestaurantRepository extends JpaRepository<Restaurant,Long>{
+public interface RestaurantRepository extends JpaRepository<Restaurant,String>{
 
     List<Restaurant> findRestaurantByName(String name);
+
+    Optional<Restaurant> findByName(String name);
 }

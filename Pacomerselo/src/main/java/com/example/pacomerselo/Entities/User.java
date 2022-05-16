@@ -57,7 +57,6 @@ public class User {
         this.password=password;
         this.orders=new ArrayList<>();
         this.roles= List.of(roles);
-        //this.cart=new ArrayList<>();
     }
 
     /*

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Profile - Paco Mérselo</title>
+  <link rel="shortcut icon" href="assets/img/scenery/logo.jpg">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+  <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+</head>
+<body>
+<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+  <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>{{#logged}}<a>Bienvenido, {{username}}</a>{{/logged}}
+    <div class="collapse navbar-collapse" id="navcol-1">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="/index">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
+        <li class="nav-item"><a class="nav-link" href="/cart">El carrito</a></li>
+        {{^logged}}
+        <li class="nav-item"><a class="nav-link" href="/login">Iniciar Sesión</a></li>
+        {{/logged}}
+        {{#logged}}
+        <li class="nav-item"><a class="nav-link" href="/profile">Perfil</a></li>
+        <li class="nav-item"><form action="/logout" method="post">
+          <input type="hidden" name="_csrf" value="{{token}}"/>
+          <button class="nav-link" type="submit">CERRAR SESIÓN</button>
+        </form></li>
+        {{/logged}}
+      </ul>
+    </div>
+  </div>
+</nav>
+<main class="page landing-page">
+  <div id="wrapper">
+    <div class="d-flex flex-column" id="content-wrapper">
+      <main id="content">
+        <div class="container-fluid">
+          <br>
+          <h3 class="text-dark mb-4">Mi Perfil</h3>
+          <div class="row mb-3">
+            <div class="col-lg-4">
+              <div class="card mb-3">
+                <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/scenery/logo.jpg" width="160" height="160">
+                </div>
+              </div>
+              <div class="card shadow mb-4"></div>
+            </div>
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-3">
+                    <div class="card-header py-3">
+                      <p class="text-muted m-0 fw-bold">Información del usuario</p>
+                    </div>
+                    <div class="card-body">
+                      <form method="post" action="/profile">
+                        {{#user}}
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3"><label class="form-label" for="username"><strong>Usuario</strong></label><input class="form-control" id="username" placeholder="{{username}}" value="{{username}}" name="username" disabled></div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3"><label class="form-label" for="email"><strong>Email</strong></label><input class="form-control" type="email" id="email" placeholder="{{email}}" value="{{email}}" name="email"></div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Guardar cambios</button></div>
+                    {{/user}}
+                    </form>
+                  </div>
+                </div>
+                <div class="card shadow"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card shadow mb-5">
+          <div class="card-header py-3">
+            <p class="text-muted m-0 fw-bold">Mis Usuarios</p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              {{#order}}
+              <br>
+              <div class="col-md-6">
+                <div class="mb-3"><h2><label class="title" ><strong>Usuario #{{orderNumber}}</strong><br></label></h2></div>
+              </div>
+              <div class="content">
+                <div class="row g-0">
+                  <div class="col-md-12 col-lg-8">
+                    <div class="items">
+                      <div class="product">
+                        {{#dishes}}
+                        <div class="row justify-content-center align-items-center">
+                          <div class="col-md-2">
+                            <div class="product-image"><img class="img-fluid d-block mx-auto image" src="assets/img/dishes/{{id}}.jpg"></div>
+                          </div>
+                          <div class="col-md-5 product-info"><span class="product-name" >{{name}}</span>
+                            <div class="product-specs">
+                              <div><span><b>Descripci&oacute;n:</b> &nbsp;</span><span class="value">{{{description}}}</span></div>
+                            </div>
+                          </div>
+                          <div class="col-6 col-md-2 quantity"><label class="form-label d-none d-md-block">Cantidad</label><input type="text" id="number" class="form-control quantity-input" value="1"  disabled></div>
+                          <div class="col-6 col-md-2 price"><h4><span>{{price}}€</span></h4></div>
+                        </div>
+                        <br>
+                        {{/dishes}}
+                      </div>
+                    </div>
+                    <div class="summary">
+                      <h6><span class="summary">Gastos de envío:</span><span class="price" style="margin: 10px"> 5€</span></h6>
+                      <h4><span class="total"><b>Total:</b></span><span class="price"> {{price}}€</span></h4>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-lg-4">
+                  </div>
+                  <div class="card shadow"></div>
+                </div>
+              </div>
+              {{/order}}
+            </div>
+          </div>
+        </div>
+    </div>
+    <div margin-right="500">
+      <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="{{token}}"/>
+        <input type="submit" value="Sign Out" />
+      </form>
+    </div>
+    <br>
+</main>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/theme.js"></script>
+<footer class="page-footer dark">
+  <div class="container">
+    <div class="row justify-content-lg-evenly">
+      <div class="col-sm-3">
+        <h5>Resumen</h5>
+        <ul>
+          <li><a href="/index">Inicio</a></li>
+          <li><a href="/login">Iniciar sesion</a></li>
+          <li><a href="/restaurant">Los Restaurantes</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>Sobre nosotros</h5>
+        <ul>
+          <li><a href="/nosotros">Conócenos</a></li>
+          <li><a href="/reviews">Reviews</a></li>
+          <li><a href="/faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>Soporte y Cuenta</h5>
+        <ul>
+          <li><a href="/profile">Mi Perfil</a></li>
+          <li><a href="/register">Regístrate</a></li>
+          <li><a href="/forgottenPassword">¿Olvidaste tu contraseña?</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <p>© 2022 Paco Mérselo.</p>
+  </div>
+</footer>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src="assets/js/vanilla-zoom.js"></script>
+<script src="assets/js/theme.js"></script>
+</body>
+
+</html>

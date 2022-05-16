@@ -39,6 +39,12 @@
                 <div class="mb-3"><label class="form-label">Contraseña</label><input class="form-control" type="password" name="password"></div><div class="mb-3">
                 <input type="hidden" name="_csrf" value="{{token}}"/>
                 </div><button class="btn btn-warning" type="submit">Iniciar sesión</button>
+                <div class="container unauthenticated">
+                    With GitHub: <a href="/oauth2/authorization/github">click here</a>
+                </div>
+                <div class="container authenticated" style="display:none">
+                    Logged in as: <span id="user"></span>
+                </div>
                 <a class="nav-link" href="/forgottenPassword">¿Olvidaste tu contraseña?</a>
                 <a class="nav-link" href="/register">¿A&uacute;n no tienes cuenta? Reg&iacute;strate ahora.</a>
             </form>
@@ -82,6 +88,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 <script src="assets/js/vanilla-zoom.js"></script>
 <script src="assets/js/theme.js"></script>
+<script type="text/javascript">
+    $.get("/user", function(data) {
+        $("#user").html(data.name);
+        $(".unauthenticated").hide()
+        $(".authenticated").show()
+    });
+</script>
 </body>
 
 </html>

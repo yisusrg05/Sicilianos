@@ -51,11 +51,15 @@ public class SessionCart {
 
     public void add(Dishes dish){
         this.dishesList.add(dish);
+        this.price=0;
         calculatePrice();
     }
 
     public void deleteDish(long id){
         dishesList.removeIf(dish -> dish.getId() == id);
+        this.price=0;
+        this.total=SHIPPING_COSTS;
+        calculatePrice();
     }
 
 }

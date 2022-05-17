@@ -147,8 +147,8 @@ public class RestaurantController {
     }
 
     //Update an already existing dish (ID2) from a given restaurant (ID1)
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PostMapping("/restaurant/{name}/updateDish/{id2}")
+    @PreAuthorize("hasRole('ROLE_RESTAURANT') or hasRole('ROLE_ADMIN')")
+    @PostMapping(value={"/restaurant/{name}/updateDish/{id2}","/restaurantControl/{name}/updateDish/{id2}"})
     public String updateDish(Model model, HttpServletRequest request, @PathVariable String name, @PathVariable long id2, Dishes newDish) {
         restaurantManager.updateDish(id2,newDish);
         Collection<Dishes> dishes = restaurantManager.getDishes(name);
@@ -278,8 +278,8 @@ public class RestaurantController {
     }
 
     //Giving the needed information to update a dish
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping ("/restaurant/{name}/updateDish/{id2}")
+    @PreAuthorize("hasRole('ROLE_RESTAURANT') or hasRole('ROLE_ADMIN')")
+    @GetMapping (value = {"/restaurant/{name}/updateDish/{id2}","/restaurantControl/{name}/updateDish/{id2}"})
     public String updateDishes(Model model, HttpServletRequest request, @PathVariable String name /*Restaurant ID*/, @PathVariable long id2/*Dish ID*/){
 
         Dishes dish = restaurantManager.getDish(id2);
@@ -289,6 +289,7 @@ public class RestaurantController {
         model.addAttribute("id1",name);
         model.addAttribute("id2",id2);
         model.addAttribute("dish",dish);
+        model.addAttribute("control",request.isUserInRole("ROLE_RESTAURANT"));
 
         return userCustomization(model,request,"updateDish");
     }
@@ -318,7 +319,7 @@ public class RestaurantController {
 
         model.addAttribute("restaurant",restaurant);
         model.addAttribute("dishes",restaurant.getDishesList());
-        model.addAttribute("name",restaurant.getName());
+        model.addAttribute("nameRest",restaurant.getName());
 
         return userCustomization(model,request,"restaurantPanel");
     }

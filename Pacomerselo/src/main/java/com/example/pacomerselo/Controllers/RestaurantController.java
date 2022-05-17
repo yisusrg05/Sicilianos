@@ -6,6 +6,7 @@ import com.example.pacomerselo.Entities.Restaurant;
 import com.example.pacomerselo.Managers.RestaurantManager;
 import com.example.pacomerselo.Repositories.Restaurant.RestaurantRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class RestaurantController {
         return userCustomization(model,request,"pricing");
     }
 
-    @PreAuthorize("permitAll()")
+    @PostAuthorize("permitAll()")
     @PostMapping("/restaurant/search")
     public String restaurantSearch(Model model, HttpServletRequest request, @RequestParam String name){
         Collection<Restaurant> restaurants=restaurantManager.findRestaurantByName(name);
@@ -60,7 +61,7 @@ public class RestaurantController {
         model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
         return userCustomization(model,request,"catalog-page");    }
 
-    @PreAuthorize("permitAll()")
+    @PostAuthorize("permitAll()")
     @PostMapping("/restaurant/{nameRest}/search")
     public String restaurantDishesSearch(Model model, HttpServletRequest request, @PathVariable String nameRest, @RequestParam String name){
         Restaurant restaurant=restaurantManager.getRestaurant(nameRest);
@@ -87,7 +88,7 @@ public class RestaurantController {
         return userCustomization(model,request,"pricing");
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/restaurant/{name}")
     public String addDish (Model model, HttpServletRequest request, @PathVariable String name, Dishes dish){
         dish.setRestaurant(restaurantManager.getRestaurant(name));
@@ -310,15 +311,28 @@ public class RestaurantController {
         return "forgottenPassword";
     }
 
+    @PreAuthorize("hasRole('ROLE_RESTAURANT')")
+    @GetMapping("/restaurantControl")
+    public String restaurantControl(Model model, HttpServletRequest request){
+        Restaurant restaurant= restaurantManager.getRestaurant(request.getUserPrincipal().getName());
+
+        model.addAttribute("restaurant",restaurant);
+        model.addAttribute("dishes",restaurant.getDishesList());
+        model.addAttribute("name",restaurant.getName());
+
+        return userCustomization(model,request,"restaurantPanel");
+    }
+
     private String userCustomization(Model model, HttpServletRequest request, String page){
         boolean logged=false;
         boolean admin=false;
         if(SecurityContextHolder.getContext().getAuthentication()!=null&&request.isUserInRole("ROLE_USER")){
             String username=request.getUserPrincipal().getName();
+            if(request.isUserInRole("ROLE_ADMIN")){
+                admin=true;
+            }
             logged=true;
             model.addAttribute("username",username);
-        } else if(request.isUserInRole("ROLE_ADMIN")){
-            admin=true;
         }
         model.addAttribute("logged",logged);
         model.addAttribute("admin",admin);

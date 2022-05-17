@@ -1,6 +1,7 @@
 package com.example.pacomerselo.Security;
 
 
+import com.example.pacomerselo.Controllers.UserAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,9 +18,10 @@ import java.security.SecureRandom;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(1)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    UserAuthenticationSuccessHandler userAuthenticationSuccessHandler;
     @Autowired
     RepositoryUserDetailsService userDetailsService;
 
@@ -40,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.formLogin().loginPage("/login");
         http.formLogin().usernameParameter("username");
         http.formLogin().passwordParameter("password");
-        http.formLogin().defaultSuccessUrl("/profile");
+        http.formLogin().successHandler(userAuthenticationSuccessHandler);
         http.formLogin().failureUrl("/incorrectEmailOrPassword");
 
         // Logout

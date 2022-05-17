@@ -189,10 +189,11 @@ public class UserController {
         boolean admin=false;
         if(SecurityContextHolder.getContext().getAuthentication()!=null&&request.isUserInRole("ROLE_USER")){
             String username=request.getUserPrincipal().getName();
+            if(request.isUserInRole("ROLE_ADMIN")){
+                admin=true;
+            }
             logged=true;
             model.addAttribute("username",username);
-        } else if(request.isUserInRole("ROLE_ADMIN")){
-            admin=true;
         }
         model.addAttribute("logged",logged);
         model.addAttribute("admin",admin);

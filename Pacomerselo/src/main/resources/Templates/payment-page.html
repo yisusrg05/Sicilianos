@@ -66,14 +66,11 @@
                     {{/dishesList}}
                     <div class="summary"><span>Precio</span><span class="price" >{{price}}€</span></div>
                     <div class="summary"><span>Gastos de Envío</span><span class="price" id="shipping">5€</span></div>
-                    <div id="total" class="total"><span>Total</span><span type="number" class="price" id="price">{{total}}€</span></div>
+                    <div  class="total"><span id="total">Total</span><span type="number" class="price" id="price" h>{{total}}€</span><span type="number" class="price" id="reprice"></span></div>
                     <div class="total"><label for="coupon">Cupón</label><br><br>
                         <div class="col-sm-4"><input type="text" id="coupon" class="form-control">    <span id="message"></span><span id="err"></span>
                         </div>
                     </div>
-                    <form action="/payment" method="post" id="totalform" hidden>
-                        <input type="number" name="newprice" id="newprice" value="0" hidden/>
-                    </form>
                     {{/cart}}
                 </div>
                 <div class="card-details">

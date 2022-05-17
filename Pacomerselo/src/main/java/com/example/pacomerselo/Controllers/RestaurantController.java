@@ -37,7 +37,7 @@ public class RestaurantController {
         return userCustomization(model,request,"pricing");
     }
 
-    @PostAuthorize("permitAll()")
+
     @PostMapping("/restaurant/search")
     public String restaurantSearch(Model model, HttpServletRequest request, @RequestParam String name){
         Collection<Restaurant> restaurants=restaurantManager.findRestaurantByName(name);
@@ -240,11 +240,6 @@ public class RestaurantController {
     @GetMapping("/incorrectEmailOrPassword")
     public String incorrectEmailOPassword(){
         return "incorrectEmailOrPassword";
-    }
-    @PreAuthorize("permitAll()")
-    @GetMapping("/restaurantPanel")
-    public String restaurantPanel(){
-        return "restaurantPanel";
     }
 
     @PreAuthorize("permitAll()")

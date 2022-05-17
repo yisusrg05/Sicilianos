@@ -28,23 +28,26 @@ $("#max-price").on("change mousemove", function () {
 
 
 
-$( "#coupon" ).change( function() {
-  let price = parseInt($("#price").val())
+$("#coupon").change( function() {
+  let price = parseInt($("#price").text())
   let coupon = String($("#coupon").val())
   let found=false;
 
   if(free.includes(coupon)){
     percentDiscount=0
+    $("#shipping").text("5€")
     found=true
   }
   else{
     if(percent10.includes(coupon)){
       percentDiscount=.9
+      $("#shipping").text("5€")
       found=true
     }
   else{
     if(percent20.includes(coupon)){
       percentDiscount=.8
+      $("#shipping").text("5€")
       found=true
     }
   }
@@ -53,11 +56,13 @@ $( "#coupon" ).change( function() {
   //adjust dollar-value variable if the coupon code entered matches
   if(dollars20.includes(coupon)){
     priceDiscount=20
+    $("#shipping").text("5€")
     found=true
   }
   else{
     if(dollars25.includes(coupon)){
       priceDiscount=25
+      $("#shipping").text("5€")
       found=true
     }
   }
@@ -69,23 +74,23 @@ $( "#coupon" ).change( function() {
   }
 
   let total = price*percentDiscount-priceDiscount
-
+  if(total < 0){total = 0}
   if(!found){
     $("#err").text("Cupón inválido")
     $("#message").text("")
+    $("#shipping").text("5€")
+    $("#price").show()
+    $("#reprice").text("")
+    $("#total").text("Total")
   }else{
     $("#err").text("")
     $("#message").text("Cupón aplicado!")
+    $("#total").text("Total con descuento")
+    $("#reprice").text(total+"€")
+    $("#price").hide()
   }
   //ensure non-negative total
-  if(total < 0){total = 0}
 
-  $("#newprice").val(total)
-  $("#form").submit()
-});
-
-$("#form").change( function() {
-  $("#form").submit();
 });
 
 

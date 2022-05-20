@@ -39,6 +39,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "auth_provider")
+    private AuthenticationProvider authProvider;
+
     //private List<Dishes> cart;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     @JsonManagedReference
@@ -81,5 +85,13 @@ public class User {
 
     public void addOrder(Order order){
         this.orders.add(order);
+    }
+
+    public AuthenticationProvider getAuthProvider() {
+        return authProvider;
+    }
+
+    public void setAuthProvider(AuthenticationProvider authProvider) {
+        this.authProvider = authProvider;
     }
 }

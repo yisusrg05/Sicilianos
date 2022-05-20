@@ -1,9 +1,6 @@
 package com.example.pacomerselo.Managers;
 
-import com.example.pacomerselo.Entities.Dishes;
-import com.example.pacomerselo.Entities.Order;
-import com.example.pacomerselo.Entities.SessionCart;
-import com.example.pacomerselo.Entities.User;
+import com.example.pacomerselo.Entities.*;
 import com.example.pacomerselo.Repositories.Order.OrderRepository;
 import com.example.pacomerselo.Repositories.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +101,23 @@ public class UserManager{
         order.setUser(getUser(username));
         orderRepository.save(order);
     }
+
+   /* public void addNewUserAfterOAuthLoginSucces(String email, String name, AuthenticationProvider provider) {
+        User user = new User();
+        user.setEmail(email);
+        user.setName(name);
+        user.setAuthProvider(provider);
+
+        userRepository.save(user);
+    }
+
+    public void updateUserAfterOAuthLoginSuccess(User user, String name, AuthenticationProvider provider) {
+        user.setName(name);
+        user.setAuthProvider(provider);
+        userRepository.save(user);
+    }
+    */
+
 /*
     //Given a user ID and a dish ID, check if that dish is in the cart, and if so, return it
     public Dishes getDishFromCart(long idUser,long id){

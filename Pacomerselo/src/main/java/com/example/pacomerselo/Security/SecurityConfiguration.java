@@ -38,6 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        http.authorizeRequests().antMatchers("/oauth2/**").permitAll();
+
         // Login form
         http.formLogin().loginPage("/login");
         http.formLogin().usernameParameter("username");
@@ -45,9 +47,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.formLogin().successHandler(userAuthenticationSuccessHandler);
         http.formLogin().failureUrl("/incorrectEmailOrPassword");
 
+        http.oauth2Login().loginPage("/login");
+        http.oauth2Login().userInfoEndpoint().userService(oAuth2UserService);
+        http.oauth2Login().successHandler(oAuth2LoginSuccessHandler);
+
+
         // Logout
         http.logout().logoutUrl("/logout");
         http.logout().logoutSuccessUrl("/");
     }
+
+
+    @Autowired
+    private CustomOAuth2UserService oAuth2UserService;
+
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
 }

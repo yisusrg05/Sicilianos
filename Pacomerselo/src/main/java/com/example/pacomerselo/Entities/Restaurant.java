@@ -45,6 +45,15 @@ public class Restaurant {
         this.password=password;
         this.roles=List.of(roles);
     }
+
+    public Restaurant(String name,String description,String type, String email,String password){
+        this.name=name;
+        this.description=description;
+        this.type=type;
+        this.email=email;
+        this.password=password;
+        this.roles=new ArrayList<>();
+    }
     //As we have a Map to collect dishes for the restaurant, we have the methods to add a dish to a Restaurant. It key is the id of the restaurant.
     public void add(Dishes dish){
         this.dishesList.add(dish);

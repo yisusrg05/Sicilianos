@@ -1,10 +1,12 @@
 package com.example.pacomerselo.Controllers;
 
 
+import com.example.pacomerselo.Entities.Restaurant;
 import com.example.pacomerselo.Entities.SessionCart;
 import com.example.pacomerselo.Entities.User;
 import com.example.pacomerselo.Managers.RestaurantManager;
 import com.example.pacomerselo.Managers.UserManager;
+import org.hibernate.internal.build.AllowPrintStacktrace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -121,8 +124,8 @@ public class UserController {
     @PostMapping("/profile")
     public String updateProfile(Model model, User newUser, HttpServletRequest request){
         String username = request.getUserPrincipal().getName();
-        User user= userManager.findByUsername(username).orElse(null);
         userManager.updateUser(username,newUser);
+        User user= userManager.findByUsername(username).orElse(null);
         model.addAttribute("order",userManager.findOrdersByUser(user));
         model.addAttribute("user",user);
         return userCustomization(model,request,"profile");
@@ -176,11 +179,45 @@ public class UserController {
         model.addAttribute("cart",sessionCart);
         return userCustomization(model,request,"payment-page");
     }
+    @GetMapping("/adminPage")
+    public String adminPage(Model model, HttpServletRequest request){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User admin= userManager.findByUsername("Administrador").orElse(null);
+        model.addAttribute("userAdmin",admin);
+        List<User> userList=userManager.getUsers();
+        userList.removeIf(user -> user.getUsername().equals("Administrador"));
+        model.addAttribute("users",userList);
+        model.addAttribute("restaurants",restaurantManager.getRestaurants());
+        return userCustomization(model,request,"adminPage");
+    }
+
+    @PostMapping("/registerRestaurant")
+    public String addRestaurant (Model model, HttpServletRequest request, Restaurant restaurant){
+        List<String> role= new ArrayList<>();
+        restaurant.setRoles(role);
+        role.add("RESTAURANT");
+        restaurantManager.addRestaurant(restaurant);
+        return userCustomization(model,request,"registerSuccesful");
+    }
+
+    @GetMapping("/deleteUser/{username}")
+    public String deleteUser(Model model, HttpServletRequest request, @PathVariable String username){
+        userManager.removeUser(username);
+        String usernameAdmin = SecurityContextHolder.getContext().getAuthentication().getName();
+        User admin= userManager.findByUsername("Administrador").orElse(null);
+        model.addAttribute("admin",admin);
+        List<User> userList=userManager.getUsers();
+        userList.removeIf(user -> user.getUsername().equals("Administrador"));
+        model.addAttribute("users",userList);
+        model.addAttribute("restaurants",restaurantManager.getRestaurants());
+        return userCustomization(model,request,"adminPage");
+    }
+
 
     private String userCustomization(Model model, HttpServletRequest request, String page){
         boolean logged=false;
         boolean admin=false;
-        if(SecurityContextHolder.getContext().getAuthentication()!=null&&request.isUserInRole("ROLE_USER")){
+        if(SecurityContextHolder.getContext().getAuthentication()!=null){
             String username=request.getUserPrincipal().getName();
             if(request.isUserInRole("ROLE_ADMIN")){
                 admin=true;

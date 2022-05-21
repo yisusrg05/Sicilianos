@@ -104,11 +104,16 @@ public class UserManager{
         }
         else{
             order.setDiscount(true);
-            order.setDiscountedPrice((int) cart.getPrice());
+            order.setDiscountedPrice((int) cart.getTotal());
         }
         order.setUser(getUser(username));
         orderRepository.save(order);
     }
+
+    public List<User> getUsers(){
+        return userRepository.findAll();
+    }
+
 
    /* public void addNewUserAfterOAuthLoginSucces(String email, String name, AuthenticationProvider provider) {
         User user = new User();

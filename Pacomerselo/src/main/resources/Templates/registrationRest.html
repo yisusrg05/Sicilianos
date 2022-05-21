@@ -38,7 +38,6 @@
             <div class="dropdown-menu shadow dropdown-menu-end animated--grow in" >
               <a class ="dropdown-item " href="/profile">
                 <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
-
                 </i>
                 &nbsp;Perfil
               </a>
@@ -51,8 +50,6 @@
               </form></a>
             </div>
           </div>
-
-
         </li>
         {{/logged}}
       </ul>
@@ -66,10 +63,11 @@
         <h2 class="text-muted">Nuevo Restaurante</h2>
         <p>¿Quieres trabajar con nosotros? Registra tu restaurante aquí</p>
       </div>
-      <form action="/restaurant" method="post">
+      <form action="/registerRestaurant" method="post">
         <div class="mb-3"><label class="form-label" >Nombre del restaurante</label><input class="form-control item" type="text" name="name" placeholder="La Plazuela"></div>
         <div class="mb-3"><label class="form-label" for="editor">Descripción</label><textarea class="form-label" name="description" id="editor" placeholder="Comida fresca y sana"></textarea></div>
         <div class="mb-3"><label class="form-label" >Tipo de comida</label><input class="form-control item" type="text" name="type" placeholder="Mediterránea"></div>
+        <input type="hidden" name="_csrf" value="{{token}}"/>
         <div class="mb-3"></div><button class="btn btn-outline-warning" type="submit">Registrar</button>
       </form>
     </div>

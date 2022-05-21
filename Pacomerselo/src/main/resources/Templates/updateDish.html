@@ -16,28 +16,27 @@
 
 <body>
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-    <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>{{#logged}}<a>Bienvenido, {{username}}</a>{{/logged}}
+    <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>{{#roleUser}}<a>Bienvenido, {{username}}</a>{{/roleUser}}{{#roleRestaurant}}<a>Gestiona tu restaurante</a>{{/roleRestaurant}}{{#roleAdmin}}<a>Pagina de Administración</a>{{/roleAdmin}}
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="navbar-nav ms-auto">
-                {{^logged}}
-                <li class="nav-item"><a class="nav-link active" href="/index">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
+                {{#viewer}}
+                <li class="nav-item"><a class="nav-link" href="/index">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/restaurant">Los Restaurantes</a></li>
                 <li class="nav-item"><a class="nav-link" href="/cart">El carrito</a></li>
                 <li class="nav-item"><a class="nav-link" href="/login">Iniciar Sesión</a></li>
-                {{/logged}}
-                {{#logged}}
-                <li class="nav-item"><a class="nav-link active" href="/index">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
+                {{/viewer}}
+                {{#roleUser}}
+                <li class="nav-item"><a class="nav-link " href="/index">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/restaurant">Los Restaurantes</a></li>
                 <li class="nav-item"><a class="nav-link" href="/cart">El carrito</a></li>
                 <li class="nav-item dropdown no-arrow">
                     <div class="nav-item dropdown no-arrow">
                         <a class=" dropdown-toggle nav-link " aria-expanded="false" data-bs-toggle="dropdown" href="'#">
-                            <span class="d-none d-lg-inline me-2" text-gray-600 small > {{username}}</span>
+                            <span class="d-none d-lg-inline me-2 text-gray-600 small" >{{username}}</span>
                         </a>
                         <div class="dropdown-menu shadow dropdown-menu-end animated--grow in" >
                             <a class ="dropdown-item " href="/profile">
                                 <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
-
                                 </i>
                                 &nbsp;Perfil
                             </a>
@@ -50,15 +49,60 @@
                             </form></a>
                         </div>
                     </div>
-
-
                 </li>
-                {{/logged}}
+                {{/roleUser}}
+                {{#roleAdmin}}
+                <li class="nav-item"><a class="nav-link " href="/index">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/restaurant">Los Restaurantes</a></li>
+                <li class="nav-item dropdown no-arrow">
+                    <div class="nav-item dropdown no-arrow">
+                        <a class=" dropdown-toggle nav-link " aria-expanded="false" data-bs-toggle="dropdown" href="'#">
+                            <span class="d-none d-lg-inline me-2 text-gray-600 small" >{{username}}</span>
+                        </a>
+                        <div class="dropdown-menu shadow dropdown-menu-end animated--grow in" >
+                            <a class ="dropdown-item " href="/adminPage">
+                                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
+                                </i>
+                                &nbsp;Panel de Control
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class ="dropdown-item "><form action="/logout" method="post">
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
+                                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
+                                </i>
+                                <button class="btn btn-sm"  type="submit">CERRAR SESIÓN</button>
+                            </form></a>
+                        </div>
+                    </div>
+                </li>
+                {{/roleAdmin}}
+                {{#roleRestaurant}}
+                <li class="nav-item dropdown no-arrow">
+                    <div class="nav-item dropdown no-arrow">
+                        <a class=" dropdown-toggle nav-link active" aria-expanded="false" data-bs-toggle="dropdown" href="'#">
+                            <span class="d-none d-lg-inline me-2 text-gray-600 small" >{{username}}</span>
+                        </a>
+                        <div class="dropdown-menu shadow dropdown-menu-end animated--grow in" >
+                            <a class ="dropdown-item " href="/restaurantControl">
+                                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
+                                </i>
+                                &nbsp;Restaurante
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class ="dropdown-item "><form action="/logout" method="post">
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
+                                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
+                                </i>
+                                <button class="btn btn-sm"  type="submit">CERRAR SESIÓN</button>
+                            </form></a>
+                        </div>
+                    </div>
+                </li>
+                {{/roleRestaurant}}
             </ul>
         </div>
     </div>
-</nav>
-<main class="page registration-page">
+</nav><main class="page registration-page">
     <section class="clean-block clean-form dark">
         <div class="container">
             <div class="block-heading">
@@ -126,7 +170,7 @@
                 <ul>
                     <li><a href="/profile">Mi Perfil</a></li>
                     <li><a href="/register">Regístrate</a></li>
-                    <li><a href="/forgottenPassword">¿Olvidaste tu contraseña?</a></li>
+                    <li><a href="/registerRestaurant">Registra un restaurante</a></li>
                 </ul>
             </div>
         </div>
@@ -134,8 +178,7 @@
     <div class="footer-copyright">
         <p>© 2022 Paco Mérselo.</p>
     </div>
-</footer>
-<script src="../../../assets/bootstrap/js/bootstrap.min.js"></script>
+</footer><script src="../../../assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 <script src="../../../assets/js/vanilla-zoom.js"></script>
 <script src="../../../assets/js/theme.js"></script>

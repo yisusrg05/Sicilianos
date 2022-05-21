@@ -17,6 +17,7 @@ import java.security.SecureRandom;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -47,9 +48,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         //private
         http.authorizeRequests().antMatchers("/cart","/addcarrito/{id1}","/deletecart/{id}","/deleteCart","/payment","/profile","/orderPlaced").hasAnyAuthority("ROLE_USER");
 
-        http.authorizeRequests().antMatchers("/restaurant/{name}/updateDish/{id2}","/restaurant/{name}/deleteDish/{id2}","/updateRestaurant/{name}","/deleteRestaurant/{name}","/{name}/registerDish","/adminPage","/updateRestaurant/{name}","/restaurant/{name}/updateDish/{id2}","/adminPage").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers("/restaurant/**","/updateRestaurant/{name}","/deleteRestaurant/{name}","/{name}/registerDish","/adminPage").hasAnyAuthority("ROLE_ADMIN");
 
-        http.authorizeRequests().antMatchers("/restaurantControl/{name}/updateDish/{id2}","/restaurantControl/{name}/updateDish/{id2}","/restaurantControl").hasAnyAuthority("ROLE_RESTAURANT");
+        http.authorizeRequests().antMatchers("/restaurantControl/**","/restaurantControl").hasAnyAuthority("ROLE_RESTAURANT");
         // Login form
         http.formLogin().loginPage("/login");
         http.formLogin().usernameParameter("username");

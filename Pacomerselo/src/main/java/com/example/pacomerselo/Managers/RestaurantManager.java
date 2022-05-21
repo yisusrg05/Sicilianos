@@ -49,9 +49,9 @@ public class RestaurantManager{
         Optional<Restaurant> op= restaurantRepository.findById(name);
         if(op.isPresent()){
             Restaurant restaurant=op.get();
-            restaurant.setName(newRestaurant.getName());
             restaurant.setDescription(policy.sanitize(newRestaurant.getDescription()));
             restaurant.setType(newRestaurant.getType());
+            restaurant.setEmail(newRestaurant.getEmail());
             restaurantRepository.save(restaurant);
             return restaurant;
         }

@@ -1,45 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Payment - Paco M&eacute;rselo</title>
-    <link rel="shortcut icon" href="assets/img/scenery/logo.jpg">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <title>Actualizado con &Eacute;xito - Paco Mérselo</title>
+    <link rel="shortcut icon" href="../../../assets/img/scenery/logo.jpg">
+    <link rel="stylesheet" href="../../../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href="assets/css/untitled.css">
-    <link rel="stylesheet" href="assets/css/vanilla-zoom.min.css">
+    <link rel="stylesheet" href="../../../assets/css/vanilla-zoom.min.css">
 </head>
-<style>
-    #message{
-        position: relative;
-        top: 10px;
-        color: #7cb57c;
-    }
-    #err{
-        position: relative;
-        top: 10px;
-        color: #d55454;
-    }
-</style>
+
 <body>
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-    <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>{{#roleUser}}<a>{{username}}, estas a un paso de confirmar tu compra!</a>{{/roleUser}}{{#roleRestaurant}}<a>Gestiona tu restaurante</a>{{/roleRestaurant}}{{#roleAdmin}}<a>Pagina de Administración</a>{{/roleAdmin}}
+    <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>{{#roleUser}}<a>Bienvenido, {{username}}</a>{{/roleUser}}{{#roleRestaurant}}<a>Gestiona tu restaurante</a>{{/roleRestaurant}}{{#roleAdmin}}<a>Pagina de Administración</a>{{/roleAdmin}}
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="navbar-nav ms-auto">
                 {{#viewer}}
                 <li class="nav-item"><a class="nav-link " href="/index">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/cart">El carrito</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/restaurant">Los Restaurantes</a></li>
+                <li class="nav-item"><a class="nav-link" href="/cart">El carrito</a></li>
                 <li class="nav-item"><a class="nav-link" href="/login">Iniciar Sesión</a></li>
                 {{/viewer}}
                 {{#roleUser}}
-                <li class="nav-item"><a class="nav-link" href="/index">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/cart">El carrito</a></li>
+                <li class="nav-item"><a class="nav-link " href="/index">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/restaurant">Los Restaurantes</a></li>
+                <li class="nav-item"><a class="nav-link" href="/cart">El carrito</a></li>
                 <li class="nav-item dropdown no-arrow">
                     <div class="nav-item dropdown no-arrow">
                         <a class=" dropdown-toggle nav-link " aria-expanded="false" data-bs-toggle="dropdown" href="'#">
@@ -63,8 +50,8 @@
                 </li>
                 {{/roleUser}}
                 {{#roleAdmin}}
-                <li class="nav-item"><a class="nav-link" href="/index">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
+                <li class="nav-item"><a class="nav-link " href="/index">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/restaurant">Los Restaurantes</a></li>
                 <li class="nav-item dropdown no-arrow">
                     <div class="nav-item dropdown no-arrow">
                         <a class=" dropdown-toggle nav-link " aria-expanded="false" data-bs-toggle="dropdown" href="'#">
@@ -113,56 +100,18 @@
             </ul>
         </div>
     </div>
-</nav><main class="page payment-page">
-    <section class="clean-block payment-form dark">
+</nav><main class="page gallery-page">
+    <section class="clean-block clean-gallery dark">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-muted">Pago</h2>
-                <p>Tu pedido está casi listo</p>
+                <h2 class="text-muted">Usuario borrado con Éxito</h2>
+                <p><button class="btn btn-info btn-lg" onclick="location.href='/adminPage'" type="button">Haz click aqu&iacute; para volver atr&aacute;s</button></p>
             </div>
-            <form action="/orderPlaced" method="post">
-                <input type="hidden" name="_csrf" value="{{token}}"/>
-                <div class="products">
-                    <h3 class="title">Checkout</h3>
-                    {{#cart}}
-                    {{#dishesList}}
-                    <div class="item"><span class="price">{{price}}€</span>
-                        <p class="item-name">{{name}}</p>
-                        <p class="item-description">{{description}}</p>
-                    </div>
-                    {{/dishesList}}
-                    <div class="summary"><span>Precio</span><span class="price" >{{price}}€</span></div>
-                    <div class="summary"><span>Gastos de Envío</span><span class="price" id="shipping">5€</span></div>
-                    <div class="total"><span id="total">Total</span><span type="number" class="price" id="price">{{total}}€</span><span type="number" class="price" id="reprice"></span></div>
-                    <div class="total"><label for="coupon">Cupón</label><br><br>
-                        <div class="col-sm-4"><input type="text" id="coupon" class="form-control">    <span id="message"></span><span id="err"></span>
-                        </div>
-                    </div>
-                    {{/cart}}
-                </div>
-                <div class="card-details">
-                    <h3 class="title">Tus datos bancarios</h3>
-                    <div class="row">
-                        <div class="col-sm-7">
-                            <div class="mb-3"><label class="form-label" for="card_holder">Nombre del titular</label><input class="form-control" type="text" id="card_holder" placeholder="Nombre del titular" name="card_holder"></div>
-                        </div>
-                        <div class="col-sm-5">
-                            <div class="mb-3"><label class="form-label">Fecha de caducidad</label>
-                                <div class="input-group expiration-date"><input class="form-control" type="text" maxlength="2" placeholder="MM" name="expiration_month"><input class="form-control" type="text" placeholder="YY" maxlength="2" name="expiration_year"></div>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="mb-3"><label class="form-label" for="card_number">Número de la tarjeta</label><input class="form-control" type="text" maxlength="16" id="card_number" placeholder="Número de la tarjeta" name="card_number"></div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="mb-3"><label class="form-label" for="cvc">CVC</label><input class="form-control" type="text" id="cvc" placeholder="CVC" maxlength="3" name="cvc"></div>
-                        </div><input type="number" id="finalPrice" name="finalPrice" hidden  value="">
-                        <div class="col-sm-12">
-                            <div class="mb-3"><button class="btn btn-warning" type="submit">  Proceder al Pago  </button>
-                        </div>
-                    </div>
-                </div>
-            </div></form>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 item"><a class="lightbox" ></a></div>
+                <div class="col-md-6 col-lg-4 item"><a class="lightbox" ><img class="w-100 d-block" src="../../../assets/img/scenery/deletebien.png"></a></div>
+                <div class="col-md-6 col-lg-4 item"><a class="lightbox" ></a></div>
+            </div>
         </div>
     </section>
 </main>
@@ -190,7 +139,7 @@
                 <ul>
                     <li><a href="/profile">Mi Perfil</a></li>
                     <li><a href="/register">Regístrate</a></li>
-                    <li><a href="/forgottenPassword">¿Olvidaste tu contraseña?</a></li>
+                    <li><a href="/registerRestaurant">Registra un restaurante</a></li>
                 </ul>
             </div>
         </div>
@@ -198,15 +147,10 @@
     <div class="footer-copyright">
         <p>© 2022 Paco Mérselo.</p>
     </div>
-</footer>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</footer><script src="../../../assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-<script src="assets/js/vanilla-zoom.js"></script>
-<script src="assets/js/theme.js"></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
-<script src="../../assets/js/script.js"></script>
+<script src="../../../assets/js/vanilla-zoom.js"></script>
+<script src="../../../assets/js/theme.js"></script>
 </body>
 
 </html>

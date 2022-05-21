@@ -36,8 +36,8 @@
         <h2 class="text-muted">Regístrate</h2>
         <p>¿Aún no tienes cuenta? Únete a nuestra familia</p>
       </div>
-      <div class="alert alert-warning" id="dialog" style="display:none;" role="alert">
-        Atención!Las contraseñas no coinciden.
+      <div class="alert alert-danger fade show " id="dialog" style="display:none;">
+        <strong>Atención!</strong> Las contraseñas no coinciden.
       </div>
       <form method="post" action="/register" onsubmit="return passwordsMatch('password','confirmPassword')">
         <div class="mb-3"><label class="form-label" for="username">Nombre de Usuario</label><input class="form-control item" type="text" id="username" name="username"></div>

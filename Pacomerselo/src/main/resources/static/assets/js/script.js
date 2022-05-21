@@ -83,7 +83,8 @@ function passwordsMatch(id1,id2) {
   var password1 = document.getElementById(id1).value;
   var password2 = document.getElementById(id2).value;
   if (password1!==password2) {
-    $('#dialog').alert();
+    scroll(0,0);
+    $('#dialog').show();
     return false;
   }
   return true;

@@ -103,6 +103,7 @@
                                                     <div class="mb-3"><label class="form-label" for="last_name"><strong>Apellidos</strong></label><input class="form-control" type="text" id="last_name" placeholder="{{surname}}" value="{{surname}}" name="surname"></div>
                                                 </div>
                                             </div>
+                                            <input type="hidden" name="_csrf" value="{{token}}"/>
                                             <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Guardar cambios</button></div>
                                             {{/user}}
                                         </form>
@@ -151,7 +152,9 @@
                                             {{^discount}}
                                             <h4><span class="total"><b>Total:</b></span><span class="price"> {{price}}€</span></h4>
                                             {{/discount}}
+                                            {{#discount}}
                                             <h4><span class="total"><b>Total con descuento:</b></span><span class="price"> {{discountedPrice}}€<del>{{price}}€</del></span></h4>
+                                            {{/discount}}
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-4">

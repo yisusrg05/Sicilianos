@@ -53,7 +53,6 @@ public class SessionCart {
         this.dishesList.add(dish);
         this.price=0;
         this.total=SHIPPING_COSTS;
-
         calculatePrice();
     }
 

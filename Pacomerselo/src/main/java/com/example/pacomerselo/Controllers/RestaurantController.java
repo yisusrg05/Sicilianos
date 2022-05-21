@@ -73,16 +73,6 @@ public class RestaurantController {
         return userCustomization(model,request,"catalog-page");
     }
 
-    //Add a new restaurant
-    @PostMapping("/restaurant")
-    public String addRestaurant (Model model, HttpServletRequest request, Restaurant restaurant){
-        restaurantManager.addRestaurant(restaurant);
-        Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
-        model.addAttribute("restaurants",restaurants);
-        model.addAttribute("empty",restaurants.isEmpty());
-        model.addAttribute("stringEmpty","Tu búsqueda no ha arrojado ningún resultado");
-        return userCustomization(model,request,"pricing");
-    }
 
     @PostMapping("/restaurant/{name}")
     public String addDish (Model model, HttpServletRequest request, @PathVariable String name, Dishes dish){
@@ -230,11 +220,6 @@ public class RestaurantController {
         return "alreadyExistingUser";
     }
 
-    @GetMapping("/adminPage")
-    public String adminPage(){
-        return "adminPage";
-    }
-
     @GetMapping ("/registerRestaurant")
     public String registerRestaurant( Model model, HttpServletRequest request){
         return userCustomization(model,request,"registrationRest");
@@ -287,6 +272,18 @@ public class RestaurantController {
     public String restaurantControl(Model model, HttpServletRequest request){
         Restaurant restaurant= restaurantManager.getRestaurant(request.getUserPrincipal().getName());
 
+        model.addAttribute("restaurant",restaurant);
+        model.addAttribute("dishes",restaurant.getDishesList());
+        model.addAttribute("nameRest",restaurant.getName());
+
+        return userCustomization(model,request,"restaurantPanel");
+    }
+
+    @PostMapping("/restaurantControl")
+    public String updateRestaurantControl(Model model, HttpServletRequest request,Restaurant newRestaurant){
+        String name= SecurityContextHolder.getContext().getAuthentication().getName();
+        restaurantManager.updateRestaurant(name,newRestaurant);
+        Restaurant restaurant=restaurantManager.getRestaurant(name);
         model.addAttribute("restaurant",restaurant);
         model.addAttribute("dishes",restaurant.getDishesList());
         model.addAttribute("nameRest",restaurant.getName());

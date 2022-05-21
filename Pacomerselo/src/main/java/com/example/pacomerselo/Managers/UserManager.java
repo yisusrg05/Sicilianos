@@ -95,8 +95,16 @@ public class UserManager{
     //Delete the cart and create a new order, given an user ID
     public void proccessOrder(String username, SessionCart cart){
         Order order= new Order();
-        for(Dishes dish : cart.getDishesList()){
+        for(Dishes dish : cart.getDishesList()) {
             order.add(dish);
+        }
+        if(order.getPrice()==(int) cart.getPrice()){
+            order.setDiscount(false);
+            order.setDiscountedPrice(order.getPrice());
+        }
+        else{
+            order.setDiscount(true);
+            order.setDiscountedPrice((int) cart.getPrice());
         }
         order.setUser(getUser(username));
         orderRepository.save(order);

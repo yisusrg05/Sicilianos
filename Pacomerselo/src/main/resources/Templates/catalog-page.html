@@ -78,6 +78,7 @@
                                         <span id="max-price-txt">100€</span>
                                         <input type="range" class="form-range" min="1" max="100" id="max-price" step="1" value="100" name="max">
                                 </div>
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
                                 <input class="btn btn-warning" type="submit">
                                 <button class="btn btn-warning" onclick="location.href='/restaurant/{{id1}}'" type="button">Reset</button>
                             </form>

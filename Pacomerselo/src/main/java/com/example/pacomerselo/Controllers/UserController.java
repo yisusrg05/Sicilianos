@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,7 +35,6 @@ public class UserController {
     @Autowired
     private SessionCart sessionCart= new SessionCart();
 
-    @PreAuthorize("permitAll()")
     @GetMapping("/login")
     public String login(Model model, HttpServletRequest request){
 
@@ -44,7 +44,6 @@ public class UserController {
         return "login";
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/cart")
     public String shoppingCart(Model model, HttpServletRequest request){
         HttpSession httpSession= request.getSession();
@@ -58,7 +57,6 @@ public class UserController {
 
 
     //Adding a new dish to the cart, given its id (ID1) and the restaurant id (ID2)
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/addcarrito/{id1}")
     public String addShoppingCart(@PathVariable long id1, Model model, HttpServletRequest request){
         HttpSession httpSession=request.getSession();
@@ -73,7 +71,6 @@ public class UserController {
 
 
     //Deleting a new dish from the cart, given its id (ID1) and the restaurant id (ID2)
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/deletecart/{id}")
     public String deleteShoppingCart(Model model,HttpServletRequest request, @PathVariable long id){
         HttpSession httpSession= request.getSession();
@@ -86,7 +83,6 @@ public class UserController {
 
 
     //Delete all the cart
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/deleteCart")
     public String deleteCart(Model model,HttpServletRequest request){
         HttpSession httpSession=request.getSession();
@@ -97,7 +93,6 @@ public class UserController {
 
 
     //Get the checkout page, showing a little summary of the cart
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/payment")
     public String payment(Model model, HttpServletRequest request){
         HttpSession httpSession=request.getSession();
@@ -107,7 +102,6 @@ public class UserController {
     }
 
     //Get the profile information (personal data and orders)
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/profile")
     public String profile(Model model, HttpServletRequest request){
         HttpSession httpSession=request.getSession();
@@ -124,7 +118,6 @@ public class UserController {
     }
 
     //Updating the profile, except the password
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/profile")
     public String updateProfile(Model model, User newUser, HttpServletRequest request){
         String username = request.getUserPrincipal().getName();
@@ -137,7 +130,6 @@ public class UserController {
     }
 
     //Update just the password, not all the User
-    @PreAuthorize("permitAll()")
     @PostMapping("/forgottenPassword")
     public String updatePassword(@RequestParam String username,@RequestParam String email, @RequestParam String password){
         List<User> user= userManager.findByUsernameAndEmail(username,email);
@@ -149,22 +141,24 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/orderPlaced")
-    public String placeOrder(Model model, HttpServletRequest request){
+    @PostMapping("/orderPlaced")
+    public String placeOrder(HttpServletRequest request, @RequestParam long finalPrice){
         HttpSession httpSession=request.getSession();
         this.sessionCart=(SessionCart) httpSession.getAttribute("cart");
+        this.sessionCart.setTotal(finalPrice);
         userManager.proccessOrder(request.getUserPrincipal().getName(),this.sessionCart);
+        this.sessionCart= new SessionCart();
         httpSession.setAttribute("cart",new SessionCart());
         return "orderPlaced";
     }
 
-
-    @PreAuthorize("permitAll()")
     @PostMapping("/register")
     public String addUser(User newUser){
         if(userManager.findByUsername(newUser.getUsername()).isEmpty()){
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            List<String> role= new ArrayList<>();
+            role.add("USER");
+            newUser.setRoles(role);
             userManager.addUser(newUser);
             return "registerSuccessful";
         }
@@ -173,7 +167,6 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/payment")
     public String applyDiscount(Model model, HttpServletRequest request, long newprice){
         HttpSession httpSession=request.getSession();

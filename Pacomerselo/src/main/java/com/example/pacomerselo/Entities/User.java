@@ -63,25 +63,15 @@ public class User {
         this.roles= List.of(roles);
     }
 
-    /*
-    //A Method that allows the user to add a dish to the cart.
-
-    public void addDish(Dishes dish){
-        this.cart.add(dish);
+    public User(String username,String name, String surname, String email, String password){
+        this.username=username;
+        this.name=name;
+        this.surname=surname;
+        this.email=email;
+        this.password=password;
+        this.orders=new ArrayList<>();
+        this.roles=new ArrayList<>();
     }
-    //The method that the user uses to delete a Dish from the Cart:
-
-    public void deleteDish(Dishes dish){
-        this.cart.remove(dish);
-    }
-    //This method returns the List of the Cart.
-
-    public List<Dishes> allCart(){
-        return this.cart;
-    }
-    */
-
-    //To store the order tha the user has bought in the historial:
 
     public void addOrder(Order order){
         this.orders.add(order);

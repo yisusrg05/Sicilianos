@@ -17,18 +17,40 @@
   <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>{{#logged}}<a>Bienvenido, {{username}}</a>{{/logged}}
     <div class="collapse navbar-collapse" id="navcol-1">
       <ul class="navbar-nav ms-auto">
+        {{^logged}}
         <li class="nav-item"><a class="nav-link active" href="/index">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
         <li class="nav-item"><a class="nav-link" href="/cart">El carrito</a></li>
-        {{^logged}}
         <li class="nav-item"><a class="nav-link" href="/login">Iniciar Sesión</a></li>
         {{/logged}}
         {{#logged}}
-        <li class="nav-item"><a class="nav-link" href="/profile">Perfil</a></li>
-        <li class="nav-item"><form action="/logout" method="post">
-          <input type="hidden" name="_csrf" value="{{token}}"/>
-          <button class="nav-link" type="submit">CERRAR SESIÓN</button>
-        </form></li>
+        <li class="nav-item"><a class="nav-link active" href="/index">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
+        <li class="nav-item"><a class="nav-link" href="/cart">El carrito</a></li>
+        <li class="nav-item dropdown no-arrow">
+          <div class="nav-item dropdown no-arrow">
+            <a class=" dropdown-toggle nav-link " aria-expanded="false" data-bs-toggle="dropdown" href="'#">
+              <span class="d-none d-lg-inline me-2" text-gray-600 small > {{username}}</span>
+            </a>
+            <div class="dropdown-menu shadow dropdown-menu-end animated--grow in" >
+              <a class ="dropdown-item " href="/profile">
+                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
+
+                </i>
+                &nbsp;Perfil
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class ="dropdown-item "><form action="/logout" method="post">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
+                </i>
+                <button class="btn btn-sm"  type="submit">CERRAR SESIÓN</button>
+              </form></a>
+            </div>
+          </div>
+
+
+        </li>
         {{/logged}}
       </ul>
     </div>

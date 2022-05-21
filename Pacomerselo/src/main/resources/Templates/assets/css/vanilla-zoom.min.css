@@ -34,4 +34,19 @@
   background-size: contain;
   margin-bottom: 5px;
 }
+.dropdown.no-arrow .dropdown-toggle::after {
+  display: none;
+}
+.navbar-expand .navbar-nav .nav-link {
+  padding-right: .5rem;
+  padding-left: .5rem;
+}
+
+.dropdown .dropdown-toggle {
+  position: relative;
+}
+.dropdown-toggle {
+  white-space: nowrap;
+}
+
 

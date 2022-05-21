@@ -12,28 +12,30 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
   <link rel="stylesheet" href="assets/css/untitled.css">
   <link rel="stylesheet" href="assets/css/vanilla-zoom.min.css">
-
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="../../assets/js/script.js"></script>
 </head>
 
 <body>
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-  <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>{{#logged}}<a>Bienvenido, {{username}}</a>{{/logged}}
+  <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>{{#roleUser}}<a>Bienvenido, {{username}}</a>{{/roleUser}}{{#roleRestaurant}}<a>Gestiona tu restaurante</a>{{/roleRestaurant}}{{#roleAdmin}}<a>Pagina de Administración</a>{{/roleAdmin}}
     <div class="collapse navbar-collapse" id="navcol-1">
       <ul class="navbar-nav ms-auto">
-        {{^logged}}
-        <li class="nav-item"><a class="nav-link active" href="/index">Inicio</a></li>
+        {{#viewer}}
+        <li class="nav-item"><a class="nav-link " href="/index">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
         <li class="nav-item"><a class="nav-link" href="/cart">El carrito</a></li>
-        <li class="nav-item"><a class="nav-link" href="/login">Iniciar Sesión</a></li>
-        {{/logged}}
-        {{#logged}}
-        <li class="nav-item"><a class="nav-link active" href="/index">Inicio</a></li>
-        <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/login">Iniciar Sesión</a></li>
+        {{/viewer}}
+        {{#roleUser}}
+        <li class="nav-item"><a class="nav-link " href="/index">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/restaurant">Los Restaurantes</a></li>
         <li class="nav-item"><a class="nav-link" href="/cart">El carrito</a></li>
         <li class="nav-item dropdown no-arrow">
           <div class="nav-item dropdown no-arrow">
             <a class=" dropdown-toggle nav-link " aria-expanded="false" data-bs-toggle="dropdown" href="'#">
-              <span class="d-none d-lg-inline me-2" text-gray-600 small > {{username}}</span>
+              <span class="d-none d-lg-inline me-2 text-gray-600 small" >{{username}}</span>
             </a>
             <div class="dropdown-menu shadow dropdown-menu-end animated--grow in" >
               <a class ="dropdown-item " href="/profile">
@@ -51,22 +53,75 @@
             </div>
           </div>
         </li>
-        {{/logged}}
+        {{/roleUser}}
+        {{#roleAdmin}}
+        <li class="nav-item"><a class="nav-link " href="/index">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/restaurant">Los Restaurantes</a></li>
+        <li class="nav-item dropdown no-arrow">
+          <div class="nav-item dropdown no-arrow">
+            <a class=" dropdown-toggle nav-link " aria-expanded="false" data-bs-toggle="dropdown" href="'#">
+              <span class="d-none d-lg-inline me-2 text-gray-600 small" >{{username}}</span>
+            </a>
+            <div class="dropdown-menu shadow dropdown-menu-end animated--grow in" >
+              <a class ="dropdown-item " href="/adminPage">
+                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
+                </i>
+                &nbsp;Panel de Control
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class ="dropdown-item "><form action="/logout" method="post">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
+                </i>
+                <button class="btn btn-sm"  type="submit">CERRAR SESIÓN</button>
+              </form></a>
+            </div>
+          </div>
+        </li>
+        {{/roleAdmin}}
+        {{#roleRestaurant}}
+        <li class="nav-item dropdown no-arrow">
+          <div class="nav-item dropdown no-arrow">
+            <a class=" dropdown-toggle nav-link " aria-expanded="false" data-bs-toggle="dropdown" href="'#">
+              <span class="d-none d-lg-inline me-2 text-gray-600 small" >{{username}}</span>
+            </a>
+            <div class="dropdown-menu shadow dropdown-menu-end animated--grow in" >
+              <a class ="dropdown-item " href="/restaurantControl">
+                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
+                </i>
+                &nbsp;Restaurante
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class ="dropdown-item "><form action="/logout" method="post">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
+                </i>
+                <button class="btn btn-sm"  type="submit">CERRAR SESIÓN</button>
+              </form></a>
+            </div>
+          </div>
+        </li>
+        {{/roleRestaurant}}
       </ul>
     </div>
   </div>
-</nav>
-<main class="page registration-page">
+</nav><main class="page registration-page">
   <section class="clean-block clean-form dark">
     <div class="container">
       <div class="block-heading">
         <h2 class="text-muted">Nuevo Restaurante</h2>
         <p>¿Quieres trabajar con nosotros? Registra tu restaurante aquí</p>
       </div>
-      <form action="/registerRestaurant" method="post">
+      <div class="alert alert-danger fade show " id="dialog" style="display:none;">
+        <strong>Atención!</strong> Las contraseñas no coinciden.
+      </div>
+      <form method="post" action="/registerRestaurant" onsubmit="return passwordsMatch('password','confirmPassword')">
         <div class="mb-3"><label class="form-label" >Nombre del restaurante</label><input class="form-control item" type="text" name="name" placeholder="La Plazuela"></div>
         <div class="mb-3"><label class="form-label" for="editor">Descripción</label><textarea class="form-label" name="description" id="editor" placeholder="Comida fresca y sana"></textarea></div>
         <div class="mb-3"><label class="form-label" >Tipo de comida</label><input class="form-control item" type="text" name="type" placeholder="Mediterránea"></div>
+        <div class="mb-3"><label class="form-label" for="email">Email</label><input class="form-control item" type="email" id="email" name="email"></div>
+        <div class="mb-3"><label class="form-label" for="password">Contraseña</label><input class="form-control item" type="password" id="password" name="password"></div>
+        <div class="mb-3"><label class="form-label" for="confirmPassword">Contraseña</label><input class="form-control item" type="password" id="confirmPassword"></div>
         <input type="hidden" name="_csrf" value="{{token}}"/>
         <div class="mb-3"></div><button class="btn btn-outline-warning" type="submit">Registrar</button>
       </form>
@@ -97,7 +152,7 @@
         <ul>
           <li><a href="/profile">Mi Perfil</a></li>
           <li><a href="/register">Regístrate</a></li>
-          <li><a href="/forgottenPassword">¿Olvidaste tu contraseña?</a></li>
+          <li><a href="/registerRestaurant">Registra un restaurante</a></li>
         </ul>
       </div>
     </div>
@@ -105,8 +160,7 @@
   <div class="footer-copyright">
     <p>© 2022 Paco Mérselo.</p>
   </div>
-</footer>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</footer><script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 <script src="assets/js/vanilla-zoom.js"></script>
 <script src="assets/js/theme.js"></script>

@@ -44,7 +44,7 @@ public class UserController {
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
         model.addAttribute("token", token.getToken());
 
-        return "login";
+        return userCustomization(model,request,"login");
     }
 
     @GetMapping("/cart")
@@ -145,28 +145,28 @@ public class UserController {
     }
 
     @PostMapping("/orderPlaced")
-    public String placeOrder(HttpServletRequest request, @RequestParam long finalPrice){
+    public String placeOrder(Model model,HttpServletRequest request, @RequestParam long finalPrice){
         HttpSession httpSession=request.getSession();
         this.sessionCart=(SessionCart) httpSession.getAttribute("cart");
         this.sessionCart.setTotal(finalPrice);
         userManager.proccessOrder(request.getUserPrincipal().getName(),this.sessionCart);
         this.sessionCart= new SessionCart();
         httpSession.setAttribute("cart",new SessionCart());
-        return "orderPlaced";
+        return userCustomization(model,request,"orderPlaced");
     }
 
     @PostMapping("/register")
-    public String addUser(User newUser){
+    public String addUser(User newUser, Model model, HttpServletRequest request){
         if(userManager.findByUsername(newUser.getUsername()).isEmpty()){
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             List<String> role= new ArrayList<>();
             role.add("USER");
             newUser.setRoles(role);
             userManager.addUser(newUser);
-            return "registerSuccessful";
+            return userCustomization(model,request,"registerSuccessful");
         }
         else{
-            return "alreadyExistingUser";
+            return userCustomization(model,request,"alreadyExistingUser");
         }
     }
 
@@ -182,7 +182,7 @@ public class UserController {
     @GetMapping("/adminPage")
     public String adminPage(Model model, HttpServletRequest request){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User admin= userManager.findByUsername("Administrador").orElse(null);
+        User admin= userManager.findByUsername(username).orElse(null);
         model.addAttribute("userAdmin",admin);
         List<User> userList=userManager.getUsers();
         userList.removeIf(user -> user.getUsername().equals("Administrador"));
@@ -191,14 +191,19 @@ public class UserController {
         return userCustomization(model,request,"adminPage");
     }
 
-    @PostMapping("/registerRestaurant")
-    public String addRestaurant (Model model, HttpServletRequest request, Restaurant restaurant){
-        List<String> role= new ArrayList<>();
-        restaurant.setRoles(role);
-        role.add("RESTAURANT");
-        restaurantManager.addRestaurant(restaurant);
-        return userCustomization(model,request,"registerSuccesful");
+    @PostMapping("/adminPage")
+    public String updateAdminPage(Model model, HttpServletRequest request, User newAdmin){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        userManager.updateUser(username,newAdmin);
+        User admin= userManager.findByUsername(username).orElse(null);
+        model.addAttribute("userAdmin",admin);
+        List<User> userList=userManager.getUsers();
+        userList.removeIf(user -> user.getUsername().equals("Administrador"));
+        model.addAttribute("users",userList);
+        model.addAttribute("restaurants",restaurantManager.getRestaurants());
+        return userCustomization(model,request,"adminPage");
     }
+
 
     @GetMapping("/deleteUser/{username}")
     public String deleteUser(Model model, HttpServletRequest request, @PathVariable String username){
@@ -210,23 +215,35 @@ public class UserController {
         userList.removeIf(user -> user.getUsername().equals("Administrador"));
         model.addAttribute("users",userList);
         model.addAttribute("restaurants",restaurantManager.getRestaurants());
-        return userCustomization(model,request,"adminPage");
+        return userCustomization(model,request,"deleteUserSuccessful");
     }
 
 
     private String userCustomization(Model model, HttpServletRequest request, String page){
-        boolean logged=false;
-        boolean admin=false;
+        boolean roleUser=false;
+        boolean roleAdmin=false;
+        boolean roleRestaurant=false;
+        boolean viewer=true;
         if(SecurityContextHolder.getContext().getAuthentication()!=null){
-            String username=request.getUserPrincipal().getName();
-            if(request.isUserInRole("ROLE_ADMIN")){
-                admin=true;
-            }
-            logged=true;
+            String username=SecurityContextHolder.getContext().getAuthentication().getName();
             model.addAttribute("username",username);
+            if(request.isUserInRole("ROLE_USER")){
+                roleUser=true;
+                viewer=false;
+            }
+            else if(request.isUserInRole("ROLE_ADMIN")){
+                roleAdmin=true;
+                viewer=false;
+            }
+            else if(request.isUserInRole("ROLE_RESTAURANT")){
+                roleRestaurant=true;
+                viewer=false;
+            }
         }
-        model.addAttribute("logged",logged);
-        model.addAttribute("admin",admin);
+        model.addAttribute("roleUser",roleUser);
+        model.addAttribute("roleAdmin",roleAdmin);
+        model.addAttribute("roleRestaurant",roleRestaurant);
+        model.addAttribute("viewer",viewer);
         return page;
     }
 }

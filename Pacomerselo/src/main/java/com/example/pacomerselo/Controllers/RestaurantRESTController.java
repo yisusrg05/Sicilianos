@@ -23,14 +23,12 @@ public class RestaurantRESTController {
     @Autowired
     RestaurantManager restaurantManager;
 
-    private final PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
 
     //////////////////////RESTAURANTS REST CONTROLLER//////////////////////
 
     //Add a new Restaurant to the catalog
     @PostMapping("/restaurant")
     public ResponseEntity<Restaurant> newRestaurant(@RequestBody Restaurant restaurant){
-        restaurant.setDescription(policy.sanitize(restaurant.getDescription()));
         restaurantManager.addRestaurant(restaurant);
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
@@ -55,7 +53,6 @@ public class RestaurantRESTController {
     //Update the restaurant given (ID)
     @PutMapping("/restaurant/{name}")
     public ResponseEntity<Restaurant> updateRestaurant(@PathVariable String name, @RequestBody Restaurant newRestaurant) {
-        newRestaurant.setDescription(policy.sanitize(newRestaurant.getDescription()));
         Restaurant restaurant = restaurantManager.updateRestaurant(name,newRestaurant);
         if (restaurant!= null) {
             return new ResponseEntity<>(newRestaurant, HttpStatus.OK);
@@ -84,7 +81,6 @@ public class RestaurantRESTController {
     //Add a new dish to the restaurant catalog (given the ID)
     @PostMapping("/restaurant/{name}/dishes")
     public ResponseEntity<Dishes> newDish(@PathVariable String name, @RequestBody Dishes dish){
-        dish.setDescription(policy.sanitize(dish.getDescription()));
         Dishes dishAdded = restaurantManager.addDish(name,dish);
         if (dishAdded!= null) {
             return new ResponseEntity<>(dishAdded, HttpStatus.CREATED);
@@ -112,8 +108,7 @@ public class RestaurantRESTController {
 
     //Update the dish (ID2) of the restaurant catalog (ID1)
     @PutMapping("/restaurant/{name}/dishes/{id2}")
-    public ResponseEntity<Dishes> updateDish(@PathVariable String name, @PathVariable long id2, @RequestBody Dishes newDish) {
-        newDish.setDescription(policy.sanitize(newDish.getDescription()));
+    public ResponseEntity<Dishes> updateDish(@PathVariable String name, @PathVariable long id2, @RequestBody Dishes newDish){
         Dishes dish=restaurantManager.getDish(id2);
         if (dish!= null) {
             restaurantManager.updateDish(id2,newDish);

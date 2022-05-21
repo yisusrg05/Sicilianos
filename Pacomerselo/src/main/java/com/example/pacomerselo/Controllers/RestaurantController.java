@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -144,7 +145,7 @@ public class RestaurantController {
     }
 
     //Delete an already existing dish (ID2) from a given restaurant (ID1)
-    @GetMapping("/restaurant/{name}/deleteDish/{id2}")
+    @GetMapping(value={"/restaurant/{name}/deleteDish/{id2}","/restaurantControl/{name}/deleteDish/{id2}"})
     public String deleteDish (Model model, HttpServletRequest request, @PathVariable String name, @PathVariable long id2){
         restaurantManager.removeDish(id2);
         Collection<Dishes> dishes = restaurantManager.getDishes(name);
@@ -160,14 +161,11 @@ public class RestaurantController {
     @PostMapping("/updateRestaurant/{name}")
     public String putRestaurant (Model model, HttpServletRequest request,@PathVariable String name,Restaurant newRestaurant){
         restaurantManager.updateRestaurant(name,newRestaurant);
-        Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
-
-        model.addAttribute("restaurants",restaurants);
         return userCustomization(model,request,"updateSuccessful");
     }
 
     //Delete an already existing restaurant given the ID
-    @GetMapping("/deleteRestaurant/{name}")
+    @GetMapping(value={"/deleteRestaurant/{name}","/restaurantControl/deleteRestaurant/{name}"})
     public String deleteRestaurant (Model model, HttpServletRequest request, @PathVariable String name){
         restaurantManager.removeRestaurant(name);
         Collection<Restaurant> restaurants =restaurantManager.getRestaurants();
@@ -183,8 +181,8 @@ public class RestaurantController {
     }
 
     @GetMapping("/accessDenied")
-    public String accessDenied( HttpServletRequest request){
-        return "accessDenied";
+    public String accessDenied( Model model,HttpServletRequest request){
+        return userCustomization(model,request,"accessDenied");
     }
 
     @GetMapping("/reviews")
@@ -198,8 +196,8 @@ public class RestaurantController {
     }
 
     @GetMapping("/register")
-    public String register(){
-        return "registration";
+    public String register(Model model, HttpServletRequest request){
+        return userCustomization(model,request,"registration");
     }
 
     @GetMapping("/{name}/registerDish")
@@ -211,13 +209,13 @@ public class RestaurantController {
     }
 
     @GetMapping("/incorrectEmailOrPassword")
-    public String incorrectEmailOPassword(){
-        return "incorrectEmailOrPassword";
+    public String incorrectEmailOPassword(Model model, HttpServletRequest request){
+        return userCustomization(model,request,"incorrectEmailOrPassword");
     }
 
     @GetMapping("/alreadyExistingUser")
-    public String alredyExistingUser(){
-        return "alreadyExistingUser";
+    public String alredyExistingUser(Model model, HttpServletRequest request){
+        return userCustomization(model,request,"alreadyExistingUser");
     }
 
     @GetMapping ("/registerRestaurant")
@@ -236,6 +234,15 @@ public class RestaurantController {
         return userCustomization(model,request,"updateRest");
     }
 
+
+    @PostMapping("/registerRestaurant")
+    public String addRestaurant (Model model, HttpServletRequest request, Restaurant restaurant){
+        List<String> role= new ArrayList<>();
+        role.add("RESTAURANT");
+        restaurant.setRoles(role);
+        restaurantManager.addRestaurant(restaurant);
+        return userCustomization(model,request,"registerSuccessful");
+    }
     //Giving the needed information to update a dish
     @GetMapping (value = {"/restaurant/{name}/updateDish/{id2}","/restaurantControl/{name}/updateDish/{id2}"})
     public String updateDishes(Model model, HttpServletRequest request, @PathVariable String name /*Restaurant ID*/, @PathVariable long id2/*Dish ID*/){
@@ -292,18 +299,30 @@ public class RestaurantController {
     }
 
     private String userCustomization(Model model, HttpServletRequest request, String page){
-        boolean logged=false;
-        boolean admin=false;
-        if(SecurityContextHolder.getContext().getAuthentication()!=null&&request.isUserInRole("ROLE_USER")){
-            String username=request.getUserPrincipal().getName();
-            if(request.isUserInRole("ROLE_ADMIN")){
-                admin=true;
-            }
-            logged=true;
+        boolean roleUser=false;
+        boolean roleAdmin=false;
+        boolean roleRestaurant=false;
+        boolean viewer=true;
+        if(SecurityContextHolder.getContext().getAuthentication()!=null){
+            String username=SecurityContextHolder.getContext().getAuthentication().getName();
             model.addAttribute("username",username);
+            if(request.isUserInRole("ROLE_USER")){
+                roleUser=true;
+                viewer=false;
+            }
+            else if(request.isUserInRole("ROLE_ADMIN")){
+                roleAdmin=true;
+                viewer=false;
+            }
+            else if(request.isUserInRole("ROLE_RESTAURANT")){
+                roleRestaurant=true;
+                viewer=false;
+            }
         }
-        model.addAttribute("logged",logged);
-        model.addAttribute("admin",admin);
+        model.addAttribute("roleUser",roleUser);
+        model.addAttribute("roleAdmin",roleAdmin);
+        model.addAttribute("roleRestaurant",roleRestaurant);
+        model.addAttribute("viewer",viewer);
         return page;
     }
 }

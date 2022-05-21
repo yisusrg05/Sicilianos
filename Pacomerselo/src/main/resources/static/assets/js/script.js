@@ -1,7 +1,6 @@
 let min_price = 0;
 let max_price = 100;
 
-
 $("#min-price").on("change mousemove", function () {
   min_price = parseInt($("#min-price").val());
   $("#min-price-txt").text(min_price + "€");
@@ -16,11 +15,9 @@ $("#max-price").on("change mousemove", function () {
   //set codes
   //this section is for percentage off codes
   const free = ['free'];
-  const percent10 = ['ten'];
-  const percent20 = ['twenty'];
   //this section is for dollar-value codes
-  const dollars20 = ['dollarcode'];
-  const dollars25 = ['dollarcode2'];
+  const dollars10 = ['diez'];
+  const dollars15 = ['quince'];
   const shipping =['freeshipping'];
   //set default values to no discount
   let percentDiscount = 1;
@@ -38,30 +35,16 @@ $("#coupon").change( function() {
     $("#shipping").text("5€")
     found=true
   }
-  else{
-    if(percent10.includes(coupon)){
-      percentDiscount=.9
-      $("#shipping").text("5€")
-      found=true
-    }
-  else{
-    if(percent20.includes(coupon)){
-      percentDiscount=.8
-      $("#shipping").text("5€")
-      found=true
-    }
-  }
-  }
 
   //adjust dollar-value variable if the coupon code entered matches
-  if(dollars20.includes(coupon)){
-    priceDiscount=20
+  if(dollars10.includes(coupon)){
+    priceDiscount=10
     $("#shipping").text("5€")
     found=true
   }
   else{
-    if(dollars25.includes(coupon)){
-      priceDiscount=25
+    if(dollars15.includes(coupon)){
+      priceDiscount=15
       $("#shipping").text("5€")
       found=true
     }
@@ -73,8 +56,10 @@ $("#coupon").change( function() {
     $("#shipping").text("Gastos de envío gratis")
   }
 
-  let total = price*percentDiscount-priceDiscount
+  let total = Math.round(price*percentDiscount-priceDiscount)
+
   if(total < 0){total = 0}
+
   if(!found){
     $("#err").text("Cupón inválido")
     $("#message").text("")
@@ -82,16 +67,27 @@ $("#coupon").change( function() {
     $("#price").show()
     $("#reprice").text("")
     $("#total").text("Total")
+    $("#finalPrice").val(price)
   }else{
     $("#err").text("")
     $("#message").text("Cupón aplicado!")
     $("#total").text("Total con descuento")
     $("#reprice").text(total+"€")
     $("#price").hide()
+    $("#finalPrice").val(total)
   }
-  //ensure non-negative total
 
 });
+
+function passwordsMatch(id1,id2) {
+  var password1 = document.getElementById(id1).value;
+  var password2 = document.getElementById(id2).value;
+  if (password1!==password2) {
+    $('#dialog').alert();
+    return false;
+  }
+  return true;
+}
 
 
 

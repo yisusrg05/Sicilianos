@@ -76,7 +76,8 @@
                 <h2 class="text-muted">Pago</h2>
                 <p>Tu pedido está casi listo</p>
             </div>
-            <form>
+            <form action="/orderPlaced" method="post">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
                 <div class="products">
                     <h3 class="title">Checkout</h3>
                     {{#cart}}
@@ -88,7 +89,7 @@
                     {{/dishesList}}
                     <div class="summary"><span>Precio</span><span class="price" >{{price}}€</span></div>
                     <div class="summary"><span>Gastos de Envío</span><span class="price" id="shipping">5€</span></div>
-                    <div  class="total"><span id="total">Total</span><span type="number" class="price" id="price" h>{{total}}€</span><span type="number" class="price" id="reprice"></span></div>
+                    <div class="total"><span id="total">Total</span><span type="number" class="price" id="price">{{total}}€</span><span type="number" class="price" id="reprice"></span></div>
                     <div class="total"><label for="coupon">Cupón</label><br><br>
                         <div class="col-sm-4"><input type="text" id="coupon" class="form-control">    <span id="message"></span><span id="err"></span>
                         </div>
@@ -111,9 +112,9 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="mb-3"><label class="form-label" for="cvc">CVC</label><input class="form-control" type="text" id="cvc" placeholder="CVC" maxlength="3" name="cvc"></div>
-                        </div>
+                        </div><input type="number" id="finalPrice" name="finalPrice" hidden  value="">
                         <div class="col-sm-12">
-                            <div class="mb-3"><button class="btn btn-warning" onclick="location.href='/orderPlaced'" type="button">  Proceder al Pago  </button>
+                            <div class="mb-3"><button class="btn btn-warning" type="submit">  Proceder al Pago  </button>
                         </div>
                     </div>
                 </div>

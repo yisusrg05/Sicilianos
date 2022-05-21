@@ -25,13 +25,17 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
 
         boolean hasUserRole = false;
         boolean hasRestaurantRole = false;
+        boolean hasAdminRole=false;
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
-            if (grantedAuthority.getAuthority().equals("ROLE_USER")||grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+            if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
                 hasUserRole = true;
                 break;
             } else if (grantedAuthority.getAuthority().equals("ROLE_RESTAURANT")) {
                 hasRestaurantRole = true;
+                break;
+            } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")){
+                hasAdminRole = true;
                 break;
             }
         }
@@ -40,7 +44,10 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
             redirectStrategy.sendRedirect(arg0, arg1, "/profile");
         } else if (hasRestaurantRole) {
             redirectStrategy.sendRedirect(arg0, arg1, "/restaurantControl");
-        } else {
+        } else if(hasAdminRole){
+            redirectStrategy.sendRedirect(arg0,arg1,"/adminPage");
+        }
+        else {
             throw new IllegalStateException();
         }
     }

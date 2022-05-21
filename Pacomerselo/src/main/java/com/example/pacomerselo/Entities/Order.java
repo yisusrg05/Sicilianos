@@ -29,6 +29,8 @@ public class Order {
 
     private long orderNumber=0;
     private int price;
+    private boolean discount;
+    private int discountedPrice;
 
     @ManyToOne
     @JsonBackReference

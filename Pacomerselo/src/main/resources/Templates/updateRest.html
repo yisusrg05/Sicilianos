@@ -66,6 +66,7 @@
                 <p>Actualiza tu Restaurante aquí</p>
             </div>
             <form action="/updateRestaurant/{{id}}" method="post">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
                 <div class="mb-3"><label class="form-label" >Nombre del restaurante</label><input class="form-control item" type="text" name="name" value="{{restaurant.name}}"></div>
                 <div class="mb-3"><label class="form-label" for="editor">Descripción</label><textarea class="form-label" name="description" id="editor">{{restaurant.description}}</textarea></div>
                 <div class="mb-3"><label class="form-label" >Tipo de comida</label><input class="form-control item" type="text" name="type" value="{{restaurant.type}}"></div>

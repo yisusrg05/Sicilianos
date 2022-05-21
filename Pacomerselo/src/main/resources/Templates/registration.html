@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
   <link rel="stylesheet" href="assets/css/untitled.css">
   <link rel="stylesheet" href="assets/css/vanilla-zoom.min.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -34,13 +36,17 @@
         <h2 class="text-muted">Regístrate</h2>
         <p>¿Aún no tienes cuenta? Únete a nuestra familia</p>
       </div>
-      <form method="post" action="" onsubmit="return passwordsMatch('password','confirmPassword')">
-        <div class="mb-3"><label class="form-label" for="name">Nombre de Usuario</label><input class="form-control item" type="text" id="username" name="username"></div>
+      <div class="alert alert-warning" id="dialog" style="display:none;" role="alert">
+        Atención!Las contraseñas no coinciden.
+      </div>
+      <form method="post" action="/register" onsubmit="return passwordsMatch('password','confirmPassword')">
+        <div class="mb-3"><label class="form-label" for="username">Nombre de Usuario</label><input class="form-control item" type="text" id="username" name="username"></div>
         <div class="mb-3"><label class="form-label" for="name">Nombre </label><input class="form-control item" type="text" id="name" name="name"></div>
-        <div class="mb-3"><label class="form-label" for="name">Apellidos </label><input class="form-control item" type="text" id="lastName" name="surname"></div>
+        <div class="mb-3"><label class="form-label" for="lastName">Apellidos </label><input class="form-control item" type="text" id="lastName" name="surname"></div>
         <div class="mb-3"><label class="form-label" for="email">Email</label><input class="form-control item" type="email" id="email" name="email"></div>
-        <div class="mb-3"><label class="form-label" for="password">Contraseña</label><input class="form-control item" type="password" id="password" name="password">
-
+        <div class="mb-3"><label class="form-label" for="password">Contraseña</label><input class="form-control item" type="password" id="password" name="password"></div>
+        <div class="mb-3"><label class="form-label" for="confirmPassword">Contraseña</label><input class="form-control item" type="password" id="confirmPassword">
+          <input type="hidden" name="_csrf" value="{{token}}"/>
         </div><button class="btn btn-warning" type="submit">Regístrate</button>
       </form>
     </div>
@@ -83,6 +89,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 <script src="assets/js/vanilla-zoom.js"></script>
 <script src="assets/js/theme.js"></script>
+<script src="../../assets/js/script.js"></script>
+<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 </body>
 
 </html>

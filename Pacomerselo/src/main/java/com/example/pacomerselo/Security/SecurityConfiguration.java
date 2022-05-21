@@ -17,13 +17,16 @@ import java.security.SecureRandom;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserAuthenticationSuccessHandler userAuthenticationSuccessHandler;
+    private UserAuthenticationSuccessHandler userAuthenticationSuccessHandler;
     @Autowired
-    RepositoryUserDetailsService userDetailsService;
+    private RepositoryUserDetailsService userDetailsService;
+    @Autowired
+    private CustomOAuth2UserService oAuth2UserService;
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -38,8 +41,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        http.authorizeRequests().antMatchers("/","/index","/restaurant/{name}","/restaurant","/restaurant/search","/restaurant/{nameRest}/search","/restaurant/{name}/filter","/nosotros","/accessDenied","/reviews","/updateSuccesful","/register","/alreadyExistingUser","/incorrectEmailOrPassword","/registerRestaurant","/faq","/login").permitAll();
         http.authorizeRequests().antMatchers("/oauth2/**").permitAll();
 
+        //private
+        http.authorizeRequests().antMatchers("/cart","/addcarrito/{id1}","/deletecart/{id}","/deleteCart","/payment","/profile","/orderPlaced").hasAnyAuthority("ROLE_USER");
+
+        http.authorizeRequests().antMatchers("/restaurant/{name}/updateDish/{id2}","/restaurant/{name}/deleteDish/{id2}","/updateRestaurant/{name}","/deleteRestaurant/{name}","/{name}/registerDish","/adminPage","/updateRestaurant/{name}","/restaurant/{name}/updateDish/{id2}").hasAnyAuthority("ROLE_ADMIN");
+
+        http.authorizeRequests().antMatchers("/restaurantControl/{name}/updateDish/{id2}","/restaurantControl/{name}/updateDish/{id2}","/restaurantControl").hasAnyAuthority("ROLE_RESTAURANT");
         // Login form
         http.formLogin().loginPage("/login");
         http.formLogin().usernameParameter("username");
@@ -57,11 +67,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.logout().logoutSuccessUrl("/");
     }
 
-
-    @Autowired
-    private CustomOAuth2UserService oAuth2UserService;
-
-    @Autowired
-    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
 }

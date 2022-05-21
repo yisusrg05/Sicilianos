@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Services - Brand</title>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i&amp;display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.css">
+  <link rel="stylesheet" href="assets/css/vanilla-zoom.min.css">
+</head>
+
+<body>
+<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+  <div class="container"><a class="navbar-brand logo" href="/index">Paco Mérselo</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>{{#logged}}<a>Bienvenido, {{username}}</a>{{/logged}}
+    <div class="collapse navbar-collapse" id="navcol-1">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="/index">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
+        <li class="nav-item"><a class="nav-link" href="/cart">El carrito</a></li>
+        {{^logged}}
+        <li class="nav-item"><a class="nav-link" href="/login">Iniciar Sesión</a></li>
+        {{/logged}}
+        {{#logged}}
+        <li class="nav-item"><a class="nav-link" href="/profile">Perfil</a></li>
+        <li class="nav-item"><form action="/logout" method="post">
+          <input type="hidden" name="_csrf" value="{{token}}"/>
+          <button class="nav-link" type="submit">CERRAR SESIÓN</button>
+        </form></li>
+        {{/logged}}
+      </ul>
+    </div>
+  </div>
+</nav>
+<main class="page service-page">
+  <section class="clean-block clean-services dark">
+    <div class="container">
+      <br>
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <div class="card">
+            <div></div>
+          </div>
+        </div>
+        <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/scenery/logo.jpg" width="160" height="160">
+      </div>
+    </div>
+    </div>
+  </section>
+<div id="select-model" class="dropdown">
+  <button class="btn dropdown-toggle d-block w-100" aria-expanded= "false"  data-bs-toggle="dropdown" type="button">Usuarios</button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item">
+      {{#users}}
+      <div class="row justify-content-center align-items-center">
+        <div class="col-md-5 product-info"><span class="product-name" >{{username}}</span>
+          <div class="product-specs">
+            <div><span><b>Nombre</b> &nbsp;</span><span class="value">{{name}}</span></div>
+            <div><span><b>Apellidos</b> &nbsp;</span><span class="value">{{surname}}</span></div>
+            <div><span><b>Email</b> &nbsp;</span><span class="value">{{email}}</span></div>
+          </div>
+        </div>
+        <button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/deleteUser/{{username}}'" type="button">BORRAR</button>
+      </div>
+      {{/users}}
+    </a>
+  </div>
+</div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</main>
+<footer class="page-footer dark">
+  <div class="container">
+    <div class="row justify-content-lg-evenly">
+      <div class="col-sm-3">
+        <h5>Resumen</h5>
+        <ul>
+          <li><a href="/index">Inicio</a></li>
+          <li><a href="/login">Iniciar sesion</a></li>
+          <li><a href="/restaurant">Los Restaurantes</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>Sobre nosotros</h5>
+        <ul>
+          <li><a href="/nosotros">Conócenos</a></li>
+          <li><a href="/reviews">Reviews</a></li>
+          <li><a href="/faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>Soporte y Cuenta</h5>
+        <ul>
+          <li><a href="/profile">Mi Perfil</a></li>
+          <li><a href="/register">Regístrate</a></li>
+          <li><a href="/forgottenPassword">¿Olvidaste tu contraseña?</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <p>© 2022 Paco Mérselo.</p>
+  </div>
+</footer>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
+<script src="assets/js/vanilla-zoom.js"></script>
+<script src="assets/js/theme.js"></script>
+</body>
+
+</html>

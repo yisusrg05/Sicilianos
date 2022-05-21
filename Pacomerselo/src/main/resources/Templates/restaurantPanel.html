@@ -58,8 +58,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="description"><strong>Descripción</strong></label><input class="form-control" type="text" id="description" placeholder="{{description}}" value="{{description}}" name="description"></div>
-                                                    </div>
+                                                        <div class="mb-3"><label class="form-label" for="editor">Descripción</label><textarea class="form-label" name="description" id="editor">{{restaurant.description}}</textarea></div>                                                    </div>
                                                     <div class="col">
                                                         <div class="mb-3"><label class="form-label" for="type"><strong>Tipo</strong></label><input class="form-control" type="text" id="type" placeholder="{{type}}" value="{{type}}" name="type"></div>
                                                     </div>
@@ -156,6 +155,18 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
             <script src="assets/js/vanilla-zoom.js"></script>
             <script src="assets/js/theme.js"></script>
+            <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+
+<script>
+       ClassicEditor
+        .create( document.querySelector( '#editor'),{
+        toolbar: [ 'bold', 'italic', 'underline', 'bulletedList', 'numberedList', 'blockQuote' ]
+        })
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
 </body>
 
 </html>

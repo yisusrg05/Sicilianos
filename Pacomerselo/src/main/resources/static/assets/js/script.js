@@ -14,11 +14,11 @@ $("#max-price").on("change mousemove", function () {
 
   //set codes
   //this section is for percentage off codes
-  const free = ['free'];
+  const free = ['free', 'NicoPonmeUn10', 'TripleB'];
   //this section is for dollar-value codes
-  const dollars10 = ['diez'];
-  const dollars15 = ['quince'];
-  const shipping =['freeshipping'];
+  const dollars10 = ['diez', 'MasBuenaQueLaCerveza', 'TuWebFavorita', 'NoQueremosBrocoli', 'JesusEnLaFotoTiene14', 'ZampaBollos', 'AquiNoSeEscuchaTaburete'];
+  const dollars15 = ['quince', 'NoTePongasTonturron','JorgeTeDebeUnaCerveza', 'NoSeasAgarrao', 'MasBuenoQueElColaCao'];
+  const shipping =['freeshipping', 'EfectoJuernes', 'TripaVaciaCorazonSinAlegria', 'EstoCuestaUnRiñon', 'MortadelaSiciliana', 'EmpiezaElVerano'];
   //set default values to no discount
   let percentDiscount = 1;
   let priceDiscount = 0;

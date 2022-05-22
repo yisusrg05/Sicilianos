@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,9 @@ public class RestaurantManager{
 
     //Adding a new restaurant and giving it its unique ID
     public void addRestaurant(Restaurant restaurant){
+        List<String> role= new ArrayList<>();
+        role.add("RESTAURANT");
+        restaurant.setRoles(role);
         restaurant.setDescription(policy.sanitize(restaurant.getDescription()));
         restaurant.setPassword(passwordEncoder.encode(restaurant.getPassword()));
         restaurantRepository.save(restaurant);
@@ -105,6 +109,17 @@ public class RestaurantManager{
         }
         else{
             return null;
+        }
+    }
+
+    public boolean restaurantContainsDish(String name, long idDish){
+        Optional<Restaurant> op= restaurantRepository.findById(name);
+        if(op.isPresent()){
+            Restaurant restaurant=op.get();
+            return restaurant.hasDish(dishesRepository.getById(idDish));
+        }
+        else{
+            return false;
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.pacomerselo.Entities;
 import com.example.pacomerselo.Entities.Dishes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public class Restaurant {
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @OneToMany(cascade = CascadeType.DETACH,mappedBy = "restaurant")
@@ -67,6 +68,10 @@ public class Restaurant {
     //As we have a Map to collect dishes for the restaurant, we have the methods to add a dish to a Restaurant. It key is the id of the restaurant.
     public void add(Dishes dish){
         this.dishesList.add(dish);
+    }
+
+    public boolean hasDish(Dishes dish){
+        return this.dishesList.equals(dish);
     }
 
     /*

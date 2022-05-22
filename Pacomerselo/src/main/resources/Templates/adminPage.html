@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <title>Dashboard - Brand</title>
+  <title>Administración - Paco Mérselo</title>
+  <link rel="shortcut icon" href="../../../assets/img/scenery/logo.jpg">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
   <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -53,25 +54,13 @@
               {{#roleAdmin}}
               <li class="nav-item"><a class="nav-link " href="/index">Inicio</a></li>
               <li class="nav-item"><a class="nav-link" href="/restaurant">Los Restaurantes</a></li>
-              <li class="nav-item dropdown no-arrow">
-                <div class="nav-item dropdown no-arrow">
-                  <a class=" dropdown-toggle nav-link active" aria-expanded="false" data-bs-toggle="dropdown" href="'#">
-                    <span class="d-none d-lg-inline me-2 text-gray-600 small" >{{username}}</span>
-                  </a>
-                  <div class="dropdown-menu shadow dropdown-menu-end animated--grow in" >
-                    <a class ="dropdown-item " href="/adminPage">
-                      <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
-                      </i>
-                      &nbsp;Panel de Control
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class ="dropdown-item "><form action="/logout" method="post">
+              <li class="nav-item"><a class="nav-link">
+                    <li class ="nav-link "><form action="/logout" method="post">
                       <input type="hidden" name="_csrf" value="{{token}}"/>
-                      <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400">
-                      </i>
-                      <button class="btn btn-sm"  type="submit">CERRAR SESIÓN</button>
-                    </form></a>
-                  </div>
+                      <button class="btn btn-sm" type="submit">Cerrar Sesión</button>
+                    </form></li>
+            </ul>
+                 </div>
                 </div>
               </li>
               {{/roleAdmin}}
@@ -175,8 +164,8 @@
                     <tr>
                       <td>{{name}}</td>
                       <td>{{email}}</td>
-                      <td><button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/restaurant/{{name}}'" type="button">CARTA</button></td>
-                      <td><button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/deleteRestaurant/{{name}}'" type="button">BORRAR</button></td>
+                      <td><button class="btn btn-warning btn-sm d-block w-100" style="margin: 10px" onclick="location.href='/restaurant/{{name}}'" type="button">CARTA</button></td>
+                      <td><button class="btn btn-danger btn-sm d-block w-100" style="margin: 10px" onclick="location.href='/deleteRestaurant/{{name}}'" type="button">BORRAR</button></td>
                     </tr>
                     {{/restaurants}}
                     <tr></tr>
@@ -199,7 +188,7 @@
                   <table class="table">
                     <thead>
                     <tr>
-                      <th>Nombre Usuario</th>
+                      <th>Username</th>
                       <th>Nombre&nbsp;</th>
                       <th>Email</th>
                       <th>Eliminar</th>
@@ -211,7 +200,7 @@
                       <td>{{username}}</td>
                       <td>{{name}}</td>
                       <td>{{email}}</td>
-                      <td><button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/deleteUser/{{username}}'" type="button">BORRAR</button></td>
+                      <td><button class="btn btn-danger btn-sm d-block w-100" style="margin: 10px" onclick="location.href='/deleteUser/{{username}}'" type="button">BORRAR</button></td>
                     </tr>
                     {{/users}}
                     <tr></tr>

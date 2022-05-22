@@ -5,6 +5,8 @@ import com.example.pacomerselo.Repositories.Order.OrderRepository;
 import com.example.pacomerselo.Repositories.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -121,6 +123,18 @@ public class UserManager{
 
     public List<Order> getOrders(){
         return orderRepository.findAll();
+    }
+
+    public void addOAuthUser(String name, String email, AuthenticationProvider authProvider){
+        User userAdded=new User(name, email,authProvider);
+        List<String> roles= new ArrayList<>();
+        roles.add("USER");
+        userAdded.setRoles(roles);
+        userRepository.save(userAdded);
+    }
+
+    public void updateOAuthUser(String name, String email, AuthenticationProvider authProvider){
+        userRepository.findByEmail(email).setUsername(name);
     }
 
 

@@ -176,8 +176,8 @@
                                                         <div class="col-6 col-md-2 price"><h4><span>{{price}}€</span></h4></div>
                                                     </div>
                                                     <br>
-                                                    <button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/restaurantControl/{{nameRest}}/updateDish/{{id}}'" type="button">ACTUALIZAR</button>
-                                                    <button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/restaurantControl/{{nameRest}}/deleteDish/{{id}}'" type="button">BORRAR</button>
+                                                    <button class="btn btn-info d-block w-100" style="margin: 10px" onclick="location.href='/restaurantControl/{{nameRest}}/updateDish/{{id}}'" type="button">ACTUALIZAR</button>
+                                                    <button class="btn btn-danger d-block w-100" style="margin: 10px" onclick="location.href='/restaurantControl/{{nameRest}}/deleteDish/{{id}}'" type="button">BORRAR</button>
                                                     {{/dishes}}
                                                 </div>
                                             </div>
@@ -194,7 +194,10 @@
                     </div>
                     </div>
                 </div>
-                <button class="btn btn-danger d-block w-50" style="margin: 10px" onclick="location.href='/restaurantControl/deleteRestaurant/{{nameRest}}'" type="button">BORRAR RESTAURANTE</button>
+                     <button class="btn btn-warning d-block w-50" style="margin: 10px" onclick="location.href='/restaurantControl/deleteRestaurant/{{nameRest}}'" type="button">AÑADIR UN NUEVO PLATO</button>
+        <BR>
+
+                     <button class="btn btn-danger d-block w-50" style="margin: 10px" onclick="location.href='/restaurantControl/deleteRestaurant/{{nameRest}}'" type="button">BORRAR RESTAURANTE</button>
             </main>
             <script src="assets/bootstrap/js/bootstrap.min.js"></script>
             <script src="assets/js/theme.js"></script>

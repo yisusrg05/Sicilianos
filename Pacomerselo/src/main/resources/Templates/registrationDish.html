@@ -109,6 +109,7 @@
                 <h2 class="text-muted">Añade un nuevo plato</h2>
                 <p>Añade un nuevo plato a tu restaurante</p>
             </div>
+            {{#roleAdmin}}
             <form action="/restaurant/{{id1}}" method="post">
                 <div class="mb-3"><label class="form-label" >Nombre</label><input class="form-control item" type="text" name="name" placeholder="Ensalada de verano"></div>
                 <div class="mb-3"><label class="form-label" for="editor" >Descripción:</label><textarea class="form-label" name="description" id="editor" placeholder="Mucho verde"></textarea></div>
@@ -124,6 +125,24 @@
                 <input type="hidden" name="_csrf" value="{{token}}"/>
                 <div class="mb-3"><label class="form-label" >Precio</label><input class="form-control item" type="number" name="price" placeholder="8"></div><button class="btn btn-outline-warning" type="submit">Registrar</button>
             </form>
+            {{/roleAdmin}}
+            {{#roleRestaurant}}
+            <form action="/restaurantControl/dishAdded" method="post">
+                <div class="mb-3"><label class="form-label" >Nombre</label><input class="form-control item" type="text" name="name" placeholder="Ensalada de verano"></div>
+                <div class="mb-3"><label class="form-label" for="editor" >Descripción:</label><textarea class="form-label" name="description" id="editor" placeholder="Mucho verde"></textarea></div>
+                <div class="mb-3"> <label >Tipo de Plato</label><br>
+                    <label>
+                        <select id="type" name="type" type="text">
+                            {{#types}}
+                            <option value="{{.}}">{{.}}</option>
+                            {{/types}}
+                        </select>
+                    </label>
+                </div>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+                <div class="mb-3"><label class="form-label" >Precio</label><input class="form-control item" type="number" name="price" placeholder="8"></div><button class="btn btn-outline-warning" type="submit">Registrar</button>
+            </form>
+            {{/roleRestaurant}}
         </div>
     </section>
 </main>

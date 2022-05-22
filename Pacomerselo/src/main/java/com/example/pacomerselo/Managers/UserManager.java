@@ -88,6 +88,10 @@ public class UserManager{
         return userRepository.findByUsernameAndEmail(username, email);
     }
 
+    public Optional<User> findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
 
     public List<Order> findOrdersByUsername(String username){
         return orderRepository.findByUsername(username);
@@ -125,16 +129,17 @@ public class UserManager{
         return orderRepository.findAll();
     }
 
-    public void addOAuthUser(String name, String email, AuthenticationProvider authProvider){
+    public void addOAuthUser(String name, String email, AuthenticationProvider authProvider,OAuth2AuthenticationToken token){
         User userAdded=new User(name, email,authProvider);
         List<String> roles= new ArrayList<>();
         roles.add("USER");
         userAdded.setRoles(roles);
+        userAdded.setPassword(passwordEncoder.encode(token.toString()));
         userRepository.save(userAdded);
     }
 
     public void updateOAuthUser(String name, String email, AuthenticationProvider authProvider){
-        userRepository.findByEmail(email).setUsername(name);
+        userRepository.findByEmail(email).orElse(null);
     }
 
 

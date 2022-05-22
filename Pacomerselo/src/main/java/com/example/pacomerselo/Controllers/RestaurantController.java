@@ -296,6 +296,22 @@ public class RestaurantController {
         return userCustomization(model,request,"restaurantPanel");
     }
 
+    @GetMapping("/restaurantControl/addDish")
+    public String registerDishControl(Model model, HttpServletRequest request){
+        model.addAttribute("id1",SecurityContextHolder.getContext().getAuthentication().getName());
+        List<String> list= DishType.DESSERT.types();
+        model.addAttribute("types", list);
+        return userCustomization(model,request,"registrationDish");
+    }
+
+    @PostMapping("/restaurantControl/dishAdded")
+    public String addedDishControl(Model model, HttpServletRequest request, Dishes dish){
+        String name= SecurityContextHolder.getContext().getAuthentication().getName();
+        dish.setRestaurant(restaurantManager.getRestaurant(name));
+        restaurantManager.addDish(name,dish);
+        return userCustomization(model,request,"registerSuccessful");
+    }
+
     private String userCustomization(Model model, HttpServletRequest request, String page){
         boolean roleUser=false;
         boolean roleAdmin=false;

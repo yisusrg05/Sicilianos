@@ -258,9 +258,9 @@ public class DatabaseUsersLoader {
         order3.add(dish14);
         order3.add(dish12);
 
-        order1.setUser(admin);
+        order1.setUser(jorge);
         order2.setUser(yisus);
-        order3.setUser(admin);
+        order3.setUser(sicilia);
 
         userRepository.save(admin);
         userRepository.save(yisus);

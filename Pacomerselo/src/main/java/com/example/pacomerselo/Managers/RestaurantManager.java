@@ -8,6 +8,7 @@ import com.example.pacomerselo.Repositories.Restaurant.RestaurantRepository;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -18,16 +19,20 @@ import java.util.Optional;
 public class RestaurantManager{
 
     @Autowired
-    RestaurantRepository restaurantRepository;
+    private RestaurantRepository restaurantRepository;
 
     @Autowired
-    DishesRepository dishesRepository;
+    private DishesRepository dishesRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
 
     //Adding a new restaurant and giving it its unique ID
     public void addRestaurant(Restaurant restaurant){
         restaurant.setDescription(policy.sanitize(restaurant.getDescription()));
+        restaurant.setPassword(passwordEncoder.encode(restaurant.getPassword()));
         restaurantRepository.save(restaurant);
     }
 

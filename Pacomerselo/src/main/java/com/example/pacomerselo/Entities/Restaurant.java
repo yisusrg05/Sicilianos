@@ -27,6 +27,7 @@ public class Restaurant {
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @OneToMany(cascade = CascadeType.DETACH,mappedBy = "restaurant")
@@ -34,6 +35,7 @@ public class Restaurant {
     private List<Dishes> dishesList=new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<String> roles;
 
     //Constructor for Restaurant:
@@ -52,6 +54,14 @@ public class Restaurant {
         this.type=type;
         this.email=email;
         this.password=password;
+        this.roles=new ArrayList<>();
+    }
+
+    public Restaurant(String name,String description,String type, String email){
+        this.name=name;
+        this.description=description;
+        this.type=type;
+        this.email=email;
         this.roles=new ArrayList<>();
     }
     //As we have a Map to collect dishes for the restaurant, we have the methods to add a dish to a Restaurant. It key is the id of the restaurant.

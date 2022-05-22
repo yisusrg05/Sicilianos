@@ -33,11 +33,12 @@ public class RESTSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                        .antMatchers(HttpMethod.GET,"/profile").hasAnyRole("ROLE_USER")
+                        .antMatchers(HttpMethod.GET,"/user").hasAnyRole("ROLE_USER")
                         .antMatchers(HttpMethod.GET,"/cart").hasAnyRole("ROLE_USER")
+                        .antMatchers(HttpMethod.PUT,"/changeprofile").hasAnyRole("ROLE_USER")
+                        .antMatchers(HttpMethod.GET,"/orders").hasAnyRole("ROLE_USER","ROLE_ADMIN")
                         .antMatchers(HttpMethod.DELETE,"/deleteuser/{username}").hasAnyRole("ROLE_ADMIN")
                         .antMatchers(HttpMethod.GET,"/adminPage").hasAnyRole("ROLE_ADMIN");
-
 
         http.csrf().disable();
         http.httpBasic();

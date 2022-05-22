@@ -129,10 +129,20 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col">
+                                                    {{^nameNull}}
                                                     <div class="mb-3"><label class="form-label" for="first_name"><strong>Nombre</strong></label><input class="form-control" type="text" id="first_name" placeholder="{{name}}" value="{{name}}" name="name"></div>
+                                                    {{/nameNull}}
+                                                    {{#nameNull}}
+                                                    <div class="mb-3"><label class="form-label" for="first_name"><strong>Nombre</strong></label><input class="form-control" type="text" id="first_name" placeholder="{{name}}" name="name"></div>
+                                                    {{/nameNull}}
                                                 </div>
                                                 <div class="col">
+                                                    {{^surnameNull}}
                                                     <div class="mb-3"><label class="form-label" for="last_name"><strong>Apellidos</strong></label><input class="form-control" type="text" id="last_name" placeholder="{{surname}}" value="{{surname}}" name="surname"></div>
+                                                    {{/surnameNull}}
+                                                    {{#surnameNull}}
+                                                    <div class="mb-3"><label class="form-label" for="last_name"><strong>Apellidos</strong></label><input class="form-control" type="text" id="last_name" placeholder="{{surname}}" name="surname"></div>
+                                                    {{/surnameNull}}
                                                 </div>
                                             </div>
                                             <input type="hidden" name="_csrf" value="{{token}}"/>

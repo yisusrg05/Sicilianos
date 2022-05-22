@@ -118,18 +118,12 @@
                 <br>
                 <br>
 
-                <div>
+                <div class="mb-2">
 
-                    <a href="/oauth2/authorization/google" class="btn btn-lg btn-secondary fab fa-goo" role="button"><i class="fab fa-google"></i>&nbsp; Login with Google</a>
-                    <a class="oauth-container btn darken-4 white black-text" href="/oauth2/authorization/google" style="text-transform:none">
-                        <div class="left">
-                            <img width="20px" style="margin-top:7px; margin-right:8px" alt="Google sign-in"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
-                        </div>
-                        Login with Google
+                    <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="/oauth2/authorization/google"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Inicia Sesión con Google</a>
+                    <a class="btn btn-lg btn-social btn-facebook" href="/oauth2/authorization/facebook">
+                        <i class="fa fa-facebook fa-fw"></i> Sign in with Facebook
                     </a>
-                <!--<a href="/oauth2/authorization/google">Login with Google</a>-->
-                    <a href="/oauth2/authorization/github" class="btn btn-light shadow-sm border rounded-pill d-block btn-user w-100 mb-2" role="button"><i class="fab fa-google"></i>&nbsp; Login with Github</a>
                 </div>
                 <div class="container authenticated" style="display:none">
                     Logged in as: <span id="user"></span>
@@ -183,10 +177,43 @@
         $(".authenticated").show()
     });
 </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+<style>
+    .btn-google {
+        color: #545454;
+        background-color: #ffffff;
+        box-shadow: 0 1px 2px 1px #ddd;
+    }
+    .btn-facebook {
+        color: #fff;
+        background-color: #3b5998;
+        border-color: rgba(0,0,0,0.2);
+    }
 
-<!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    .btn-social {
+        position: relative;
+        padding-left: 44px;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .btn-social:hover {
+        color: #eee;
+    }
+
+    .btn-social :first-child {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 40px;
+        padding: 7px;
+        font-size: 1.6em;
+        text-align: center;
+        border-right: 1px solid rgba(0,0,0,0.2);
+    }
+</style>
 </body>
 
 </html>

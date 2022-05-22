@@ -112,6 +112,17 @@ public class UserController {
             this.sessionCart=new SessionCart();
         }
         httpSession.setAttribute("cart",this.sessionCart);
+        boolean surnameNull=false;
+        boolean nameNull=false;
+        assert user != null;
+        if(user.getSurname().equals("Cambiar valor por defecto")){
+            surnameNull=true;
+        }
+        if(user.getName().equals("Cambiar valor por defecto")){
+            nameNull=true;
+        }
+        model.addAttribute("surnameNull",surnameNull);
+        model.addAttribute("nameNull",nameNull);
         model.addAttribute("user",user);
         model.addAttribute("order", userManager.findOrdersByUser(user));
 
@@ -122,6 +133,12 @@ public class UserController {
     @PostMapping("/profile")
     public String updateProfile(Model model, User newUser, HttpServletRequest request){
         String username = request.getUserPrincipal().getName();
+        if(newUser.getName()==null){
+            newUser.setName("Cambiar valor por defecto");
+        }
+        if(newUser.getSurname()==null){
+            newUser.setSurname("Cambiar valor por defecto");
+        }
         userManager.updateUser(username,newUser);
         User user= userManager.findByUsername(username).orElse(null);
         model.addAttribute("order",userManager.findOrdersByUser(user));

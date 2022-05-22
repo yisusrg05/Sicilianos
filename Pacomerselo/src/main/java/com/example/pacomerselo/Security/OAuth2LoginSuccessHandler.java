@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -28,13 +29,24 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String email = oAuth2User.getEmail();
         Optional<User> op = userManager.findByUsername(oAuth2User.getName());
         String name = oAuth2User.getName();
+        String clientName= oAuth2User.getClientName();
         OAuth2AuthenticationToken oAuth2AuthenticationToken=(OAuth2AuthenticationToken) authentication;
         if (op.isEmpty()){
-            userManager.addOAuthUser(name,email, AuthenticationProvider.GOOGLE ,oAuth2AuthenticationToken);
+            if(Objects.equals(clientName, AuthenticationProvider.GOOGLE.name())){
+                userManager.addOAuthUser(name,email, AuthenticationProvider.GOOGLE ,oAuth2AuthenticationToken);
+            }
+            else{
+                userManager.addOAuthUser(name,email, AuthenticationProvider.FACEBOOK ,oAuth2AuthenticationToken);
+            }
 
         }else{
-            User user= op.get();
-            userManager.updateOAuthUser(name, email,AuthenticationProvider.GOOGLE);
+            if(Objects.equals(clientName, AuthenticationProvider.GOOGLE.name())){
+                userManager.updateOAuthUser(name, email,AuthenticationProvider.GOOGLE);
+            }
+            else{
+                userManager.updateOAuthUser(name, email,AuthenticationProvider.FACEBOOK);
+
+            }
         }
         response.sendRedirect("/profile");
 

@@ -116,7 +116,7 @@ public class RestaurantRESTController {
 
     @PostMapping("/addDishes/{name}")
     public ResponseEntity<Dishes> newDishAdmin(HttpServletRequest request, @RequestBody Dishes dish, @PathVariable String name){
-        if(request.isUserInRole("ROLE_RESTAURANT")){
+        if(request.isUserInRole("ROLE_ADMIN")){
             restaurantManager.addDish(name,dish);
             return new ResponseEntity<>(dish, HttpStatus.OK);
         } else {
@@ -145,7 +145,7 @@ public class RestaurantRESTController {
     @PutMapping("/updateDish/{id2}")
     public ResponseEntity<Dishes> updateDish(HttpServletRequest request, @PathVariable long id2, @RequestBody Dishes newDish){
         String name= SecurityContextHolder.getContext().getAuthentication().getName();
-        if(request.isUserInRole("ROLE_RESTAURANT")&&restaurantManager.restaurantContainsDish(name,id2)){
+        if(name.equals(restaurantManager.getDish(id2).getRestaurant().getName())||request.isUserInRole("ROLE_ADMIN")){
             restaurantManager.updateDish(id2,newDish);
             return new ResponseEntity<>(restaurantManager.getDish(id2), HttpStatus.OK);
         } else {
@@ -157,9 +157,9 @@ public class RestaurantRESTController {
     @DeleteMapping("/deleteDish/{id2}")
     public ResponseEntity<Dishes> deleteDish(HttpServletRequest request,@PathVariable long id2) {
         String name= SecurityContextHolder.getContext().getAuthentication().getName();
-        if((request.isUserInRole("ROLE_RESTAURANT")&&restaurantManager.restaurantContainsDish(name,id2))||request.isUserInRole("ROLE_ADMIN")){
+        if(name.equals(restaurantManager.getDish(id2).getRestaurant().getName())||request.isUserInRole("ROLE_ADMIN")){
             restaurantManager.removeDish(id2);
-            return new ResponseEntity<>(restaurantManager.getDish(id2), HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

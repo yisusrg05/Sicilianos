@@ -115,13 +115,18 @@
                 <div class="mb-3"><label class="form-label">Contraseña</label><input class="form-control" type="password" name="password"></div><div class="mb-3">
                 <input type="hidden" name="_csrf" value="{{token}}"/>
                 </div><button class="btn btn-warning" type="submit">Iniciar sesión</button>
+                <br>
+                <br>
+
                 <div>
-                <a href="/oauth2/authorization/google">Login with Google</a>
+
+                    <a href="/oauth2/authorization/google" class="btn btn-light shadow-sm border rounded-pill d-block btn-google btn-user w-100 mb-2" role="button"><i class="fab fa-google"></i>&nbsp; Login with Google</a>
+                <!--<a href="/oauth2/authorization/google">Login with Google</a>-->
                 </div>
                 <div class="container authenticated" style="display:none">
                     Logged in as: <span id="user"></span>
                 </div>
-                <a class="nav-link" href="/forgottenPassword">¿Olvidaste tu contraseña?</a>
+
                 <a class="nav-link" href="/register">¿A&uacute;n no tienes cuenta? Reg&iacute;strate ahora.</a>
             </form>
         </div>

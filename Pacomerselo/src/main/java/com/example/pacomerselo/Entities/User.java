@@ -3,6 +3,7 @@ package com.example.pacomerselo.Entities;
 import com.example.pacomerselo.Entities.Order;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.service.spi.InjectService;
 import org.springframework.context.annotation.Scope;
@@ -37,6 +38,7 @@ public class User {
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -73,6 +75,17 @@ public class User {
         this.password=password;
         this.orders=new ArrayList<>();
         this.roles=new ArrayList<>();
+    }
+
+    public User(String username,String email, AuthenticationProvider authProvider){
+        this.username=username;
+        this.name="Cambiar valor por defecto";
+        this.surname="Cambiar valor por defecto";
+        this.email=email;
+        this.password=null;
+        this.orders=new ArrayList<>();
+        this.roles=new ArrayList<>();
+        this.authProvider=authProvider;
     }
 
     public void addOrder(Order order){

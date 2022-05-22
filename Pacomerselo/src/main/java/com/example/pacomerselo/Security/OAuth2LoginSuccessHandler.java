@@ -24,15 +24,15 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
         String email = oAuth2User.getEmail();
-        /*
         User user = userManager.getUser(email);
         String name = oAuth2User.getName();
         if (user == null){
-            userManager.addNewUserAfterOAuthLoginSucces(email, name, AuthenticationProvider.GOOGLE );
+            userManager.addOAuthUser(name,email, AuthenticationProvider.GOOGLE );
 
         }else{
-            userManager.updateUserAfterOAuthLoginSuccess(user, name, AuthenticationProvider.GOOGLE);
-        }*/
+            userManager.updateOAuthUser(name, email,AuthenticationProvider.GOOGLE);
+        }
+        response.sendRedirect("/profile");
 
         System.out.println("User´s email: " + email);
 

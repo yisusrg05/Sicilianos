@@ -41,13 +41,17 @@ public class RESTSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .antMatchers(HttpMethod.GET,"/users").hasAnyRole("ROLE_ADMIN")
                         .antMatchers(HttpMethod.GET,"/adminPage").hasAnyRole("ROLE_ADMIN")
                         .antMatchers(HttpMethod.POST,"/restaurants").hasAnyRole("ROLE_ADMIN")
+                        .antMatchers(HttpMethod.PUT,"/restaurant").hasAnyRole("ROLE_RESTAURANT")
+                        .antMatchers(HttpMethod.DELETE,"/restaurant").hasAnyRole("ROLE_ADMIN","ROLE_RESTAURANT")
+                        .antMatchers(HttpMethod.POST,"/addDishes").hasAnyRole("ROLE_RESTAURANT")
+                        .antMatchers(HttpMethod.PUT,"/updateDish/{id2}").hasAnyRole("ROLE_RESTAURANT")
+                        .antMatchers(HttpMethod.DELETE,"/deleteDish/{id2}").hasAnyRole("ROLE_ADMIN","ROLE_RESTAURANT")
+                        .antMatchers(HttpMethod.POST,"/addDishes/{name}").hasAnyRole("ROLE_ADMIN")
+                        .antMatchers(HttpMethod.PUT,"/restaurant/{name}").hasAnyRole("ROLE_ADMIN")
 
 
 
-
-
-
-                        .anyRequest()
+                .anyRequest()
                                 .permitAll();
 
         http.csrf().disable();

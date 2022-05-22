@@ -22,6 +22,12 @@ public class UserRepositoryImpl {
         return query.setParameter("username",username).setParameter("email",email).getResultList();
     }
 
+    public User findByEmail(String email){
+        TypedQuery<User> query= entityManager.createQuery
+                ("SELECT u FROM User u WHERE u.email=:email",User.class);
+        return query.setParameter("email",email).getSingleResult();
+    }
+
     @Transactional
     public int updateUser(String username,String name, String surname, String email){
         Query query = entityManager.createQuery

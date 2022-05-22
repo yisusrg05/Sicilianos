@@ -237,9 +237,7 @@ public class RestaurantController {
 
     @PostMapping("/registerRestaurant")
     public String addRestaurant (Model model, HttpServletRequest request, Restaurant restaurant){
-        List<String> role= new ArrayList<>();
-        role.add("RESTAURANT");
-        restaurant.setRoles(role);
+
         restaurantManager.addRestaurant(restaurant);
         return userCustomization(model,request,"registerSuccessful");
     }

@@ -60,7 +60,17 @@ public class RestaurantRESTController {
             restaurantManager.updateRestaurant(name,newRestaurant);
             return new ResponseEntity<>(restaurantManager.getRestaurant(name), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @PutMapping("/restaurant/{name}")
+    public ResponseEntity<Restaurant> updateRestaurantAdmin(HttpServletRequest request, @RequestBody Restaurant newRestaurant,@PathVariable String name) {
+        if(request.isUserInRole("ROLE_ADMIN")){
+            restaurantManager.updateRestaurant(name,newRestaurant);
+            return new ResponseEntity<>(restaurantManager.getRestaurant(name), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -72,17 +82,17 @@ public class RestaurantRESTController {
             restaurantManager.removeRestaurant(name);
             return new ResponseEntity<>(restaurantManager.getRestaurant(name), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @DeleteMapping("/restaurant/{name}")
-    public ResponseEntity<Restaurant> deleteRestaurant(HttpServletRequest request, @PathVariable String name) {
+    public ResponseEntity<Restaurant> deleteRestaurantAdmin(HttpServletRequest request, @PathVariable String name) {
         if(request.isUserInRole("ROLE_ADMIN")){
             restaurantManager.removeRestaurant(name);
             return new ResponseEntity<>(restaurantManager.getRestaurant(name), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -100,7 +110,17 @@ public class RestaurantRESTController {
             restaurantManager.addDish(name,dish);
             return new ResponseEntity<>(dish, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @PostMapping("/addDishes/{name}")
+    public ResponseEntity<Dishes> newDishAdmin(HttpServletRequest request, @RequestBody Dishes dish, @PathVariable String name){
+        if(request.isUserInRole("ROLE_RESTAURANT")){
+            restaurantManager.addDish(name,dish);
+            return new ResponseEntity<>(dish, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -125,11 +145,11 @@ public class RestaurantRESTController {
     @PutMapping("/updateDish/{id2}")
     public ResponseEntity<Dishes> updateDish(HttpServletRequest request, @PathVariable long id2, @RequestBody Dishes newDish){
         String name= SecurityContextHolder.getContext().getAuthentication().getName();
-        if(request.isUserInRole("ROLE_RESTAURANT")&&restaurantManager.getDishes(name).contains(restaurantManager.getDish(id2))){
+        if(request.isUserInRole("ROLE_RESTAURANT")&&restaurantManager.restaurantContainsDish(name,id2)){
             restaurantManager.updateDish(id2,newDish);
             return new ResponseEntity<>(restaurantManager.getDish(id2), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -137,11 +157,11 @@ public class RestaurantRESTController {
     @DeleteMapping("/deleteDish/{id2}")
     public ResponseEntity<Dishes> deleteDish(HttpServletRequest request,@PathVariable long id2) {
         String name= SecurityContextHolder.getContext().getAuthentication().getName();
-        if((request.isUserInRole("ROLE_RESTAURANT")&&restaurantManager.getDishes(name).contains(restaurantManager.getDish(id2)))||request.isUserInRole("ROLE_ADMIN")){
+        if((request.isUserInRole("ROLE_RESTAURANT")&&restaurantManager.restaurantContainsDish(name,id2))||request.isUserInRole("ROLE_ADMIN")){
             restaurantManager.removeDish(id2);
             return new ResponseEntity<>(restaurantManager.getDish(id2), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 

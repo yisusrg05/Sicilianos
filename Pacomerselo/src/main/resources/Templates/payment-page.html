@@ -138,6 +138,7 @@
                         <div class="col-sm-4"><input type="text" id="coupon" class="form-control">    <span id="message"></span><span id="err"></span>
                         </div>
                     </div>
+                    <input type="number" id="finalPrice" name="finalPrice" hidden  value="{{total}}">
                     {{/cart}}
                 </div>
                 <div class="card-details">
@@ -156,7 +157,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="mb-3"><label class="form-label" for="cvc">CVC</label><input class="form-control" type="text" id="cvc" placeholder="CVC" maxlength="3" name="cvc"></div>
-                        </div><input type="number" id="finalPrice" name="finalPrice" hidden  value="">
+                        </div>
                         <div class="col-sm-12">
                             <div class="mb-3"><button class="btn btn-warning" type="submit">  Proceder al Pago  </button>
                         </div>

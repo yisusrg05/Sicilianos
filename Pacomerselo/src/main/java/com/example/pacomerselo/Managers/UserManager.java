@@ -98,7 +98,7 @@ public class UserManager{
         for(Dishes dish : cart.getDishesList()) {
             order.add(dish);
         }
-        if(order.getPrice()==(int) cart.getPrice()){
+        if(order.getPrice()==(int) cart.getTotal()){
             order.setDiscount(false);
             order.setDiscountedPrice(order.getPrice());
         }

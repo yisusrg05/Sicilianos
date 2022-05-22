@@ -57,7 +57,23 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.6.8.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.valb3r.letsencrypt-helper</groupId>
+            <artifactId>letsencrypt-helper-tomcat</artifactId>
+            <version>0.2.4</version>
+        </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>

@@ -1,0 +1,198 @@
+/*--------------------------------------------------------------
+# Main
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Page Title
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Back to top button
+--------------------------------------------------------------*/
+.back-to-top {
+    position: fixed;
+    visibility: hidden;
+    opacity: 0;
+    right: 15px;
+    bottom: 15px;
+    z-index: 99999;
+    background: #4154f1;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    transition: all 0.4s;
+}
+.back-to-top i {
+    font-size: 24px;
+    color: #fff;
+    line-height: 0;
+}
+.back-to-top:hover {
+    background: #6776f4;
+    color: #fff;
+}
+.back-to-top.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Override some default Bootstrap stylings
+--------------------------------------------------------------*/
+
+/* Light Backgrounds */
+.bg-primary-light {
+    background-color: #cfe2ff;
+    border-color: #cfe2ff;
+}
+
+.bg-secondary-light {
+    background-color: #e2e3e5;
+    border-color: #e2e3e5;
+}
+
+.bg-success-light {
+    background-color: #d1e7dd;
+    border-color: #d1e7dd;
+}
+
+.bg-danger-light {
+    background-color: #f8d7da;
+    border-color: #f8d7da;
+}
+
+.bg-warning-light {
+    background-color: #fff3cd;
+    border-color: #fff3cd;
+}
+
+.bg-info-light {
+    background-color: #cff4fc;
+    border-color: #cff4fc;
+}
+
+.bg-dark-light {
+    background-color: #d3d3d4;
+    border-color: #d3d3d4;
+}
+
+
+/* Recent Sales */
+.dashboard .recent-sales {
+    font-size: 14px;
+}
+.dashboard .recent-sales .table thead {
+    background: #f6f6fe;
+}
+.dashboard .recent-sales .table thead th {
+    border: 100px;
+}
+.dashboard .recent-sales .dataTable-top {
+    padding: 0 0 10px 0;
+}
+.dashboard .recent-sales .dataTable-bottom {
+    padding: 10px 0 0 0;
+}
+
+/* Top Selling */
+.dashboard .top-selling {
+    font-size: 14px;
+}
+.dashboard .top-selling .table thead {
+    background: #f6f6fe;
+}
+.dashboard .top-selling .table thead th {
+    border:550px;
+}
+.dashboard .top-selling .table tbody td {
+    vertical-align: middle;
+}
+.dashboard .top-selling img {
+    border-radius: 100px;
+    max-width: 60px;
+}
+
+
+
+
+
+.greek-symbols {
+    list-style-type:lower-greek;
+}
+
+.background-grey li:nth-child(2n) {
+    background-color: #ccc;
+}
+
+cite {
+    background-color: #eee;
+    padding: 10px 10px;
+    position: relative;
+    border-radius: 10px;
+}
+
+.autor {
+    position: absolute;
+    bottom: -15px;
+    text-align: right;
+    right: 5px;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+.vanilla-zoom {
+    width: 100%;
+    /*display: flex;*/
+}
+
+.vanilla-zoom .sidebar {
+    /*flex-basis: 30%;*/
+    width: 100%;
+    display: flex;
+    /*flex-direction: column;*/
+}
+
+.vanilla-zoom .sidebar img.small-preview {
+    width: 60px;
+    margin-right: 5px;
+    cursor: pointer;
+    opacity: .5;
+}
+
+.vanilla-zoom .sidebar img.small-preview.active, .vanilla-zoom .sidebar img.small-preview:hover {
+    opacity: 1;
+}
+
+.vanilla-zoom .sidebar img.small-preview:last-child {
+    margin-right: 0;
+}
+
+.vanilla-zoom .zoomed-image {
+    width: 100%;
+    height: 300px;
+    flex: 1;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: contain;
+    margin-bottom: 5px;
+}
+.dropdown.no-arrow .dropdown-toggle::after {
+    display: none;
+}
+.navbar-expand .navbar-nav .nav-link {
+    padding-right: .5rem;
+    padding-left: .5rem;
+}
+
+.dropdown .dropdown-toggle {
+    position: relative;
+}
+.dropdown-toggle {
+    white-space: nowrap;
+}
+

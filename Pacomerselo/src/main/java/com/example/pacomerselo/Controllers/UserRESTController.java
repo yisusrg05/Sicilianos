@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -56,6 +58,21 @@ public class UserRESTController{
         }
     }
 
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getUsers(HttpServletRequest request){
+        if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
+            if(request.isUserInRole("ROLE_ADMIN")){
+                return new ResponseEntity<>(userManager.getUsers(),HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
 
     //Add a new user to the App
     @PostMapping("/register")
@@ -68,11 +85,16 @@ public class UserRESTController{
     @PutMapping("/changeprofile")
     public ResponseEntity<User> updateProfile(@RequestBody User newUser){
         String username=SecurityContextHolder.getContext().getAuthentication().getName();
-        int usersUpdated=userManager.updateUser(username,newUser);
-        if (usersUpdated==1) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
+            int usersUpdated=userManager.updateUser(username,newUser);
+            if (usersUpdated==1) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 

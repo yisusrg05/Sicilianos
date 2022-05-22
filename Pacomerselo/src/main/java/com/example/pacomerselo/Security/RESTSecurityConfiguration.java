@@ -38,7 +38,17 @@ public class RESTSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .antMatchers(HttpMethod.PUT,"/changeprofile").hasAnyRole("ROLE_USER")
                         .antMatchers(HttpMethod.GET,"/orders").hasAnyRole("ROLE_USER","ROLE_ADMIN")
                         .antMatchers(HttpMethod.DELETE,"/deleteuser/{username}").hasAnyRole("ROLE_ADMIN")
-                        .antMatchers(HttpMethod.GET,"/adminPage").hasAnyRole("ROLE_ADMIN");
+                        .antMatchers(HttpMethod.GET,"/users").hasAnyRole("ROLE_ADMIN")
+                        .antMatchers(HttpMethod.GET,"/adminPage").hasAnyRole("ROLE_ADMIN")
+                        .antMatchers(HttpMethod.POST,"/restaurants").hasAnyRole("ROLE_ADMIN")
+
+
+
+
+
+
+                        .anyRequest()
+                                .permitAll();
 
         http.csrf().disable();
         http.httpBasic();

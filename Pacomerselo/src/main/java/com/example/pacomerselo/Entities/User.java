@@ -37,7 +37,6 @@ public class User {
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
-    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)

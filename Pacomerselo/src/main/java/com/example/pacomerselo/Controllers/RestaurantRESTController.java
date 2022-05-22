@@ -9,9 +9,11 @@ import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -51,24 +53,36 @@ public class RestaurantRESTController {
     }
 
     //Update the restaurant given (ID)
-    @PutMapping("/restaurant/{name}")
-    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable String name, @RequestBody Restaurant newRestaurant) {
-        Restaurant restaurant = restaurantManager.updateRestaurant(name,newRestaurant);
-        if (restaurant!= null) {
-            return new ResponseEntity<>(newRestaurant, HttpStatus.OK);
+    @PutMapping("/restaurant")
+    public ResponseEntity<Restaurant> updateRestaurant(HttpServletRequest request, @RequestBody Restaurant newRestaurant) {
+        String name= SecurityContextHolder.getContext().getAuthentication().getName();
+        if(request.isUserInRole("ROLE_RESTAURANT")){
+            restaurantManager.updateRestaurant(name,newRestaurant);
+            return new ResponseEntity<>(restaurantManager.getRestaurant(name), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
     //Delete the restaurant given (ID)
-    @DeleteMapping("/restaurant/{name}")
-    public ResponseEntity<Restaurant> deleteRestaurant(@PathVariable String name) {
-        Restaurant restaurant = new Restaurant();
-        if (restaurant!= null) {
-            return new ResponseEntity<>(HttpStatus.OK);
+    @DeleteMapping("/restaurant")
+    public ResponseEntity<Restaurant> deleteRestaurant(HttpServletRequest request) {
+        String name= SecurityContextHolder.getContext().getAuthentication().getName();
+        if(request.isUserInRole("ROLE_RESTAURANT")){
+            restaurantManager.removeRestaurant(name);
+            return new ResponseEntity<>(restaurantManager.getRestaurant(name), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @DeleteMapping("/restaurant/{name}")
+    public ResponseEntity<Restaurant> deleteRestaurant(HttpServletRequest request, @PathVariable String name) {
+        if(request.isUserInRole("ROLE_ADMIN")){
+            restaurantManager.removeRestaurant(name);
+            return new ResponseEntity<>(restaurantManager.getRestaurant(name), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -79,13 +93,14 @@ public class RestaurantRESTController {
 
     //////////////////////DISHES REST CONTROLLER//////////////////////
     //Add a new dish to the restaurant catalog (given the ID)
-    @PostMapping("/restaurant/{name}/dishes")
-    public ResponseEntity<Dishes> newDish(@PathVariable String name, @RequestBody Dishes dish){
-        Dishes dishAdded = restaurantManager.addDish(name,dish);
-        if (dishAdded!= null) {
-            return new ResponseEntity<>(dishAdded, HttpStatus.CREATED);
+    @PostMapping("/addDishes")
+    public ResponseEntity<Dishes> newDish(HttpServletRequest request, @RequestBody Dishes dish){
+        String name= SecurityContextHolder.getContext().getAuthentication().getName();
+        if(request.isUserInRole("ROLE_RESTAURANT")){
+            restaurantManager.addDish(name,dish);
+            return new ResponseEntity<>(dish, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -107,25 +122,26 @@ public class RestaurantRESTController {
     }
 
     //Update the dish (ID2) of the restaurant catalog (ID1)
-    @PutMapping("/restaurant/{name}/dishes/{id2}")
-    public ResponseEntity<Dishes> updateDish(@PathVariable String name, @PathVariable long id2, @RequestBody Dishes newDish){
-        Dishes dish=restaurantManager.getDish(id2);
-        if (dish!= null) {
+    @PutMapping("/updateDish/{id2}")
+    public ResponseEntity<Dishes> updateDish(HttpServletRequest request, @PathVariable long id2, @RequestBody Dishes newDish){
+        String name= SecurityContextHolder.getContext().getAuthentication().getName();
+        if(request.isUserInRole("ROLE_RESTAURANT")&&restaurantManager.getDishes(name).contains(restaurantManager.getDish(id2))){
             restaurantManager.updateDish(id2,newDish);
-            return new ResponseEntity<>(newDish, HttpStatus.OK);
+            return new ResponseEntity<>(restaurantManager.getDish(id2), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
     //Delete the dish (ID2) of the restaurant catalog (ID1)
-    @DeleteMapping("/restaurant/{name}/dishes/{id2}")
-    public ResponseEntity<Dishes> deleteDish(@PathVariable String name,@PathVariable long id2) {
-        int dishesDeleted= restaurantManager.removeDish(id2);
-        if(dishesDeleted==1){
-            return new ResponseEntity<>(HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @DeleteMapping("/deleteDish/{id2}")
+    public ResponseEntity<Dishes> deleteDish(HttpServletRequest request,@PathVariable long id2) {
+        String name= SecurityContextHolder.getContext().getAuthentication().getName();
+        if((request.isUserInRole("ROLE_RESTAURANT")&&restaurantManager.getDishes(name).contains(restaurantManager.getDish(id2)))||request.isUserInRole("ROLE_ADMIN")){
+            restaurantManager.removeDish(id2);
+            return new ResponseEntity<>(restaurantManager.getDish(id2), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 

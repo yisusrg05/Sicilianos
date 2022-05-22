@@ -173,6 +173,7 @@ public class UserController {
         userList.removeIf(user -> user.getUsername().equals("Administrador"));
         model.addAttribute("users",userList);
         model.addAttribute("restaurants",restaurantManager.getRestaurants());
+        model.addAttribute("orders",userManager.getOrders());
         return userCustomization(model,request,"adminPage");
     }
 
@@ -194,11 +195,12 @@ public class UserController {
     public String deleteUser(Model model, HttpServletRequest request, @PathVariable String username){
         userManager.removeUser(username);
         String usernameAdmin = SecurityContextHolder.getContext().getAuthentication().getName();
-        User admin= userManager.findByUsername("Administrador").orElse(null);
+        User admin= userManager.findByUsername(usernameAdmin).orElse(null);
         model.addAttribute("admin",admin);
         List<User> userList=userManager.getUsers();
         userList.removeIf(user -> user.getUsername().equals("Administrador"));
         model.addAttribute("users",userList);
+        model.addAttribute("restaurants",restaurantManager.getRestaurants());
         model.addAttribute("restaurants",restaurantManager.getRestaurants());
         return userCustomization(model,request,"deleteUserSuccessful");
     }

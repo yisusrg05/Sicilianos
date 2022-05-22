@@ -37,10 +37,12 @@ public class User {
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "auth_provider")
+    @JsonIgnore
     private AuthenticationProvider authProvider;
 
     //private List<Dishes> cart;
@@ -50,6 +52,7 @@ public class User {
     private List<Order> orders;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<String> roles;
 
     //Constructor of user:

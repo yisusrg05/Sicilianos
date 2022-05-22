@@ -8,8 +8,10 @@ import com.example.pacomerselo.Managers.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 @RestController
@@ -24,17 +26,34 @@ public class UserRESTController{
     //////////////////////ORDERS REST CONTROLLER//////////////////////
 
     //Get all the orders of the user
-    @GetMapping("/orders/{username}")
-    public Collection<Order> getOrders(@PathVariable String username){
-        return userManager.findOrdersByUsername(username);
+    @GetMapping("/orders")
+    public ResponseEntity<Collection<Order>>getOrders(HttpServletRequest request){
+        if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
+            String username=SecurityContextHolder.getContext().getAuthentication().getName();
+            if(request.isUserInRole("ROLE_ADMIN")){
+                return new ResponseEntity<>(userManager.getOrders(),HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<>(userManager.findOrdersByUsername(username),HttpStatus.OK);
+
+            }
+        }else{
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     //////////////////////USER REST CONTROLLER//////////////////////
 
     //Get the user of the Username given
-    @GetMapping("/user/{username}")
-    public User getUser(@PathVariable String username){
-        return userManager.getUser(username);
+    @GetMapping("/user")
+    public ResponseEntity<User> getUser(HttpServletRequest request){
+        if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
+            String username=SecurityContextHolder.getContext().getAuthentication().getName();
+            return new ResponseEntity<>(userManager.getUser(username),HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
 
@@ -46,8 +65,9 @@ public class UserRESTController{
     }
 
     //Update a user profile given (Username)
-    @PutMapping("/changeprofile/{username}")
-    public ResponseEntity<User> updateProfile(@PathVariable String username,@RequestBody User newUser){
+    @PutMapping("/changeprofile")
+    public ResponseEntity<User> updateProfile(@RequestBody User newUser){
+        String username=SecurityContextHolder.getContext().getAuthentication().getName();
         int usersUpdated=userManager.updateUser(username,newUser);
         if (usersUpdated==1) {
             return new ResponseEntity<>(HttpStatus.OK);

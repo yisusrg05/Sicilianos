@@ -102,10 +102,10 @@
           </div>
         </div>
       </nav>
-      <br>      <br>
       <br>
       <br>
-
+      <br>
+      <br>
       <div class="container-fluid">
         <div class="d-sm-flex justify-content-between align-items-center mb-4">
           <h3 class="text-dark mb-0">P&aacute;gina de Administraci&oacute;n de Paco M&eacute;rselo</h3>
@@ -128,12 +128,22 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {{#orders}}
                     <tr>
-                      <td>Cell 1</td>
-                      <td>Cell 2</td>
-                      <td>Cell 2</td>
-                      <td>Cell 2</td>
+                      <td>{{orderNumber}}</td>
+                      <td>{{user.username}}</td>
+                      <td>
+                        {{#dishes}}
+                        <ul>
+                          <li>{{restaurant.name}}</li>
+                          <li>{{name}}</li>
+                          <li>{{price}}</li>
+                        </ul>
+                        {{/dishes}}
+                      </td>
+                      <td>{{price}}€</td>
                     </tr>
+                    {{/orders}}
                     <tr></tr>
                     </tbody>
                   </table>
@@ -156,15 +166,19 @@
                     <tr>
                       <th>Nombre</th>
                       <th>Email</th>
+                      <th>Ver Carta</th>
                       <th>Eliminar</th>
                     </tr>
                     </thead>
                     <tbody>
+                    {{#restaurants}}
                     <tr>
-                      <td>Cell 1</td>
-                      <td>Cell 2</td>
-                      <td>Cell 2</td>
+                      <td>{{name}}</td>
+                      <td>{{email}}</td>
+                      <td><button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/restaurant/{{name}}'" type="button">CARTA</button></td>
+                      <td><button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/deleteRestaurant/{{name}}'" type="button">BORRAR</button></td>
                     </tr>
+                    {{/restaurants}}
                     <tr></tr>
                     </tbody>
                   </table>
@@ -192,12 +206,14 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {{#users}}
                     <tr>
-                      <td>Cell 1</td>
-                      <td>Cell 2</td>
-                      <td>Cell 2</td>
-                      <td>Cell 2</td>
+                      <td>{{username}}</td>
+                      <td>{{name}}</td>
+                      <td>{{email}}</td>
+                      <td><button class="btn btn-outline-warning d-block w-100" style="margin: 10px" onclick="location.href='/deleteUser/{{username}}'" type="button">BORRAR</button></td>
                     </tr>
+                    {{/users}}
                     <tr></tr>
                     </tbody>
                   </table>

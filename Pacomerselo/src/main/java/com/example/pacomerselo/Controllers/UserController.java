@@ -32,8 +32,6 @@ public class UserController {
     @Autowired
     private UserManager userManager;
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
     private RestaurantManager restaurantManager;
     @Autowired
     private SessionCart sessionCart= new SessionCart();
@@ -132,18 +130,6 @@ public class UserController {
 
     }
 
-    //Update just the password, not all the User
-    @PostMapping("/forgottenPassword")
-    public String updatePassword(@RequestParam String username,@RequestParam String email, @RequestParam String password){
-        List<User> user= userManager.findByUsernameAndEmail(username,email);
-        if(!user.isEmpty()){
-            userManager.updateUserPassword(user.get(0),passwordEncoder.encode(password));
-            return "login";
-        }else{
-            return "incorrectEmailOrPassword";
-        }
-    }
-
     @PostMapping("/orderPlaced")
     public String placeOrder(Model model,HttpServletRequest request, @RequestParam long finalPrice){
         HttpSession httpSession=request.getSession();
@@ -158,7 +144,6 @@ public class UserController {
     @PostMapping("/register")
     public String addUser(User newUser, Model model, HttpServletRequest request){
         if(userManager.findByUsername(newUser.getUsername()).isEmpty()){
-            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             List<String> role= new ArrayList<>();
             role.add("USER");
             newUser.setRoles(role);
@@ -188,6 +173,7 @@ public class UserController {
         userList.removeIf(user -> user.getUsername().equals("Administrador"));
         model.addAttribute("users",userList);
         model.addAttribute("restaurants",restaurantManager.getRestaurants());
+        model.addAttribute("orders",userManager.getOrders());
         return userCustomization(model,request,"adminPage");
     }
 
@@ -209,11 +195,12 @@ public class UserController {
     public String deleteUser(Model model, HttpServletRequest request, @PathVariable String username){
         userManager.removeUser(username);
         String usernameAdmin = SecurityContextHolder.getContext().getAuthentication().getName();
-        User admin= userManager.findByUsername("Administrador").orElse(null);
+        User admin= userManager.findByUsername(usernameAdmin).orElse(null);
         model.addAttribute("admin",admin);
         List<User> userList=userManager.getUsers();
         userList.removeIf(user -> user.getUsername().equals("Administrador"));
         model.addAttribute("users",userList);
+        model.addAttribute("restaurants",restaurantManager.getRestaurants());
         model.addAttribute("restaurants",restaurantManager.getRestaurants());
         return userCustomization(model,request,"deleteUserSuccessful");
     }

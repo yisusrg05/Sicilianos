@@ -4,6 +4,7 @@ import com.example.pacomerselo.Entities.*;
 import com.example.pacomerselo.Repositories.Order.OrderRepository;
 import com.example.pacomerselo.Repositories.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -13,16 +14,20 @@ import java.util.*;
 public class UserManager{
 
     @Autowired
-    protected OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     static final int SHIPPING_COSTS = 5;
 
     //Adding a user, plus setting its ID, adding it to the user map and adding it to our <Username,ID> map
     public void addUser(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -114,6 +119,10 @@ public class UserManager{
         return userRepository.findAll();
     }
 
+    public List<Order> getOrders(){
+        return orderRepository.findAll();
+    }
+
 
    /* public void addNewUserAfterOAuthLoginSucces(String email, String name, AuthenticationProvider provider) {
         User user = new User();
@@ -128,20 +137,6 @@ public class UserManager{
         user.setName(name);
         user.setAuthProvider(provider);
         userRepository.save(user);
-    }
-    */
-
-/*
-    //Given a user ID and a dish ID, check if that dish is in the cart, and if so, return it
-    public Dishes getDishFromCart(long idUser,long id){
-        List<Dishes> dishesList=users.get(idUser).getCart();
-        Dishes validDish=null;
-        for (Dishes dish: dishesList){
-            if (dish.getId()==id){
-                validDish=dish;
-            }
-        }
-        return validDish;
     }
     */
 

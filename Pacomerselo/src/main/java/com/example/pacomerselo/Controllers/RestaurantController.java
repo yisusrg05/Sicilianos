@@ -161,7 +161,7 @@ public class RestaurantController {
     @PostMapping("/updateRestaurant/{name}")
     public String putRestaurant (Model model, HttpServletRequest request,@PathVariable String name,Restaurant newRestaurant){
         restaurantManager.updateRestaurant(name,newRestaurant);
-        return userCustomization(model,request,"updateSuccessful");
+        return userCustomization(model,request,"updateSuccesful");
     }
 
     //Delete an already existing restaurant given the ID

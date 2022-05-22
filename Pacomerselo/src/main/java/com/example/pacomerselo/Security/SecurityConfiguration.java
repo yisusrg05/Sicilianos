@@ -71,8 +71,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.logout().logoutUrl("/logout");
         http.logout().logoutSuccessUrl("/");
 
-        http.requiresChannel().anyRequest().requiresSecure();
-
     }
 
 

@@ -312,6 +312,11 @@ public class RestaurantController {
         return userCustomization(model,request,"registerSuccessful");
     }
 
+    @GetMapping("/privacy")
+    public String privacy(){
+        return "export";
+    }
+
     private String userCustomization(Model model, HttpServletRequest request, String page){
         boolean roleUser=false;
         boolean roleAdmin=false;
